@@ -33,6 +33,21 @@
 		25CF3AB82133A81A0072F3C1 /* KWEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AB52133A8190072F3C1 /* KWEnvironment.swift */; };
 		25CF3AB92133A81A0072F3C1 /* KWGasConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AB62133A8190072F3C1 /* KWGasConfiguration.swift */; };
 		25CF3ABB2133AA7F0072F3C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ABA2133AA7F0072F3C1 /* Assets.xcassets */; };
+		25CF3ACF2133AAD10072F3C1 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ABD2133AAD10072F3C1 /* index.html */; };
+		25CF3AD02133AAD10072F3C1 /* config_env_production.json in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ABF2133AAD10072F3C1 /* config_env_production.json */; };
+		25CF3AD12133AAD10072F3C1 /* config_env_ropsten.json in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC02133AAD10072F3C1 /* config_env_ropsten.json */; };
+		25CF3AD22133AAD10072F3C1 /* config_env_mainnet_test.json in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC12133AAD10072F3C1 /* config_env_mainnet_test.json */; };
+		25CF3AD32133AAD10072F3C1 /* config_env_staging.json in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC22133AAD10072F3C1 /* config_env_staging.json */; };
+		25CF3AD42133AAD10072F3C1 /* config_env_kovan.json in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC32133AAD10072F3C1 /* config_env_kovan.json */; };
+		25CF3AD52133AAD10072F3C1 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC62133AAD10072F3C1 /* Montserrat-Medium.ttf */; };
+		25CF3AD62133AAD10072F3C1 /* Montserrat-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC72133AAD10072F3C1 /* Montserrat-BoldItalic.ttf */; };
+		25CF3AD72133AAD10072F3C1 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC82133AAD10072F3C1 /* Montserrat-Bold.ttf */; };
+		25CF3AD82133AAD10072F3C1 /* Montserrat-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC92133AAD10072F3C1 /* Montserrat-MediumItalic.ttf */; };
+		25CF3AD92133AAD10072F3C1 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ACA2133AAD10072F3C1 /* Montserrat-SemiBold.ttf */; };
+		25CF3ADA2133AAD10072F3C1 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ACB2133AAD10072F3C1 /* OFL.txt */; };
+		25CF3ADB2133AAD10072F3C1 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ACC2133AAD10072F3C1 /* Montserrat-Regular.ttf */; };
+		25CF3ADC2133AAD10072F3C1 /* Montserrat-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ACD2133AAD10072F3C1 /* Montserrat-SemiBoldItalic.ttf */; };
+		25CF3ADD2133AAD10072F3C1 /* web3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ACE2133AAD10072F3C1 /* web3.min.js */; };
 		C3034C74371E7691359DE447 /* Pods_KyberWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 366D1B46AAC5E7A1065E705D /* Pods_KyberWidget.framework */; };
 		DF5D339E8825FA9A8880F7E0 /* Pods_KyberWidgetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC5571C42DB4CEDAB9509A7 /* Pods_KyberWidgetTests.framework */; };
 /* End PBXBuildFile section */
@@ -78,6 +93,21 @@
 		25CF3AB52133A8190072F3C1 /* KWEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWEnvironment.swift; sourceTree = "<group>"; };
 		25CF3AB62133A8190072F3C1 /* KWGasConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGasConfiguration.swift; sourceTree = "<group>"; };
 		25CF3ABA2133AA7F0072F3C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		25CF3ABD2133AAD10072F3C1 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		25CF3ABF2133AAD10072F3C1 /* config_env_production.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_env_production.json; sourceTree = "<group>"; };
+		25CF3AC02133AAD10072F3C1 /* config_env_ropsten.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_env_ropsten.json; sourceTree = "<group>"; };
+		25CF3AC12133AAD10072F3C1 /* config_env_mainnet_test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_env_mainnet_test.json; sourceTree = "<group>"; };
+		25CF3AC22133AAD10072F3C1 /* config_env_staging.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_env_staging.json; sourceTree = "<group>"; };
+		25CF3AC32133AAD10072F3C1 /* config_env_kovan.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_env_kovan.json; sourceTree = "<group>"; };
+		25CF3AC62133AAD10072F3C1 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
+		25CF3AC72133AAD10072F3C1 /* Montserrat-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-BoldItalic.ttf"; sourceTree = "<group>"; };
+		25CF3AC82133AAD10072F3C1 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		25CF3AC92133AAD10072F3C1 /* Montserrat-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-MediumItalic.ttf"; sourceTree = "<group>"; };
+		25CF3ACA2133AAD10072F3C1 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+		25CF3ACB2133AAD10072F3C1 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		25CF3ACC2133AAD10072F3C1 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		25CF3ACD2133AAD10072F3C1 /* Montserrat-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		25CF3ACE2133AAD10072F3C1 /* web3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = web3.min.js; sourceTree = "<group>"; };
 		366D1B46AAC5E7A1065E705D /* Pods_KyberWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KyberWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8778C457DF21680B127AA3F6 /* Pods-KyberWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KyberWidget.release.xcconfig"; path = "Pods/Target Support Files/Pods-KyberWidget/Pods-KyberWidget.release.xcconfig"; sourceTree = "<group>"; };
 		9510865A608F09061DFF840A /* Pods-KyberWidgetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KyberWidgetTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KyberWidgetTests/Pods-KyberWidgetTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -129,6 +159,7 @@
 		25CF3A722133A0760072F3C1 /* KyberWidget */ = {
 			isa = PBXGroup;
 			children = (
+				25CF3ABC2133AAD10072F3C1 /* Resources */,
 				25CF3AB32133A8190072F3C1 /* Configuration */,
 				25CF3AAA2133A6E80072F3C1 /* Utility */,
 				25CF3AA12133A64D0072F3C1 /* Models */,
@@ -197,6 +228,52 @@
 				25CF3AB62133A8190072F3C1 /* KWGasConfiguration.swift */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		25CF3ABC2133AAD10072F3C1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3ABD2133AAD10072F3C1 /* index.html */,
+				25CF3ABE2133AAD10072F3C1 /* Configs */,
+				25CF3AC42133AAD10072F3C1 /* Fonts */,
+				25CF3ACE2133AAD10072F3C1 /* web3.min.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		25CF3ABE2133AAD10072F3C1 /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3ABF2133AAD10072F3C1 /* config_env_production.json */,
+				25CF3AC02133AAD10072F3C1 /* config_env_ropsten.json */,
+				25CF3AC12133AAD10072F3C1 /* config_env_mainnet_test.json */,
+				25CF3AC22133AAD10072F3C1 /* config_env_staging.json */,
+				25CF3AC32133AAD10072F3C1 /* config_env_kovan.json */,
+			);
+			path = Configs;
+			sourceTree = "<group>";
+		};
+		25CF3AC42133AAD10072F3C1 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3AC52133AAD10072F3C1 /* Montserrat */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		25CF3AC52133AAD10072F3C1 /* Montserrat */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3AC62133AAD10072F3C1 /* Montserrat-Medium.ttf */,
+				25CF3AC72133AAD10072F3C1 /* Montserrat-BoldItalic.ttf */,
+				25CF3AC82133AAD10072F3C1 /* Montserrat-Bold.ttf */,
+				25CF3AC92133AAD10072F3C1 /* Montserrat-MediumItalic.ttf */,
+				25CF3ACA2133AAD10072F3C1 /* Montserrat-SemiBold.ttf */,
+				25CF3ACB2133AAD10072F3C1 /* OFL.txt */,
+				25CF3ACC2133AAD10072F3C1 /* Montserrat-Regular.ttf */,
+				25CF3ACD2133AAD10072F3C1 /* Montserrat-SemiBoldItalic.ttf */,
+			);
+			path = Montserrat;
 			sourceTree = "<group>";
 		};
 		6FE1672A996E6EAE497D7CA2 /* Pods */ = {
@@ -316,7 +393,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25CF3AD82133AAD10072F3C1 /* Montserrat-MediumItalic.ttf in Resources */,
+				25CF3AD72133AAD10072F3C1 /* Montserrat-Bold.ttf in Resources */,
+				25CF3ADB2133AAD10072F3C1 /* Montserrat-Regular.ttf in Resources */,
+				25CF3ADC2133AAD10072F3C1 /* Montserrat-SemiBoldItalic.ttf in Resources */,
+				25CF3AD62133AAD10072F3C1 /* Montserrat-BoldItalic.ttf in Resources */,
 				25CF3ABB2133AA7F0072F3C1 /* Assets.xcassets in Resources */,
+				25CF3AD02133AAD10072F3C1 /* config_env_production.json in Resources */,
+				25CF3ACF2133AAD10072F3C1 /* index.html in Resources */,
+				25CF3AD92133AAD10072F3C1 /* Montserrat-SemiBold.ttf in Resources */,
+				25CF3ADD2133AAD10072F3C1 /* web3.min.js in Resources */,
+				25CF3AD32133AAD10072F3C1 /* config_env_staging.json in Resources */,
+				25CF3ADA2133AAD10072F3C1 /* OFL.txt in Resources */,
+				25CF3AD42133AAD10072F3C1 /* config_env_kovan.json in Resources */,
+				25CF3AD22133AAD10072F3C1 /* config_env_mainnet_test.json in Resources */,
+				25CF3AD52133AAD10072F3C1 /* Montserrat-Medium.ttf in Resources */,
+				25CF3AD12133AAD10072F3C1 /* config_env_ropsten.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

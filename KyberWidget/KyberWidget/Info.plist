@@ -31,5 +31,15 @@
   <string>Allow access camera to scan QR code</string>
   <key>ITSAppUsesNonExemptEncryption</key>
   <false/>
+  <key>UIAppFonts</key>
+  <array>
+    <string>Montserrat-SemiBoldItalic.ttf</string>
+    <string>Montserrat-SemiBold.ttf</string>
+    <string>Montserrat-Regular.ttf</string>
+    <string>Montserrat-MediumItalic.ttf</string>
+    <string>Montserrat-Medium.ttf</string>
+    <string>Montserrat-BoldItalic.ttf</string>
+    <string>Montserrat-Bold.ttf</string>
+  </array>
 </dict>
 </plist>
