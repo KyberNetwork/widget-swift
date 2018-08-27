@@ -16,12 +16,10 @@ public class KWImportViewModel: NSObject {
   let receiverAddress: String
   let receiverTokenSymbol: String
   let receiverTokenAmount: String?
-  let callback: String?
   let network: KWEnvironment
 
-  private(set) var paramForwarding: Bool = true
-  private(set) var signer: String?
-  private(set) var commissionID: String?
+  let signer: String?
+  let commissionID: String?
 
   var tokens: [KWTokenObject]
   let payment: KWPayment
@@ -38,9 +36,7 @@ public class KWImportViewModel: NSObject {
     receiverAddress: String,
     receiverTokenSymbol: String,
     receiverTokenAmount: String?,
-    callback: String? = nil,
     network: KWEnvironment,
-    paramForwarding: Bool = true,
     signer: String? = nil,
     commissionID: String? = nil,
     keystore: KWKeystore,
@@ -50,9 +46,7 @@ public class KWImportViewModel: NSObject {
     self.receiverAddress = receiverAddress
     self.receiverTokenSymbol = receiverTokenSymbol
     self.receiverTokenAmount = receiverTokenAmount
-    self.callback = callback
     self.network = network
-    self.paramForwarding = paramForwarding
     self.signer = signer
     self.commissionID = commissionID
     self.keystore = keystore

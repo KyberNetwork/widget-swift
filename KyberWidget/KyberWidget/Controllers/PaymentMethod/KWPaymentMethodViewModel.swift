@@ -24,12 +24,11 @@ public class KWPaymentMethodViewModel: NSObject {
   let receiverAddress: String
   let receiverToken: KWTokenObject
   let receiverTokenAmount: String?
-  let callback: String?
   let network: KWEnvironment
+  let dataType: KWDataType
 
-  private(set) var paramForwarding: Bool = true
-  private(set) var signer: String?
-  private(set) var commissionID: String?
+  let signer: String?
+  let commissionID: String?
 
   let keystore: KWKeystore
   let provider: KWExternalProvider
@@ -55,21 +54,19 @@ public class KWPaymentMethodViewModel: NSObject {
     receiverAddress: String,
     receiverToken: KWTokenObject,
     receiverTokenAmount: String?,
-    callback: String?,
     network: KWEnvironment,
-    paramForwarding: Bool = true,
     signer: String? = nil,
     commissionID: String? = nil,
+    dataType: KWDataType,
     keystore: KWKeystore
     ) {
     self.receiverAddress = receiverAddress
     self.receiverToken = receiverToken
     self.receiverTokenAmount = receiverTokenAmount
-    self.callback = callback
     self.network = network
-    self.paramForwarding = paramForwarding
     self.signer = signer
     self.commissionID = commissionID
+    self.dataType = dataType
     self.keystore = keystore
     self.provider = KWExternalProvider(
       keystore: keystore,

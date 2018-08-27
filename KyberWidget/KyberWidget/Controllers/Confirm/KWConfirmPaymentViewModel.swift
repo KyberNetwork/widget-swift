@@ -13,12 +13,19 @@ import TrustKeystore
 
 public class KWConfirmPaymentViewModel: NSObject {
 
+  let dataType: KWDataType
   let payment: KWPayment
   var gasLimit: BigInt?
   let provider: KWExternalProvider
   let keystore: KWKeystore
 
-  init(payment: KWPayment, network: KWEnvironment, keystore: KWKeystore) {
+  init(
+    dataType: KWDataType,
+    payment: KWPayment,
+    network: KWEnvironment,
+    keystore: KWKeystore
+    ) {
+    self.dataType = dataType
     self.payment = payment
     self.gasLimit = payment.gasLimit
     self.keystore = keystore

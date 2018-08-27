@@ -26,6 +26,11 @@ public protocol KWCoordinatorDelegate: class {
   func coordinatorDidCreatePaymentTransaction(with hash: String)
 }
 
+public enum KWDataType {
+  case payment
+  case kyberswap
+}
+
 public class KWCoordinator {
 
   let baseViewController: UIViewController
@@ -34,15 +39,14 @@ public class KWCoordinator {
   let receiverTokenSymbol: String
   var receiverToken: KWTokenObject? = nil
   let receiverTokenAmount: String?
+  let dataType: KWDataType
 
-  let callback: String?
   let network: KWEnvironment
 
   var payment: KWPayment?
 
-  private(set) var paramForwarding: Bool = true
-  private(set) var signer: String?
-  private(set) var commissionID: String?
+  let signer: String?
+  let commissionID: String?
 
   fileprivate(set) var keystore: KWKeystore
   fileprivate(set) var account: Account?
@@ -59,8 +63,8 @@ public class KWCoordinator {
       receiverAddress: self.receiverAddress,
       receiverToken: self.receiverToken ?? KWTokenObject.ethToken(env: self.network),
       receiverTokenAmount: self.receiverTokenAmount,
-      callback: self.callback,
       network: self.network,
+      dataType: self.dataType,
       keystore: self.keystore
     )
     let controller = KWPaymentMethodViewController(viewModel: viewModel)
@@ -99,9 +103,11 @@ public class KWCoordinator {
     self.commissionID = commissionID
     self.keystore = try KWKeystore()
 
-    // TODO: remove
-    self.callback = nil
-    self.paramForwarding = false
+    if receiverAddr == "self" {
+      self.dataType = .kyberswap
+    } else {
+      self.dataType = .payment
+    }
   }
 
   public func start(completion: (() -> Void)? = nil) {
@@ -202,6 +208,7 @@ extension KWCoordinator: KWImportViewControllerDelegate {
   fileprivate func openConfirmationView(payment: KWPayment) {
     self.confirmVC = {
       let viewModel = KWConfirmPaymentViewModel(
+        dataType: self.dataType,
         payment: payment,
         network: self.network,
         keystore: self.keystore
@@ -255,9 +262,7 @@ extension KWCoordinator: KWPaymentMethodViewControllerDelegate {
         receiverAddress: self.receiverAddress,
         receiverTokenSymbol: self.receiverTokenSymbol,
         receiverTokenAmount: self.receiverTokenAmount,
-        callback: self.callback,
         network: self.network,
-        paramForwarding: self.paramForwarding,
         signer: self.signer,
         commissionID: self.commissionID,
         keystore: self.keystore,
