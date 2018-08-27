@@ -10,6 +10,28 @@
 		25CF3A7A2133A0760072F3C1 /* KyberWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CF3A702133A0760072F3C1 /* KyberWidget.framework */; };
 		25CF3A7F2133A0760072F3C1 /* KyberWidgetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A7E2133A0760072F3C1 /* KyberWidgetTests.swift */; };
 		25CF3A812133A0760072F3C1 /* KyberWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 25CF3A732133A0760072F3C1 /* KyberWidget.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		25CF3A962133A5840072F3C1 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A8B2133A5840072F3C1 /* UIView.swift */; };
+		25CF3A972133A5840072F3C1 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A8C2133A5840072F3C1 /* Data.swift */; };
+		25CF3A982133A5840072F3C1 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A8D2133A5840072F3C1 /* UIColor.swift */; };
+		25CF3A992133A5840072F3C1 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A8E2133A5840072F3C1 /* Dictionary.swift */; };
+		25CF3A9A2133A5840072F3C1 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A8F2133A5840072F3C1 /* String.swift */; };
+		25CF3A9B2133A5840072F3C1 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A902133A5840072F3C1 /* UIButton.swift */; };
+		25CF3A9C2133A5840072F3C1 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A912133A5840072F3C1 /* UIImage.swift */; };
+		25CF3A9D2133A5840072F3C1 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A922133A5840072F3C1 /* UIViewController.swift */; };
+		25CF3A9E2133A5840072F3C1 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A932133A5840072F3C1 /* UIImageView.swift */; };
+		25CF3A9F2133A5840072F3C1 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A942133A5840072F3C1 /* UINavigationController.swift */; };
+		25CF3AA02133A5840072F3C1 /* BigInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A952133A5840072F3C1 /* BigInt.swift */; };
+		25CF3AA62133A64D0072F3C1 /* KWTokenObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AA22133A64D0072F3C1 /* KWTokenObject.swift */; };
+		25CF3AA72133A64D0072F3C1 /* KWDraftTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AA32133A64D0072F3C1 /* KWDraftTransaction.swift */; };
+		25CF3AA82133A64D0072F3C1 /* KWEthereumUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AA42133A64D0072F3C1 /* KWEthereumUnit.swift */; };
+		25CF3AA92133A64D0072F3C1 /* KWPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AA52133A64D0072F3C1 /* KWPayment.swift */; };
+		25CF3AAF2133A6E80072F3C1 /* KWKeystore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AAB2133A6E80072F3C1 /* KWKeystore.swift */; };
+		25CF3AB02133A6E80072F3C1 /* KWJSONLoadUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AAC2133A6E80072F3C1 /* KWJSONLoadUtil.swift */; };
+		25CF3AB12133A6E80072F3C1 /* KWXibLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AAD2133A6E80072F3C1 /* KWXibLoaderView.swift */; };
+		25CF3AB22133A6E80072F3C1 /* KWNumberUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AAE2133A6E80072F3C1 /* KWNumberUtil.swift */; };
+		25CF3AB72133A81A0072F3C1 /* KWThemeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AB42133A8190072F3C1 /* KWThemeConfig.swift */; };
+		25CF3AB82133A81A0072F3C1 /* KWEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AB52133A8190072F3C1 /* KWEnvironment.swift */; };
+		25CF3AB92133A81A0072F3C1 /* KWGasConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AB62133A8190072F3C1 /* KWGasConfiguration.swift */; };
 		C3034C74371E7691359DE447 /* Pods_KyberWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 366D1B46AAC5E7A1065E705D /* Pods_KyberWidget.framework */; };
 		DF5D339E8825FA9A8880F7E0 /* Pods_KyberWidgetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC5571C42DB4CEDAB9509A7 /* Pods_KyberWidgetTests.framework */; };
 /* End PBXBuildFile section */
@@ -32,6 +54,28 @@
 		25CF3A792133A0760072F3C1 /* KyberWidgetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KyberWidgetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		25CF3A7E2133A0760072F3C1 /* KyberWidgetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KyberWidgetTests.swift; sourceTree = "<group>"; };
 		25CF3A802133A0760072F3C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25CF3A8B2133A5840072F3C1 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		25CF3A8C2133A5840072F3C1 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		25CF3A8D2133A5840072F3C1 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		25CF3A8E2133A5840072F3C1 /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
+		25CF3A8F2133A5840072F3C1 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		25CF3A902133A5840072F3C1 /* UIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
+		25CF3A912133A5840072F3C1 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		25CF3A922133A5840072F3C1 /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		25CF3A932133A5840072F3C1 /* UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		25CF3A942133A5840072F3C1 /* UINavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
+		25CF3A952133A5840072F3C1 /* BigInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigInt.swift; sourceTree = "<group>"; };
+		25CF3AA22133A64D0072F3C1 /* KWTokenObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWTokenObject.swift; sourceTree = "<group>"; };
+		25CF3AA32133A64D0072F3C1 /* KWDraftTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWDraftTransaction.swift; sourceTree = "<group>"; };
+		25CF3AA42133A64D0072F3C1 /* KWEthereumUnit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWEthereumUnit.swift; sourceTree = "<group>"; };
+		25CF3AA52133A64D0072F3C1 /* KWPayment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWPayment.swift; sourceTree = "<group>"; };
+		25CF3AAB2133A6E80072F3C1 /* KWKeystore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWKeystore.swift; sourceTree = "<group>"; };
+		25CF3AAC2133A6E80072F3C1 /* KWJSONLoadUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWJSONLoadUtil.swift; sourceTree = "<group>"; };
+		25CF3AAD2133A6E80072F3C1 /* KWXibLoaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWXibLoaderView.swift; sourceTree = "<group>"; };
+		25CF3AAE2133A6E80072F3C1 /* KWNumberUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWNumberUtil.swift; sourceTree = "<group>"; };
+		25CF3AB42133A8190072F3C1 /* KWThemeConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWThemeConfig.swift; sourceTree = "<group>"; };
+		25CF3AB52133A8190072F3C1 /* KWEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWEnvironment.swift; sourceTree = "<group>"; };
+		25CF3AB62133A8190072F3C1 /* KWGasConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGasConfiguration.swift; sourceTree = "<group>"; };
 		366D1B46AAC5E7A1065E705D /* Pods_KyberWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KyberWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8778C457DF21680B127AA3F6 /* Pods-KyberWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KyberWidget.release.xcconfig"; path = "Pods/Target Support Files/Pods-KyberWidget/Pods-KyberWidget.release.xcconfig"; sourceTree = "<group>"; };
 		9510865A608F09061DFF840A /* Pods-KyberWidgetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KyberWidgetTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KyberWidgetTests/Pods-KyberWidgetTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -83,6 +127,10 @@
 		25CF3A722133A0760072F3C1 /* KyberWidget */ = {
 			isa = PBXGroup;
 			children = (
+				25CF3AB32133A8190072F3C1 /* Configuration */,
+				25CF3AAA2133A6E80072F3C1 /* Utility */,
+				25CF3AA12133A64D0072F3C1 /* Models */,
+				25CF3A8A2133A5840072F3C1 /* Extensions */,
 				25CF3A732133A0760072F3C1 /* KyberWidget.h */,
 				25CF3A742133A0760072F3C1 /* Info.plist */,
 			);
@@ -96,6 +144,56 @@
 				25CF3A802133A0760072F3C1 /* Info.plist */,
 			);
 			path = KyberWidgetTests;
+			sourceTree = "<group>";
+		};
+		25CF3A8A2133A5840072F3C1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3A8B2133A5840072F3C1 /* UIView.swift */,
+				25CF3A8C2133A5840072F3C1 /* Data.swift */,
+				25CF3A8D2133A5840072F3C1 /* UIColor.swift */,
+				25CF3A8E2133A5840072F3C1 /* Dictionary.swift */,
+				25CF3A8F2133A5840072F3C1 /* String.swift */,
+				25CF3A902133A5840072F3C1 /* UIButton.swift */,
+				25CF3A912133A5840072F3C1 /* UIImage.swift */,
+				25CF3A922133A5840072F3C1 /* UIViewController.swift */,
+				25CF3A932133A5840072F3C1 /* UIImageView.swift */,
+				25CF3A942133A5840072F3C1 /* UINavigationController.swift */,
+				25CF3A952133A5840072F3C1 /* BigInt.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		25CF3AA12133A64D0072F3C1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3AA22133A64D0072F3C1 /* KWTokenObject.swift */,
+				25CF3AA32133A64D0072F3C1 /* KWDraftTransaction.swift */,
+				25CF3AA42133A64D0072F3C1 /* KWEthereumUnit.swift */,
+				25CF3AA52133A64D0072F3C1 /* KWPayment.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		25CF3AAA2133A6E80072F3C1 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3AAB2133A6E80072F3C1 /* KWKeystore.swift */,
+				25CF3AAC2133A6E80072F3C1 /* KWJSONLoadUtil.swift */,
+				25CF3AAD2133A6E80072F3C1 /* KWXibLoaderView.swift */,
+				25CF3AAE2133A6E80072F3C1 /* KWNumberUtil.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		25CF3AB32133A8190072F3C1 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3AB42133A8190072F3C1 /* KWThemeConfig.swift */,
+				25CF3AB52133A8190072F3C1 /* KWEnvironment.swift */,
+				25CF3AB62133A8190072F3C1 /* KWGasConfiguration.swift */,
+			);
+			path = Configuration;
 			sourceTree = "<group>";
 		};
 		6FE1672A996E6EAE497D7CA2 /* Pods */ = {
@@ -316,6 +414,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25CF3A962133A5840072F3C1 /* UIView.swift in Sources */,
+				25CF3AA92133A64D0072F3C1 /* KWPayment.swift in Sources */,
+				25CF3AA62133A64D0072F3C1 /* KWTokenObject.swift in Sources */,
+				25CF3A9F2133A5840072F3C1 /* UINavigationController.swift in Sources */,
+				25CF3AA82133A64D0072F3C1 /* KWEthereumUnit.swift in Sources */,
+				25CF3AB22133A6E80072F3C1 /* KWNumberUtil.swift in Sources */,
+				25CF3A9E2133A5840072F3C1 /* UIImageView.swift in Sources */,
+				25CF3AA72133A64D0072F3C1 /* KWDraftTransaction.swift in Sources */,
+				25CF3A992133A5840072F3C1 /* Dictionary.swift in Sources */,
+				25CF3A9A2133A5840072F3C1 /* String.swift in Sources */,
+				25CF3AB82133A81A0072F3C1 /* KWEnvironment.swift in Sources */,
+				25CF3AB92133A81A0072F3C1 /* KWGasConfiguration.swift in Sources */,
+				25CF3A982133A5840072F3C1 /* UIColor.swift in Sources */,
+				25CF3AA02133A5840072F3C1 /* BigInt.swift in Sources */,
+				25CF3AB02133A6E80072F3C1 /* KWJSONLoadUtil.swift in Sources */,
+				25CF3A972133A5840072F3C1 /* Data.swift in Sources */,
+				25CF3AAF2133A6E80072F3C1 /* KWKeystore.swift in Sources */,
+				25CF3AB12133A6E80072F3C1 /* KWXibLoaderView.swift in Sources */,
+				25CF3A9B2133A5840072F3C1 /* UIButton.swift in Sources */,
+				25CF3A9D2133A5840072F3C1 /* UIViewController.swift in Sources */,
+				25CF3AB72133A81A0072F3C1 /* KWThemeConfig.swift in Sources */,
+				25CF3A9C2133A5840072F3C1 /* UIImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,6 +636,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9510865A608F09061DFF840A /* Pods-KyberWidgetTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HMT2AL7Q6Y;
 				INFOPLIST_FILE = KyberWidgetTests/Info.plist;
@@ -535,6 +656,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1B6800345CC5B213915C0981 /* Pods-KyberWidgetTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HMT2AL7Q6Y;
 				INFOPLIST_FILE = KyberWidgetTests/Info.plist;

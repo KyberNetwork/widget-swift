@@ -26,6 +26,7 @@
     <true/>
   </dict>
   <key>com.apple.security.get-task-allow</key>
+  <true/>
   <key>NSCameraUsageDescription</key>
   <string>Allow access camera to scan QR code</string>
   <key>ITSAppUsesNonExemptEncryption</key>
