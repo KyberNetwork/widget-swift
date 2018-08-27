@@ -9,7 +9,7 @@
 
 import Moya
 
-enum KWNetworkProvider {
+public enum KWNetworkProvider {
   case getMaxGasPrice// = "/getMaxGasPrice"
   case getGasPrice// = "/getGasPrice"
   case getSupportedTokens(env: KWEnvironment)// = "/api/tokens/supported"
@@ -17,7 +17,7 @@ enum KWNetworkProvider {
 
 extension KWNetworkProvider: TargetType {
 
-  var baseURL: URL {
+  public var baseURL: URL {
     switch self {
     case .getSupportedTokens(let env):
       let string = env == .ropsten ? "https://staging-tracker.knstats.com/api/tokens/supported" : "https://tracker.kyber.network/api/tokens/supported"
@@ -28,7 +28,7 @@ extension KWNetworkProvider: TargetType {
     }
   }
 
-  var path: String {
+  public var path: String {
     switch self {
     case .getSupportedTokens:
       return ""
@@ -39,19 +39,19 @@ extension KWNetworkProvider: TargetType {
     }
   }
 
-  var method: Moya.Method {
+  public var method: Moya.Method {
     return .get
   }
 
-  var task: Task {
+  public var task: Task {
     return .requestPlain
   }
 
-  var sampleData: Data {
+  public var sampleData: Data {
     return Data() // sample data for UITest
   }
 
-  var headers: [String: String]? {
+  public var headers: [String: String]? {
     return [
       "content-type": "application/json",
       "client": "manhlx_kyberpayios",

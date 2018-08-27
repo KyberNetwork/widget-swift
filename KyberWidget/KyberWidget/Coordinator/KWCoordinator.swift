@@ -14,7 +14,7 @@ import TrustCore
 
 public enum KWError {
   case unsupportedToken
-  case invalidAddress
+  case invalidAddress(errorMessage: String)
   case invalidAmount
   case failedToLoadSupportedToken(errorMessage: String)
   case failedToSendPayment(errorMessage: String)
@@ -75,12 +75,10 @@ public class KWCoordinator {
 
   public init(
     baseViewController: UIViewController,
-    receiverAddress: String,
-    receiverTokenSymbol: String,
-    receiverTokenAmount: String?,
-    callback: String? = nil,
+    receiverAddr: String,
+    receiverToken: String,
+    receiverAmount: String?,
     network: KWEnvironment,
-    paramForwarding: Bool = true,
     signer: String? = nil,
     commissionID: String? = nil
     ) throws {
@@ -93,20 +91,23 @@ public class KWCoordinator {
       )
       return navController
     }()
-    self.receiverAddress = receiverAddress
-    self.receiverTokenSymbol = receiverTokenSymbol
-    self.receiverTokenAmount = receiverTokenAmount
-    self.callback = callback
+    self.receiverAddress = receiverAddr
+    self.receiverTokenSymbol = receiverToken
+    self.receiverTokenAmount = receiverAmount
     self.network = network
-    self.paramForwarding = paramForwarding
     self.signer = signer
     self.commissionID = commissionID
     self.keystore = try KWKeystore()
+
+    // TODO: remove
+    self.callback = nil
+    self.paramForwarding = false
   }
 
   public func start(completion: (() -> Void)? = nil) {
-    if Address(string: self.receiverAddress) == nil {
-      self.startSession(error: .invalidAddress, completion: completion)
+    if self.receiverAddress != "self" && Address(string: self.receiverAddress) == nil {
+      let errorMessage: String = "Receiver address should be a valid ETH address or `self`"
+      self.startSession(error: .invalidAddress(errorMessage: errorMessage), completion: completion)
       return
     }
     self.baseViewController.displayLoading(text: "Loading...", animated: true)

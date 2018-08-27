@@ -11,11 +11,11 @@ import UIKit
 import Moya
 import Result
 
-class KWSupportedToken: NSObject {
+public class KWSupportedToken: NSObject {
 
-  static let shared = KWSupportedToken()
+  static public let shared = KWSupportedToken()
 
-  func fetchTrackerSupportedTokens(network: KWEnvironment, completion: @escaping (Result<[KWTokenObject], AnyError>) -> Void) {
+  public func fetchTrackerSupportedTokens(network: KWEnvironment, completion: @escaping (Result<[KWTokenObject], AnyError>) -> Void) {
     print("---- Supported Tokens: Start fetching data ----")
     let provider = MoyaProvider<KWNetworkProvider>()
     DispatchQueue.global(qos: .background).async {

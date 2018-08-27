@@ -61,7 +61,7 @@ public class KWExternalProvider: NSObject {
   }
 
   // MARK: Transaction
-  public  func getTransactionCount(for address: String, completion: @escaping (Result<Int, AnyError>) -> Void) {
+  public func getTransactionCount(for address: String, completion: @escaping (Result<Int, AnyError>) -> Void) {
     self.generalProvider.getTransactionCount(
     for: address) { [weak self] result in
       guard let `self` = self else { return }
