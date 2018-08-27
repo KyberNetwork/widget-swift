@@ -32,6 +32,7 @@
 		25CF3AB72133A81A0072F3C1 /* KWThemeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AB42133A8190072F3C1 /* KWThemeConfig.swift */; };
 		25CF3AB82133A81A0072F3C1 /* KWEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AB52133A8190072F3C1 /* KWEnvironment.swift */; };
 		25CF3AB92133A81A0072F3C1 /* KWGasConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AB62133A8190072F3C1 /* KWGasConfiguration.swift */; };
+		25CF3ABB2133AA7F0072F3C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ABA2133AA7F0072F3C1 /* Assets.xcassets */; };
 		C3034C74371E7691359DE447 /* Pods_KyberWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 366D1B46AAC5E7A1065E705D /* Pods_KyberWidget.framework */; };
 		DF5D339E8825FA9A8880F7E0 /* Pods_KyberWidgetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC5571C42DB4CEDAB9509A7 /* Pods_KyberWidgetTests.framework */; };
 /* End PBXBuildFile section */
@@ -76,6 +77,7 @@
 		25CF3AB42133A8190072F3C1 /* KWThemeConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWThemeConfig.swift; sourceTree = "<group>"; };
 		25CF3AB52133A8190072F3C1 /* KWEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWEnvironment.swift; sourceTree = "<group>"; };
 		25CF3AB62133A8190072F3C1 /* KWGasConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGasConfiguration.swift; sourceTree = "<group>"; };
+		25CF3ABA2133AA7F0072F3C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		366D1B46AAC5E7A1065E705D /* Pods_KyberWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KyberWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8778C457DF21680B127AA3F6 /* Pods-KyberWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KyberWidget.release.xcconfig"; path = "Pods/Target Support Files/Pods-KyberWidget/Pods-KyberWidget.release.xcconfig"; sourceTree = "<group>"; };
 		9510865A608F09061DFF840A /* Pods-KyberWidgetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KyberWidgetTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KyberWidgetTests/Pods-KyberWidgetTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				25CF3A8A2133A5840072F3C1 /* Extensions */,
 				25CF3A732133A0760072F3C1 /* KyberWidget.h */,
 				25CF3A742133A0760072F3C1 /* Info.plist */,
+				25CF3ABA2133AA7F0072F3C1 /* Assets.xcassets */,
 			);
 			path = KyberWidget;
 			sourceTree = "<group>";
@@ -275,6 +278,9 @@
 		25CF3A672133A0760072F3C1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					Resources,
+				);
 				LastSwiftUpdateCheck = 0940;
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = kyber.network;
@@ -310,6 +316,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25CF3ABB2133AA7F0072F3C1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
