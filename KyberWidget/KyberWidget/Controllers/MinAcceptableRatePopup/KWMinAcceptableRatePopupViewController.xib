@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-Medium.ttf">
+            <string>Montserrat-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KWMinAcceptableRatePopupViewController" customModule="KyberWidget" customModuleProvider="target">
+            <connections>
+                <outlet property="containerView" destination="Wc8-Pk-76o" id="ANq-zI-K9E"/>
+                <outlet property="desciptionLabel" destination="8up-yw-fsF" id="z5P-OR-9FW"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wc8-Pk-76o">
+                    <rect key="frame" x="0.0" y="446.5" width="375" height="220.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8up-yw-fsF">
+                            <rect key="frame" x="32" y="32" width="311" height="156.5"/>
+                            <string key="text">Guard yourself during volatile times by setting the lowest conversion rate you would accept for this transaction. Setting a high value may result in a failed transaction and you would be charged gas fees. \nOur recommended                                           Min Acceptable Rate is 655.6506 KNC</string>
+                            <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="16"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="8up-yw-fsF" firstAttribute="leading" secondItem="Wc8-Pk-76o" secondAttribute="leading" constant="32" id="ACb-f5-KiY"/>
+                        <constraint firstAttribute="trailing" secondItem="8up-yw-fsF" secondAttribute="trailing" constant="32" id="geJ-B9-lhf"/>
+                        <constraint firstItem="8up-yw-fsF" firstAttribute="top" secondItem="Wc8-Pk-76o" secondAttribute="top" constant="32" id="jpO-Pr-RFh"/>
+                        <constraint firstAttribute="bottom" secondItem="8up-yw-fsF" secondAttribute="bottom" constant="32" id="tVx-Ir-dwS"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.066666666666666666" green="0.086274509803921567" blue="0.14117647058823529" alpha="0.31882702464788731" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Wc8-Pk-76o" secondAttribute="trailing" id="DbD-yO-7n7"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Wc8-Pk-76o" secondAttribute="bottom" id="O3e-xr-Pjb"/>
+                <constraint firstItem="Wc8-Pk-76o" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="dFQ-Ec-ALE"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+        </view>
+    </objects>
+</document>

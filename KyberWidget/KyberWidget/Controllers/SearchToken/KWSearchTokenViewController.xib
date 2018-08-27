@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-Medium.ttf">
+            <string>Montserrat-Medium</string>
+        </array>
+        <array key="Montserrat-Regular.ttf">
+            <string>Montserrat-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KWSearchTokenViewController" customModule="KyberWidget" customModuleProvider="target">
+            <connections>
+                <outlet property="noMatchingTokensLabel" destination="qBW-cK-YSw" id="uxE-eq-zY5"/>
+                <outlet property="searchTextField" destination="vHA-YC-Rnd" id="T7P-2a-4uH"/>
+                <outlet property="tableViewBottomPaddingConstraint" destination="0k0-TK-3IM" id="cPH-Jc-LRh"/>
+                <outlet property="tokensTableView" destination="tvR-nt-YdR" id="YJa-ud-kug"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tvR-nt-YdR">
+                    <rect key="frame" x="0.0" y="100" width="375" height="567"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No matching tokens" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qBW-cK-YSw">
+                    <rect key="frame" x="105" y="148" width="166" height="20"/>
+                    <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="16"/>
+                    <color key="textColor" red="0.1137254902" green="0.18823529410000001" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vHA-YC-Rnd">
+                    <rect key="frame" x="12" y="44" width="351" height="40"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="hDA-gi-6w9"/>
+                    </constraints>
+                    <color key="textColor" red="0.3529411764705882" green="0.36862745098039218" blue="0.40392156862745099" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_black_icon" translatesAutoresizingMaskIntoConstraints="NO" id="2Yj-ML-p46">
+                    <rect key="frame" x="336" y="56" width="15" height="16"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="0.96470588239999999" green="0.96862745100000003" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="tvR-nt-YdR" secondAttribute="bottom" id="0k0-TK-3IM"/>
+                <constraint firstItem="2Yj-ML-p46" firstAttribute="centerY" secondItem="vHA-YC-Rnd" secondAttribute="centerY" id="2AR-KM-t1J"/>
+                <constraint firstItem="qBW-cK-YSw" firstAttribute="top" secondItem="vHA-YC-Rnd" secondAttribute="bottom" constant="64" id="Oo6-vd-CpZ"/>
+                <constraint firstItem="tvR-nt-YdR" firstAttribute="top" secondItem="vHA-YC-Rnd" secondAttribute="bottom" constant="16" id="UWF-2W-rbg"/>
+                <constraint firstItem="qBW-cK-YSw" firstAttribute="centerX" secondItem="tvR-nt-YdR" secondAttribute="centerX" id="Utq-He-wuy"/>
+                <constraint firstItem="vHA-YC-Rnd" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="24" id="Vdj-rI-wwM"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tvR-nt-YdR" secondAttribute="trailing" id="YOA-Hj-7Uk"/>
+                <constraint firstItem="2Yj-ML-p46" firstAttribute="trailing" secondItem="vHA-YC-Rnd" secondAttribute="trailing" constant="-12" id="cAx-LA-uZ7"/>
+                <constraint firstItem="tvR-nt-YdR" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="qI4-SJ-Zgk"/>
+                <constraint firstItem="vHA-YC-Rnd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="12" id="tFW-YT-r8B"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vHA-YC-Rnd" secondAttribute="trailing" constant="12" id="vfD-iv-q4g"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="24.5" y="51.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="search_black_icon" width="15" height="16"/>
+    </resources>
+</document>
