@@ -48,6 +48,21 @@
 		25CF3ADB2133AAD10072F3C1 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ACC2133AAD10072F3C1 /* Montserrat-Regular.ttf */; };
 		25CF3ADC2133AAD10072F3C1 /* Montserrat-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ACD2133AAD10072F3C1 /* Montserrat-SemiBoldItalic.ttf */; };
 		25CF3ADD2133AAD10072F3C1 /* web3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ACE2133AAD10072F3C1 /* web3.min.js */; };
+		25CF3AF22133AB3A0072F3C1 /* KWCallRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AE02133AB3A0072F3C1 /* KWCallRequest.swift */; };
+		25CF3AF32133AB3A0072F3C1 /* KWBalanceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AE12133AB3A0072F3C1 /* KWBalanceRequest.swift */; };
+		25CF3AF42133AB3A0072F3C1 /* KWEtherServiceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AE22133AB3A0072F3C1 /* KWEtherServiceRequest.swift */; };
+		25CF3AF52133AB3A0072F3C1 /* KWGetTransactionCountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AE32133AB3A0072F3C1 /* KWGetTransactionCountRequest.swift */; };
+		25CF3AF62133AB3A0072F3C1 /* KWEstimateGasLimitRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AE42133AB3A0072F3C1 /* KWEstimateGasLimitRequest.swift */; };
+		25CF3AF72133AB3A0072F3C1 /* KWEstimateGasRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AE52133AB3A0072F3C1 /* KWEstimateGasRequest.swift */; };
+		25CF3AF92133AB3A0072F3C1 /* KWSendRawTransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AE72133AB3A0072F3C1 /* KWSendRawTransactionRequest.swift */; };
+		25CF3AFB2133AB3A0072F3C1 /* KWGetExpectedRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AEA2133AB3A0072F3C1 /* KWGetExpectedRate.swift */; };
+		25CF3AFC2133AB3A0072F3C1 /* KWGetTokenAllowance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AEB2133AB3A0072F3C1 /* KWGetTokenAllowance.swift */; };
+		25CF3AFD2133AB3A0072F3C1 /* KWGetTokenBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AEC2133AB3A0072F3C1 /* KWGetTokenBalance.swift */; };
+		25CF3AFE2133AB3A0072F3C1 /* KWGetUserCapInWei.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AED2133AB3A0072F3C1 /* KWGetUserCapInWei.swift */; };
+		25CF3AFF2133AB3A0072F3C1 /* KWExchangeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AEE2133AB3A0072F3C1 /* KWExchangeRequest.swift */; };
+		25CF3B002133AB3A0072F3C1 /* KWSendApproveToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AEF2133AB3A0072F3C1 /* KWSendApproveToken.swift */; };
+		25CF3B012133AB3A0072F3C1 /* KWTokenTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AF02133AB3A0072F3C1 /* KWTokenTransfer.swift */; };
+		25CF3B022133AB3A0072F3C1 /* KWWeb3Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AF12133AB3A0072F3C1 /* KWWeb3Swift.swift */; };
 		C3034C74371E7691359DE447 /* Pods_KyberWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 366D1B46AAC5E7A1065E705D /* Pods_KyberWidget.framework */; };
 		DF5D339E8825FA9A8880F7E0 /* Pods_KyberWidgetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC5571C42DB4CEDAB9509A7 /* Pods_KyberWidgetTests.framework */; };
 /* End PBXBuildFile section */
@@ -108,6 +123,21 @@
 		25CF3ACC2133AAD10072F3C1 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		25CF3ACD2133AAD10072F3C1 /* Montserrat-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		25CF3ACE2133AAD10072F3C1 /* web3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = web3.min.js; sourceTree = "<group>"; };
+		25CF3AE02133AB3A0072F3C1 /* KWCallRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWCallRequest.swift; sourceTree = "<group>"; };
+		25CF3AE12133AB3A0072F3C1 /* KWBalanceRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWBalanceRequest.swift; sourceTree = "<group>"; };
+		25CF3AE22133AB3A0072F3C1 /* KWEtherServiceRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWEtherServiceRequest.swift; sourceTree = "<group>"; };
+		25CF3AE32133AB3A0072F3C1 /* KWGetTransactionCountRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGetTransactionCountRequest.swift; sourceTree = "<group>"; };
+		25CF3AE42133AB3A0072F3C1 /* KWEstimateGasLimitRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWEstimateGasLimitRequest.swift; sourceTree = "<group>"; };
+		25CF3AE52133AB3A0072F3C1 /* KWEstimateGasRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWEstimateGasRequest.swift; sourceTree = "<group>"; };
+		25CF3AE72133AB3A0072F3C1 /* KWSendRawTransactionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWSendRawTransactionRequest.swift; sourceTree = "<group>"; };
+		25CF3AEA2133AB3A0072F3C1 /* KWGetExpectedRate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGetExpectedRate.swift; sourceTree = "<group>"; };
+		25CF3AEB2133AB3A0072F3C1 /* KWGetTokenAllowance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGetTokenAllowance.swift; sourceTree = "<group>"; };
+		25CF3AEC2133AB3A0072F3C1 /* KWGetTokenBalance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGetTokenBalance.swift; sourceTree = "<group>"; };
+		25CF3AED2133AB3A0072F3C1 /* KWGetUserCapInWei.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGetUserCapInWei.swift; sourceTree = "<group>"; };
+		25CF3AEE2133AB3A0072F3C1 /* KWExchangeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWExchangeRequest.swift; sourceTree = "<group>"; };
+		25CF3AEF2133AB3A0072F3C1 /* KWSendApproveToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWSendApproveToken.swift; sourceTree = "<group>"; };
+		25CF3AF02133AB3A0072F3C1 /* KWTokenTransfer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWTokenTransfer.swift; sourceTree = "<group>"; };
+		25CF3AF12133AB3A0072F3C1 /* KWWeb3Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWWeb3Swift.swift; sourceTree = "<group>"; };
 		366D1B46AAC5E7A1065E705D /* Pods_KyberWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KyberWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8778C457DF21680B127AA3F6 /* Pods-KyberWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KyberWidget.release.xcconfig"; path = "Pods/Target Support Files/Pods-KyberWidget/Pods-KyberWidget.release.xcconfig"; sourceTree = "<group>"; };
 		9510865A608F09061DFF840A /* Pods-KyberWidgetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KyberWidgetTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KyberWidgetTests/Pods-KyberWidgetTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -159,6 +189,7 @@
 		25CF3A722133A0760072F3C1 /* KyberWidget */ = {
 			isa = PBXGroup;
 			children = (
+				25CF3ADE2133AB3A0072F3C1 /* Web3Swift */,
 				25CF3ABC2133AAD10072F3C1 /* Resources */,
 				25CF3AB32133A8190072F3C1 /* Configuration */,
 				25CF3AAA2133A6E80072F3C1 /* Utility */,
@@ -274,6 +305,44 @@
 				25CF3ACD2133AAD10072F3C1 /* Montserrat-SemiBoldItalic.ttf */,
 			);
 			path = Montserrat;
+			sourceTree = "<group>";
+		};
+		25CF3ADE2133AB3A0072F3C1 /* Web3Swift */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3ADF2133AB3A0072F3C1 /* Request */,
+				25CF3AE82133AB3A0072F3C1 /* Commands */,
+				25CF3AF12133AB3A0072F3C1 /* KWWeb3Swift.swift */,
+			);
+			path = Web3Swift;
+			sourceTree = "<group>";
+		};
+		25CF3ADF2133AB3A0072F3C1 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3AE02133AB3A0072F3C1 /* KWCallRequest.swift */,
+				25CF3AE12133AB3A0072F3C1 /* KWBalanceRequest.swift */,
+				25CF3AE22133AB3A0072F3C1 /* KWEtherServiceRequest.swift */,
+				25CF3AE32133AB3A0072F3C1 /* KWGetTransactionCountRequest.swift */,
+				25CF3AE42133AB3A0072F3C1 /* KWEstimateGasLimitRequest.swift */,
+				25CF3AE52133AB3A0072F3C1 /* KWEstimateGasRequest.swift */,
+				25CF3AE72133AB3A0072F3C1 /* KWSendRawTransactionRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		25CF3AE82133AB3A0072F3C1 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3AEA2133AB3A0072F3C1 /* KWGetExpectedRate.swift */,
+				25CF3AEB2133AB3A0072F3C1 /* KWGetTokenAllowance.swift */,
+				25CF3AEC2133AB3A0072F3C1 /* KWGetTokenBalance.swift */,
+				25CF3AED2133AB3A0072F3C1 /* KWGetUserCapInWei.swift */,
+				25CF3AEE2133AB3A0072F3C1 /* KWExchangeRequest.swift */,
+				25CF3AEF2133AB3A0072F3C1 /* KWSendApproveToken.swift */,
+				25CF3AF02133AB3A0072F3C1 /* KWTokenTransfer.swift */,
+			);
+			path = Commands;
 			sourceTree = "<group>";
 		};
 		6FE1672A996E6EAE497D7CA2 /* Pods */ = {
@@ -513,28 +582,43 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25CF3AF72133AB3A0072F3C1 /* KWEstimateGasRequest.swift in Sources */,
 				25CF3A962133A5840072F3C1 /* UIView.swift in Sources */,
 				25CF3AA92133A64D0072F3C1 /* KWPayment.swift in Sources */,
 				25CF3AA62133A64D0072F3C1 /* KWTokenObject.swift in Sources */,
 				25CF3A9F2133A5840072F3C1 /* UINavigationController.swift in Sources */,
 				25CF3AA82133A64D0072F3C1 /* KWEthereumUnit.swift in Sources */,
+				25CF3AF92133AB3A0072F3C1 /* KWSendRawTransactionRequest.swift in Sources */,
 				25CF3AB22133A6E80072F3C1 /* KWNumberUtil.swift in Sources */,
 				25CF3A9E2133A5840072F3C1 /* UIImageView.swift in Sources */,
 				25CF3AA72133A64D0072F3C1 /* KWDraftTransaction.swift in Sources */,
+				25CF3AFD2133AB3A0072F3C1 /* KWGetTokenBalance.swift in Sources */,
 				25CF3A992133A5840072F3C1 /* Dictionary.swift in Sources */,
+				25CF3AFC2133AB3A0072F3C1 /* KWGetTokenAllowance.swift in Sources */,
+				25CF3AFB2133AB3A0072F3C1 /* KWGetExpectedRate.swift in Sources */,
 				25CF3A9A2133A5840072F3C1 /* String.swift in Sources */,
+				25CF3AF22133AB3A0072F3C1 /* KWCallRequest.swift in Sources */,
+				25CF3B022133AB3A0072F3C1 /* KWWeb3Swift.swift in Sources */,
+				25CF3AF32133AB3A0072F3C1 /* KWBalanceRequest.swift in Sources */,
 				25CF3AB82133A81A0072F3C1 /* KWEnvironment.swift in Sources */,
 				25CF3AB92133A81A0072F3C1 /* KWGasConfiguration.swift in Sources */,
 				25CF3A982133A5840072F3C1 /* UIColor.swift in Sources */,
+				25CF3AFE2133AB3A0072F3C1 /* KWGetUserCapInWei.swift in Sources */,
 				25CF3AA02133A5840072F3C1 /* BigInt.swift in Sources */,
 				25CF3AB02133A6E80072F3C1 /* KWJSONLoadUtil.swift in Sources */,
+				25CF3B002133AB3A0072F3C1 /* KWSendApproveToken.swift in Sources */,
 				25CF3A972133A5840072F3C1 /* Data.swift in Sources */,
 				25CF3AAF2133A6E80072F3C1 /* KWKeystore.swift in Sources */,
 				25CF3AB12133A6E80072F3C1 /* KWXibLoaderView.swift in Sources */,
+				25CF3AF42133AB3A0072F3C1 /* KWEtherServiceRequest.swift in Sources */,
 				25CF3A9B2133A5840072F3C1 /* UIButton.swift in Sources */,
+				25CF3AFF2133AB3A0072F3C1 /* KWExchangeRequest.swift in Sources */,
+				25CF3AF62133AB3A0072F3C1 /* KWEstimateGasLimitRequest.swift in Sources */,
 				25CF3A9D2133A5840072F3C1 /* UIViewController.swift in Sources */,
 				25CF3AB72133A81A0072F3C1 /* KWThemeConfig.swift in Sources */,
+				25CF3AF52133AB3A0072F3C1 /* KWGetTransactionCountRequest.swift in Sources */,
 				25CF3A9C2133A5840072F3C1 /* UIImage.swift in Sources */,
+				25CF3B012133AB3A0072F3C1 /* KWTokenTransfer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
