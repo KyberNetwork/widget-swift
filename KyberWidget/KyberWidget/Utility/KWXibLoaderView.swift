@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KPXibLoaderView: UIView {
+class KWXibLoaderView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.commonInit()

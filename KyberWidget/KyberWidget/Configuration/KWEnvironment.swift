@@ -42,11 +42,11 @@ public enum KWEnvironment: Int {
     return self.customRPC?.etherScanEndpoint ?? ""
   }
 
-  var customRPC: KPCustomRPC? {
+  var customRPC: KWCustomRPC? {
     guard let json = KWJSONLoadUtil.jsonDataFromFile(with: self.configFileName) else {
       return nil
     }
-    return KPCustomRPC(dictionary: json)
+    return KWCustomRPC(dictionary: json)
   }
 
   var endpoint: String { return self.customRPC?.endpoint ?? "" }
@@ -72,7 +72,7 @@ public enum KWEnvironment: Int {
   }
 }
 
-public struct KPCustomRPC {
+public struct KWCustomRPC {
   let chainID: Int
   let chainName: String
   let endpoint: String

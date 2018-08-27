@@ -63,6 +63,11 @@
 		25CF3B002133AB3A0072F3C1 /* KWSendApproveToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AEF2133AB3A0072F3C1 /* KWSendApproveToken.swift */; };
 		25CF3B012133AB3A0072F3C1 /* KWTokenTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AF02133AB3A0072F3C1 /* KWTokenTransfer.swift */; };
 		25CF3B022133AB3A0072F3C1 /* KWWeb3Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AF12133AB3A0072F3C1 /* KWWeb3Swift.swift */; };
+		25CF3B0A2133B0110072F3C1 /* KWGeneralProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B042133B0110072F3C1 /* KWGeneralProvider.swift */; };
+		25CF3B0B2133B0110072F3C1 /* KWNetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B062133B0110072F3C1 /* KWNetworkProvider.swift */; };
+		25CF3B0C2133B0110072F3C1 /* KWGasCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B072133B0110072F3C1 /* KWGasCoordinator.swift */; };
+		25CF3B0D2133B0110072F3C1 /* KWSupportedToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B082133B0110072F3C1 /* KWSupportedToken.swift */; };
+		25CF3B0E2133B0110072F3C1 /* KWExternalProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B092133B0110072F3C1 /* KWExternalProvider.swift */; };
 		C3034C74371E7691359DE447 /* Pods_KyberWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 366D1B46AAC5E7A1065E705D /* Pods_KyberWidget.framework */; };
 		DF5D339E8825FA9A8880F7E0 /* Pods_KyberWidgetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC5571C42DB4CEDAB9509A7 /* Pods_KyberWidgetTests.framework */; };
 /* End PBXBuildFile section */
@@ -138,6 +143,11 @@
 		25CF3AEF2133AB3A0072F3C1 /* KWSendApproveToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWSendApproveToken.swift; sourceTree = "<group>"; };
 		25CF3AF02133AB3A0072F3C1 /* KWTokenTransfer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWTokenTransfer.swift; sourceTree = "<group>"; };
 		25CF3AF12133AB3A0072F3C1 /* KWWeb3Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWWeb3Swift.swift; sourceTree = "<group>"; };
+		25CF3B042133B0110072F3C1 /* KWGeneralProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGeneralProvider.swift; sourceTree = "<group>"; };
+		25CF3B062133B0110072F3C1 /* KWNetworkProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWNetworkProvider.swift; sourceTree = "<group>"; };
+		25CF3B072133B0110072F3C1 /* KWGasCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGasCoordinator.swift; sourceTree = "<group>"; };
+		25CF3B082133B0110072F3C1 /* KWSupportedToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWSupportedToken.swift; sourceTree = "<group>"; };
+		25CF3B092133B0110072F3C1 /* KWExternalProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWExternalProvider.swift; sourceTree = "<group>"; };
 		366D1B46AAC5E7A1065E705D /* Pods_KyberWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KyberWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8778C457DF21680B127AA3F6 /* Pods-KyberWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KyberWidget.release.xcconfig"; path = "Pods/Target Support Files/Pods-KyberWidget/Pods-KyberWidget.release.xcconfig"; sourceTree = "<group>"; };
 		9510865A608F09061DFF840A /* Pods-KyberWidgetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KyberWidgetTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KyberWidgetTests/Pods-KyberWidgetTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -189,6 +199,7 @@
 		25CF3A722133A0760072F3C1 /* KyberWidget */ = {
 			isa = PBXGroup;
 			children = (
+				25CF3B032133B0110072F3C1 /* Provider */,
 				25CF3ADE2133AB3A0072F3C1 /* Web3Swift */,
 				25CF3ABC2133AAD10072F3C1 /* Resources */,
 				25CF3AB32133A8190072F3C1 /* Configuration */,
@@ -343,6 +354,26 @@
 				25CF3AF02133AB3A0072F3C1 /* KWTokenTransfer.swift */,
 			);
 			path = Commands;
+			sourceTree = "<group>";
+		};
+		25CF3B032133B0110072F3C1 /* Provider */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3B042133B0110072F3C1 /* KWGeneralProvider.swift */,
+				25CF3B052133B0110072F3C1 /* InternalLoad */,
+				25CF3B092133B0110072F3C1 /* KWExternalProvider.swift */,
+			);
+			path = Provider;
+			sourceTree = "<group>";
+		};
+		25CF3B052133B0110072F3C1 /* InternalLoad */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3B062133B0110072F3C1 /* KWNetworkProvider.swift */,
+				25CF3B072133B0110072F3C1 /* KWGasCoordinator.swift */,
+				25CF3B082133B0110072F3C1 /* KWSupportedToken.swift */,
+			);
+			path = InternalLoad;
 			sourceTree = "<group>";
 		};
 		6FE1672A996E6EAE497D7CA2 /* Pods */ = {
@@ -596,7 +627,9 @@
 				25CF3A992133A5840072F3C1 /* Dictionary.swift in Sources */,
 				25CF3AFC2133AB3A0072F3C1 /* KWGetTokenAllowance.swift in Sources */,
 				25CF3AFB2133AB3A0072F3C1 /* KWGetExpectedRate.swift in Sources */,
+				25CF3B0E2133B0110072F3C1 /* KWExternalProvider.swift in Sources */,
 				25CF3A9A2133A5840072F3C1 /* String.swift in Sources */,
+				25CF3B0B2133B0110072F3C1 /* KWNetworkProvider.swift in Sources */,
 				25CF3AF22133AB3A0072F3C1 /* KWCallRequest.swift in Sources */,
 				25CF3B022133AB3A0072F3C1 /* KWWeb3Swift.swift in Sources */,
 				25CF3AF32133AB3A0072F3C1 /* KWBalanceRequest.swift in Sources */,
@@ -610,12 +643,15 @@
 				25CF3A972133A5840072F3C1 /* Data.swift in Sources */,
 				25CF3AAF2133A6E80072F3C1 /* KWKeystore.swift in Sources */,
 				25CF3AB12133A6E80072F3C1 /* KWXibLoaderView.swift in Sources */,
+				25CF3B0D2133B0110072F3C1 /* KWSupportedToken.swift in Sources */,
 				25CF3AF42133AB3A0072F3C1 /* KWEtherServiceRequest.swift in Sources */,
 				25CF3A9B2133A5840072F3C1 /* UIButton.swift in Sources */,
 				25CF3AFF2133AB3A0072F3C1 /* KWExchangeRequest.swift in Sources */,
 				25CF3AF62133AB3A0072F3C1 /* KWEstimateGasLimitRequest.swift in Sources */,
 				25CF3A9D2133A5840072F3C1 /* UIViewController.swift in Sources */,
 				25CF3AB72133A81A0072F3C1 /* KWThemeConfig.swift in Sources */,
+				25CF3B0C2133B0110072F3C1 /* KWGasCoordinator.swift in Sources */,
+				25CF3B0A2133B0110072F3C1 /* KWGeneralProvider.swift in Sources */,
 				25CF3AF52133AB3A0072F3C1 /* KWGetTransactionCountRequest.swift in Sources */,
 				25CF3A9C2133A5840072F3C1 /* UIImage.swift in Sources */,
 				25CF3B012133AB3A0072F3C1 /* KWTokenTransfer.swift in Sources */,

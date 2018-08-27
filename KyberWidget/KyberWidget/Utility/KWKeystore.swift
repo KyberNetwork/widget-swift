@@ -33,7 +33,7 @@ public enum KWKeystoreError: LocalizedError {
   }
 }
 
-public enum KPImportType {
+public enum KWImportType {
   case keystore(string: String, password: String)
   case privateKey(string: String)
   case mnemonic(words: [String], password: String)
@@ -71,7 +71,7 @@ public class KWKeystore {
       completion()
     }
   }
-  public func importWallet(type: KPImportType, completion: @escaping (Result<Account, KWKeystoreError>) -> Void) {
+  public func importWallet(type: KWImportType, completion: @escaping (Result<Account, KWKeystoreError>) -> Void) {
     let newPassword = self.generateRandomString(bytesCount: 32)
     switch type {
     case .keystore(let string, let password):
