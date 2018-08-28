@@ -18,6 +18,21 @@ Download the library in this repo [here](https://github.com/KyberNetwork/widget-
 
 Go to your project `General settings`, add KyberWidget into `Embedded Binaries`.
 
+Add these dependency frameworks below into your project via ([Cocoapods](https://cocoapods.org/):
+```swift
+  pod 'Moya', '~> 10.0.1'
+  pod 'BigInt', '~> 3.0'
+  pod 'APIKit'
+  pod 'MBProgressHUD'
+  pod 'TrustKeystore', '~> 0.4.2'
+  pod 'TrustCore', '~> 0.0.7'
+  pod 'JSONRPCKit', :git=> 'https://github.com/bricklife/JSONRPCKit.git'
+  pod 'IQKeyboardManager'
+  pod 'KeychainSwift'
+  pod 'QRCodeReaderViewController', :git=>'https://github.com/yannickl/QRCodeReaderViewController.git', :branch=>'master'
+  pod 'JavaScriptKit', '~> 1.0'
+```
+
 ## Usage
 
 #### Import KyberWidget
@@ -65,21 +80,6 @@ To use the widget for _payment_ use case:
       )
   } catch {}
 ```
-You could initialize the `KWCoordinator` like below as well, but it is not recommended as there are a lot of use cases that you must be followed.
-
-```swift
-do {
-  self.coordinator = KWCoordinator(
-    baseViewController: UIViewController,
-    receiveAddr: String,
-    receiveToken: String?,
-    receiveAmount: Double?,
-    network: KWEnvironment // ETH network ("ropsten", "mainnet"),
-    signer: String?,
-    commissionID: String?
-  )
- } catch {}
-```
 
 ***Parameter details:***
 
@@ -91,7 +91,7 @@ do {
 
 - ***receiveAmount*** (Double) - the amount of `receiveToken` you (vendor) want your user to pay. If you leave it blank or missing, the users can specify it in the widget interface. It could be useful for undetermined payment or pay-as-you-go payment like a charity, ICO or anything else. This param is ignored if you do not specify `receiveToken`.
 
-- ***network*** (KWEnvironment - default `ropsten`) - **required** - ethereum network that the widget will run. Possible value: `mainnetTest, production, staging, ropsten, kovan`.
+- ***network*** (KWEnvironment - default `ropsten`) - ethereum network that the widget will run. Possible value: `mainnetTest, production, staging, ropsten, kovan`.
 
 - ***signer*** (String) - concatenation of a list of ethereum address by underscore `_`, eg. 0xFDF28Bf25779ED4cA74e958d54653260af604C20_0xFDF28Bf25779ED4cA74e958d54653260af604C20 - If you pass this param, the user will be forced to pay from one of those addresses.
 
@@ -244,3 +244,21 @@ NOTE:
 
 ## Supported tokens
 See all supported tokens [here](https://tracker.kyber.network/#/tokens)
+
+## Acknowledgement
+The KyberWidget iOS uses following open source softwares:
+
+- [Moya](https://github.com/Moya/Moya)
+- [BigInt](https://github.com/attaswift/BigInt)
+- [APIKit](https://github.com/ishkawa/APIKit)
+- [MBProgressHUD](https://github.com/jdg/MBProgressHUD)
+- [TrustKeystore'](https://github.com/TrustWallet/trust-keystore)
+- [TrustCore](https://github.com/TrustWallet/trust-core)
+- [JSONRPCKit](https://github.com/bricklife/JSONRPCKit.git)
+- [IQKeyboardManager](https://github.com/hackiftekhar/IQKeyboardManager)
+- [KeychainSwift](https://github.com/evgenyneu/keychain-swift)
+- [QRCodeReaderViewController](https://github.com/yannickl/QRCodeReaderViewController.git)
+- [JavaScriptKit](https://github.com/alexaubry/JavaScriptKit)
+
+Special thank to [TrustWallet](https://github.com/TrustWallet) team for their awesome works
+
