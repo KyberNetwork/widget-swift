@@ -14,7 +14,7 @@ The lib shipped with a standard, ready-to-use UI. It also let developers to cust
 
 Currently you have to manually add KyberWidget into your project ([Cocoapods](https://cocoapods.org/) will be available soon).
 
-Download the library in this repo [here](https://github.com/KyberNetwork/widget-swift/KyberWidget/KyberWidget.framework) and add it into your project. 
+Download the library in this repo [here](https://github.com/KyberNetwork/widget-swift/tree/master/KyberWidget/KyberWidget.framework) or clone this repo to get `KyberWidget.framework` from KyberWidget or example project and add it into your project. 
 
 Go to your project `General settings`, add KyberWidget into `Embedded Binaries`.
 
