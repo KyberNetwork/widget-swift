@@ -1,0 +1,1099 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		25CF3A7A2133A0760072F3C1 /* KyberWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CF3A702133A0760072F3C1 /* KyberWidget.framework */; };
+		25CF3A7F2133A0760072F3C1 /* KyberWidgetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A7E2133A0760072F3C1 /* KyberWidgetTests.swift */; };
+		25CF3A812133A0760072F3C1 /* KyberWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 25CF3A732133A0760072F3C1 /* KyberWidget.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		25CF3A962133A5840072F3C1 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A8B2133A5840072F3C1 /* UIView.swift */; };
+		25CF3A972133A5840072F3C1 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A8C2133A5840072F3C1 /* Data.swift */; };
+		25CF3A982133A5840072F3C1 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A8D2133A5840072F3C1 /* UIColor.swift */; };
+		25CF3A992133A5840072F3C1 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A8E2133A5840072F3C1 /* Dictionary.swift */; };
+		25CF3A9A2133A5840072F3C1 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A8F2133A5840072F3C1 /* String.swift */; };
+		25CF3A9B2133A5840072F3C1 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A902133A5840072F3C1 /* UIButton.swift */; };
+		25CF3A9C2133A5840072F3C1 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A912133A5840072F3C1 /* UIImage.swift */; };
+		25CF3A9D2133A5840072F3C1 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A922133A5840072F3C1 /* UIViewController.swift */; };
+		25CF3A9E2133A5840072F3C1 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A932133A5840072F3C1 /* UIImageView.swift */; };
+		25CF3A9F2133A5840072F3C1 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A942133A5840072F3C1 /* UINavigationController.swift */; };
+		25CF3AA02133A5840072F3C1 /* BigInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A952133A5840072F3C1 /* BigInt.swift */; };
+		25CF3AA62133A64D0072F3C1 /* KWTokenObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AA22133A64D0072F3C1 /* KWTokenObject.swift */; };
+		25CF3AA72133A64D0072F3C1 /* KWDraftTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AA32133A64D0072F3C1 /* KWDraftTransaction.swift */; };
+		25CF3AA82133A64D0072F3C1 /* KWEthereumUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AA42133A64D0072F3C1 /* KWEthereumUnit.swift */; };
+		25CF3AA92133A64D0072F3C1 /* KWPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AA52133A64D0072F3C1 /* KWPayment.swift */; };
+		25CF3AAF2133A6E80072F3C1 /* KWKeystore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AAB2133A6E80072F3C1 /* KWKeystore.swift */; };
+		25CF3AB02133A6E80072F3C1 /* KWJSONLoadUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AAC2133A6E80072F3C1 /* KWJSONLoadUtil.swift */; };
+		25CF3AB12133A6E80072F3C1 /* KWXibLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AAD2133A6E80072F3C1 /* KWXibLoaderView.swift */; };
+		25CF3AB22133A6E80072F3C1 /* KWNumberUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AAE2133A6E80072F3C1 /* KWNumberUtil.swift */; };
+		25CF3AB72133A81A0072F3C1 /* KWThemeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AB42133A8190072F3C1 /* KWThemeConfig.swift */; };
+		25CF3AB82133A81A0072F3C1 /* KWEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AB52133A8190072F3C1 /* KWEnvironment.swift */; };
+		25CF3AB92133A81A0072F3C1 /* KWGasConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AB62133A8190072F3C1 /* KWGasConfiguration.swift */; };
+		25CF3ABB2133AA7F0072F3C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ABA2133AA7F0072F3C1 /* Assets.xcassets */; };
+		25CF3ACF2133AAD10072F3C1 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ABD2133AAD10072F3C1 /* index.html */; };
+		25CF3AD02133AAD10072F3C1 /* config_env_production.json in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ABF2133AAD10072F3C1 /* config_env_production.json */; };
+		25CF3AD12133AAD10072F3C1 /* config_env_ropsten.json in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC02133AAD10072F3C1 /* config_env_ropsten.json */; };
+		25CF3AD22133AAD10072F3C1 /* config_env_mainnet_test.json in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC12133AAD10072F3C1 /* config_env_mainnet_test.json */; };
+		25CF3AD32133AAD10072F3C1 /* config_env_staging.json in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC22133AAD10072F3C1 /* config_env_staging.json */; };
+		25CF3AD42133AAD10072F3C1 /* config_env_kovan.json in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC32133AAD10072F3C1 /* config_env_kovan.json */; };
+		25CF3AD52133AAD10072F3C1 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC62133AAD10072F3C1 /* Montserrat-Medium.ttf */; };
+		25CF3AD62133AAD10072F3C1 /* Montserrat-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC72133AAD10072F3C1 /* Montserrat-BoldItalic.ttf */; };
+		25CF3AD72133AAD10072F3C1 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC82133AAD10072F3C1 /* Montserrat-Bold.ttf */; };
+		25CF3AD82133AAD10072F3C1 /* Montserrat-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC92133AAD10072F3C1 /* Montserrat-MediumItalic.ttf */; };
+		25CF3AD92133AAD10072F3C1 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ACA2133AAD10072F3C1 /* Montserrat-SemiBold.ttf */; };
+		25CF3ADA2133AAD10072F3C1 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ACB2133AAD10072F3C1 /* OFL.txt */; };
+		25CF3ADB2133AAD10072F3C1 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ACC2133AAD10072F3C1 /* Montserrat-Regular.ttf */; };
+		25CF3ADC2133AAD10072F3C1 /* Montserrat-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ACD2133AAD10072F3C1 /* Montserrat-SemiBoldItalic.ttf */; };
+		25CF3ADD2133AAD10072F3C1 /* web3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ACE2133AAD10072F3C1 /* web3.min.js */; };
+		25CF3AF22133AB3A0072F3C1 /* KWCallRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AE02133AB3A0072F3C1 /* KWCallRequest.swift */; };
+		25CF3AF32133AB3A0072F3C1 /* KWBalanceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AE12133AB3A0072F3C1 /* KWBalanceRequest.swift */; };
+		25CF3AF42133AB3A0072F3C1 /* KWEtherServiceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AE22133AB3A0072F3C1 /* KWEtherServiceRequest.swift */; };
+		25CF3AF52133AB3A0072F3C1 /* KWGetTransactionCountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AE32133AB3A0072F3C1 /* KWGetTransactionCountRequest.swift */; };
+		25CF3AF62133AB3A0072F3C1 /* KWEstimateGasLimitRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AE42133AB3A0072F3C1 /* KWEstimateGasLimitRequest.swift */; };
+		25CF3AF72133AB3A0072F3C1 /* KWEstimateGasRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AE52133AB3A0072F3C1 /* KWEstimateGasRequest.swift */; };
+		25CF3AF92133AB3A0072F3C1 /* KWSendRawTransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AE72133AB3A0072F3C1 /* KWSendRawTransactionRequest.swift */; };
+		25CF3AFB2133AB3A0072F3C1 /* KWGetExpectedRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AEA2133AB3A0072F3C1 /* KWGetExpectedRate.swift */; };
+		25CF3AFC2133AB3A0072F3C1 /* KWGetTokenAllowance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AEB2133AB3A0072F3C1 /* KWGetTokenAllowance.swift */; };
+		25CF3AFD2133AB3A0072F3C1 /* KWGetTokenBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AEC2133AB3A0072F3C1 /* KWGetTokenBalance.swift */; };
+		25CF3AFE2133AB3A0072F3C1 /* KWGetUserCapInWei.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AED2133AB3A0072F3C1 /* KWGetUserCapInWei.swift */; };
+		25CF3AFF2133AB3A0072F3C1 /* KWExchangeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AEE2133AB3A0072F3C1 /* KWExchangeRequest.swift */; };
+		25CF3B002133AB3A0072F3C1 /* KWSendApproveToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AEF2133AB3A0072F3C1 /* KWSendApproveToken.swift */; };
+		25CF3B012133AB3A0072F3C1 /* KWTokenTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AF02133AB3A0072F3C1 /* KWTokenTransfer.swift */; };
+		25CF3B022133AB3A0072F3C1 /* KWWeb3Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3AF12133AB3A0072F3C1 /* KWWeb3Swift.swift */; };
+		25CF3B0A2133B0110072F3C1 /* KWGeneralProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B042133B0110072F3C1 /* KWGeneralProvider.swift */; };
+		25CF3B0B2133B0110072F3C1 /* KWNetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B062133B0110072F3C1 /* KWNetworkProvider.swift */; };
+		25CF3B0C2133B0110072F3C1 /* KWGasCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B072133B0110072F3C1 /* KWGasCoordinator.swift */; };
+		25CF3B0D2133B0110072F3C1 /* KWSupportedToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B082133B0110072F3C1 /* KWSupportedToken.swift */; };
+		25CF3B0E2133B0110072F3C1 /* KWExternalProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B092133B0110072F3C1 /* KWExternalProvider.swift */; };
+		25CF3B612133B1680072F3C1 /* KWPaymentMethodViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3B442133B1670072F3C1 /* KWPaymentMethodViewController.xib */; };
+		25CF3B622133B1680072F3C1 /* KWPaymentMethodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B452133B1670072F3C1 /* KWPaymentMethodViewModel.swift */; };
+		25CF3B632133B1680072F3C1 /* KWPaymentMethodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B462133B1670072F3C1 /* KWPaymentMethodViewController.swift */; };
+		25CF3B642133B1680072F3C1 /* KAdvancedSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B492133B1670072F3C1 /* KAdvancedSettingsView.swift */; };
+		25CF3B652133B1680072F3C1 /* KAdvancedSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3B4A2133B1670072F3C1 /* KAdvancedSettingsView.xib */; };
+		25CF3B662133B1680072F3C1 /* KWStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B4C2133B1670072F3C1 /* KWStepView.swift */; };
+		25CF3B672133B1680072F3C1 /* KWStepView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3B4D2133B1670072F3C1 /* KWStepView.xib */; };
+		25CF3B682133B1680072F3C1 /* KWConfirmPaymentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3B4F2133B1670072F3C1 /* KWConfirmPaymentViewController.xib */; };
+		25CF3B692133B1680072F3C1 /* KWConfirmPaymentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B502133B1670072F3C1 /* KWConfirmPaymentViewModel.swift */; };
+		25CF3B6A2133B1680072F3C1 /* KWConfirmPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B512133B1670072F3C1 /* KWConfirmPaymentViewController.swift */; };
+		25CF3B6C2133B1680072F3C1 /* KWSearchTokenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3B542133B1670072F3C1 /* KWSearchTokenViewController.xib */; };
+		25CF3B6D2133B1680072F3C1 /* KWSearchTokenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3B562133B1670072F3C1 /* KWSearchTokenTableViewCell.xib */; };
+		25CF3B6E2133B1680072F3C1 /* KWSearchTokenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B572133B1670072F3C1 /* KWSearchTokenTableViewCell.swift */; };
+		25CF3B6F2133B1680072F3C1 /* KWImportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3B592133B1670072F3C1 /* KWImportViewController.xib */; };
+		25CF3B702133B1680072F3C1 /* KWImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B5A2133B1670072F3C1 /* KWImportViewController.swift */; };
+		25CF3B712133B1680072F3C1 /* KWImportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B5B2133B1670072F3C1 /* KWImportViewModel.swift */; };
+		25CF3B722133B1680072F3C1 /* KWMinAcceptableRatePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B5D2133B1670072F3C1 /* KWMinAcceptableRatePopupViewController.swift */; };
+		25CF3B732133B1680072F3C1 /* KWMinAcceptableRatePopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3B5E2133B1670072F3C1 /* KWMinAcceptableRatePopupViewController.xib */; };
+		25CF3B742133B1680072F3C1 /* KWCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B602133B1670072F3C1 /* KWCoordinator.swift */; };
+		25CF3B762133B2C70072F3C1 /* KWSearchTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3B752133B2C70072F3C1 /* KWSearchTokenViewController.swift */; };
+		C3034C74371E7691359DE447 /* Pods_KyberWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 366D1B46AAC5E7A1065E705D /* Pods_KyberWidget.framework */; };
+		DF5D339E8825FA9A8880F7E0 /* Pods_KyberWidgetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC5571C42DB4CEDAB9509A7 /* Pods_KyberWidgetTests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		25CF3A7B2133A0760072F3C1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 25CF3A672133A0760072F3C1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 25CF3A6F2133A0760072F3C1;
+			remoteInfo = KyberWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1B6800345CC5B213915C0981 /* Pods-KyberWidgetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KyberWidgetTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-KyberWidgetTests/Pods-KyberWidgetTests.release.xcconfig"; sourceTree = "<group>"; };
+		25CF3A702133A0760072F3C1 /* KyberWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KyberWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25CF3A732133A0760072F3C1 /* KyberWidget.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KyberWidget.h; sourceTree = "<group>"; };
+		25CF3A742133A0760072F3C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25CF3A792133A0760072F3C1 /* KyberWidgetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KyberWidgetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		25CF3A7E2133A0760072F3C1 /* KyberWidgetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KyberWidgetTests.swift; sourceTree = "<group>"; };
+		25CF3A802133A0760072F3C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25CF3A8B2133A5840072F3C1 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		25CF3A8C2133A5840072F3C1 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		25CF3A8D2133A5840072F3C1 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		25CF3A8E2133A5840072F3C1 /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
+		25CF3A8F2133A5840072F3C1 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		25CF3A902133A5840072F3C1 /* UIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
+		25CF3A912133A5840072F3C1 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		25CF3A922133A5840072F3C1 /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		25CF3A932133A5840072F3C1 /* UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		25CF3A942133A5840072F3C1 /* UINavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
+		25CF3A952133A5840072F3C1 /* BigInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigInt.swift; sourceTree = "<group>"; };
+		25CF3AA22133A64D0072F3C1 /* KWTokenObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWTokenObject.swift; sourceTree = "<group>"; };
+		25CF3AA32133A64D0072F3C1 /* KWDraftTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWDraftTransaction.swift; sourceTree = "<group>"; };
+		25CF3AA42133A64D0072F3C1 /* KWEthereumUnit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWEthereumUnit.swift; sourceTree = "<group>"; };
+		25CF3AA52133A64D0072F3C1 /* KWPayment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWPayment.swift; sourceTree = "<group>"; };
+		25CF3AAB2133A6E80072F3C1 /* KWKeystore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWKeystore.swift; sourceTree = "<group>"; };
+		25CF3AAC2133A6E80072F3C1 /* KWJSONLoadUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWJSONLoadUtil.swift; sourceTree = "<group>"; };
+		25CF3AAD2133A6E80072F3C1 /* KWXibLoaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWXibLoaderView.swift; sourceTree = "<group>"; };
+		25CF3AAE2133A6E80072F3C1 /* KWNumberUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWNumberUtil.swift; sourceTree = "<group>"; };
+		25CF3AB42133A8190072F3C1 /* KWThemeConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWThemeConfig.swift; sourceTree = "<group>"; };
+		25CF3AB52133A8190072F3C1 /* KWEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWEnvironment.swift; sourceTree = "<group>"; };
+		25CF3AB62133A8190072F3C1 /* KWGasConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGasConfiguration.swift; sourceTree = "<group>"; };
+		25CF3ABA2133AA7F0072F3C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		25CF3ABD2133AAD10072F3C1 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		25CF3ABF2133AAD10072F3C1 /* config_env_production.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_env_production.json; sourceTree = "<group>"; };
+		25CF3AC02133AAD10072F3C1 /* config_env_ropsten.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_env_ropsten.json; sourceTree = "<group>"; };
+		25CF3AC12133AAD10072F3C1 /* config_env_mainnet_test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_env_mainnet_test.json; sourceTree = "<group>"; };
+		25CF3AC22133AAD10072F3C1 /* config_env_staging.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_env_staging.json; sourceTree = "<group>"; };
+		25CF3AC32133AAD10072F3C1 /* config_env_kovan.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_env_kovan.json; sourceTree = "<group>"; };
+		25CF3AC62133AAD10072F3C1 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
+		25CF3AC72133AAD10072F3C1 /* Montserrat-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-BoldItalic.ttf"; sourceTree = "<group>"; };
+		25CF3AC82133AAD10072F3C1 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		25CF3AC92133AAD10072F3C1 /* Montserrat-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-MediumItalic.ttf"; sourceTree = "<group>"; };
+		25CF3ACA2133AAD10072F3C1 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+		25CF3ACB2133AAD10072F3C1 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		25CF3ACC2133AAD10072F3C1 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		25CF3ACD2133AAD10072F3C1 /* Montserrat-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		25CF3ACE2133AAD10072F3C1 /* web3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = web3.min.js; sourceTree = "<group>"; };
+		25CF3AE02133AB3A0072F3C1 /* KWCallRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWCallRequest.swift; sourceTree = "<group>"; };
+		25CF3AE12133AB3A0072F3C1 /* KWBalanceRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWBalanceRequest.swift; sourceTree = "<group>"; };
+		25CF3AE22133AB3A0072F3C1 /* KWEtherServiceRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWEtherServiceRequest.swift; sourceTree = "<group>"; };
+		25CF3AE32133AB3A0072F3C1 /* KWGetTransactionCountRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGetTransactionCountRequest.swift; sourceTree = "<group>"; };
+		25CF3AE42133AB3A0072F3C1 /* KWEstimateGasLimitRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWEstimateGasLimitRequest.swift; sourceTree = "<group>"; };
+		25CF3AE52133AB3A0072F3C1 /* KWEstimateGasRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWEstimateGasRequest.swift; sourceTree = "<group>"; };
+		25CF3AE72133AB3A0072F3C1 /* KWSendRawTransactionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWSendRawTransactionRequest.swift; sourceTree = "<group>"; };
+		25CF3AEA2133AB3A0072F3C1 /* KWGetExpectedRate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGetExpectedRate.swift; sourceTree = "<group>"; };
+		25CF3AEB2133AB3A0072F3C1 /* KWGetTokenAllowance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGetTokenAllowance.swift; sourceTree = "<group>"; };
+		25CF3AEC2133AB3A0072F3C1 /* KWGetTokenBalance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGetTokenBalance.swift; sourceTree = "<group>"; };
+		25CF3AED2133AB3A0072F3C1 /* KWGetUserCapInWei.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGetUserCapInWei.swift; sourceTree = "<group>"; };
+		25CF3AEE2133AB3A0072F3C1 /* KWExchangeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWExchangeRequest.swift; sourceTree = "<group>"; };
+		25CF3AEF2133AB3A0072F3C1 /* KWSendApproveToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWSendApproveToken.swift; sourceTree = "<group>"; };
+		25CF3AF02133AB3A0072F3C1 /* KWTokenTransfer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWTokenTransfer.swift; sourceTree = "<group>"; };
+		25CF3AF12133AB3A0072F3C1 /* KWWeb3Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWWeb3Swift.swift; sourceTree = "<group>"; };
+		25CF3B042133B0110072F3C1 /* KWGeneralProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGeneralProvider.swift; sourceTree = "<group>"; };
+		25CF3B062133B0110072F3C1 /* KWNetworkProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWNetworkProvider.swift; sourceTree = "<group>"; };
+		25CF3B072133B0110072F3C1 /* KWGasCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWGasCoordinator.swift; sourceTree = "<group>"; };
+		25CF3B082133B0110072F3C1 /* KWSupportedToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWSupportedToken.swift; sourceTree = "<group>"; };
+		25CF3B092133B0110072F3C1 /* KWExternalProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWExternalProvider.swift; sourceTree = "<group>"; };
+		25CF3B442133B1670072F3C1 /* KWPaymentMethodViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KWPaymentMethodViewController.xib; sourceTree = "<group>"; };
+		25CF3B452133B1670072F3C1 /* KWPaymentMethodViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWPaymentMethodViewModel.swift; sourceTree = "<group>"; };
+		25CF3B462133B1670072F3C1 /* KWPaymentMethodViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWPaymentMethodViewController.swift; sourceTree = "<group>"; };
+		25CF3B492133B1670072F3C1 /* KAdvancedSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KAdvancedSettingsView.swift; sourceTree = "<group>"; };
+		25CF3B4A2133B1670072F3C1 /* KAdvancedSettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KAdvancedSettingsView.xib; sourceTree = "<group>"; };
+		25CF3B4C2133B1670072F3C1 /* KWStepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWStepView.swift; sourceTree = "<group>"; };
+		25CF3B4D2133B1670072F3C1 /* KWStepView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KWStepView.xib; sourceTree = "<group>"; };
+		25CF3B4F2133B1670072F3C1 /* KWConfirmPaymentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KWConfirmPaymentViewController.xib; sourceTree = "<group>"; };
+		25CF3B502133B1670072F3C1 /* KWConfirmPaymentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWConfirmPaymentViewModel.swift; sourceTree = "<group>"; };
+		25CF3B512133B1670072F3C1 /* KWConfirmPaymentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWConfirmPaymentViewController.swift; sourceTree = "<group>"; };
+		25CF3B542133B1670072F3C1 /* KWSearchTokenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KWSearchTokenViewController.xib; sourceTree = "<group>"; };
+		25CF3B562133B1670072F3C1 /* KWSearchTokenTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KWSearchTokenTableViewCell.xib; sourceTree = "<group>"; };
+		25CF3B572133B1670072F3C1 /* KWSearchTokenTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWSearchTokenTableViewCell.swift; sourceTree = "<group>"; };
+		25CF3B592133B1670072F3C1 /* KWImportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KWImportViewController.xib; sourceTree = "<group>"; };
+		25CF3B5A2133B1670072F3C1 /* KWImportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWImportViewController.swift; sourceTree = "<group>"; };
+		25CF3B5B2133B1670072F3C1 /* KWImportViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWImportViewModel.swift; sourceTree = "<group>"; };
+		25CF3B5D2133B1670072F3C1 /* KWMinAcceptableRatePopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWMinAcceptableRatePopupViewController.swift; sourceTree = "<group>"; };
+		25CF3B5E2133B1670072F3C1 /* KWMinAcceptableRatePopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KWMinAcceptableRatePopupViewController.xib; sourceTree = "<group>"; };
+		25CF3B602133B1670072F3C1 /* KWCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWCoordinator.swift; sourceTree = "<group>"; };
+		25CF3B752133B2C70072F3C1 /* KWSearchTokenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KWSearchTokenViewController.swift; sourceTree = "<group>"; };
+		366D1B46AAC5E7A1065E705D /* Pods_KyberWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KyberWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8778C457DF21680B127AA3F6 /* Pods-KyberWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KyberWidget.release.xcconfig"; path = "Pods/Target Support Files/Pods-KyberWidget/Pods-KyberWidget.release.xcconfig"; sourceTree = "<group>"; };
+		9510865A608F09061DFF840A /* Pods-KyberWidgetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KyberWidgetTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KyberWidgetTests/Pods-KyberWidgetTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9F7F7F9FC99847B4658EC44A /* Pods-KyberWidget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KyberWidget.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KyberWidget/Pods-KyberWidget.debug.xcconfig"; sourceTree = "<group>"; };
+		ABC5571C42DB4CEDAB9509A7 /* Pods_KyberWidgetTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KyberWidgetTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		25CF3A6C2133A0760072F3C1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3034C74371E7691359DE447 /* Pods_KyberWidget.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25CF3A762133A0760072F3C1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25CF3A7A2133A0760072F3C1 /* KyberWidget.framework in Frameworks */,
+				DF5D339E8825FA9A8880F7E0 /* Pods_KyberWidgetTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		25CF3A662133A0760072F3C1 = {
+			isa = PBXGroup;
+			children = (
+				25CF3A722133A0760072F3C1 /* KyberWidget */,
+				25CF3A7D2133A0760072F3C1 /* KyberWidgetTests */,
+				25CF3A712133A0760072F3C1 /* Products */,
+				6FE1672A996E6EAE497D7CA2 /* Pods */,
+				B73B5F4117FF74BDFA9F1067 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		25CF3A712133A0760072F3C1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3A702133A0760072F3C1 /* KyberWidget.framework */,
+				25CF3A792133A0760072F3C1 /* KyberWidgetTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		25CF3A722133A0760072F3C1 /* KyberWidget */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3B422133B1670072F3C1 /* Controllers */,
+				25CF3B5F2133B1670072F3C1 /* Coordinator */,
+				25CF3B032133B0110072F3C1 /* Provider */,
+				25CF3ADE2133AB3A0072F3C1 /* Web3Swift */,
+				25CF3ABC2133AAD10072F3C1 /* Resources */,
+				25CF3AB32133A8190072F3C1 /* Configuration */,
+				25CF3AAA2133A6E80072F3C1 /* Utility */,
+				25CF3AA12133A64D0072F3C1 /* Models */,
+				25CF3A8A2133A5840072F3C1 /* Extensions */,
+				25CF3A732133A0760072F3C1 /* KyberWidget.h */,
+				25CF3A742133A0760072F3C1 /* Info.plist */,
+				25CF3ABA2133AA7F0072F3C1 /* Assets.xcassets */,
+			);
+			path = KyberWidget;
+			sourceTree = "<group>";
+		};
+		25CF3A7D2133A0760072F3C1 /* KyberWidgetTests */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3A7E2133A0760072F3C1 /* KyberWidgetTests.swift */,
+				25CF3A802133A0760072F3C1 /* Info.plist */,
+			);
+			path = KyberWidgetTests;
+			sourceTree = "<group>";
+		};
+		25CF3A8A2133A5840072F3C1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3A8B2133A5840072F3C1 /* UIView.swift */,
+				25CF3A8C2133A5840072F3C1 /* Data.swift */,
+				25CF3A8D2133A5840072F3C1 /* UIColor.swift */,
+				25CF3A8E2133A5840072F3C1 /* Dictionary.swift */,
+				25CF3A8F2133A5840072F3C1 /* String.swift */,
+				25CF3A902133A5840072F3C1 /* UIButton.swift */,
+				25CF3A912133A5840072F3C1 /* UIImage.swift */,
+				25CF3A922133A5840072F3C1 /* UIViewController.swift */,
+				25CF3A932133A5840072F3C1 /* UIImageView.swift */,
+				25CF3A942133A5840072F3C1 /* UINavigationController.swift */,
+				25CF3A952133A5840072F3C1 /* BigInt.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		25CF3AA12133A64D0072F3C1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3AA22133A64D0072F3C1 /* KWTokenObject.swift */,
+				25CF3AA32133A64D0072F3C1 /* KWDraftTransaction.swift */,
+				25CF3AA42133A64D0072F3C1 /* KWEthereumUnit.swift */,
+				25CF3AA52133A64D0072F3C1 /* KWPayment.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		25CF3AAA2133A6E80072F3C1 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3AAB2133A6E80072F3C1 /* KWKeystore.swift */,
+				25CF3AAC2133A6E80072F3C1 /* KWJSONLoadUtil.swift */,
+				25CF3AAD2133A6E80072F3C1 /* KWXibLoaderView.swift */,
+				25CF3AAE2133A6E80072F3C1 /* KWNumberUtil.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		25CF3AB32133A8190072F3C1 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3AB42133A8190072F3C1 /* KWThemeConfig.swift */,
+				25CF3AB52133A8190072F3C1 /* KWEnvironment.swift */,
+				25CF3AB62133A8190072F3C1 /* KWGasConfiguration.swift */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		25CF3ABC2133AAD10072F3C1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3ABD2133AAD10072F3C1 /* index.html */,
+				25CF3ABE2133AAD10072F3C1 /* Configs */,
+				25CF3AC42133AAD10072F3C1 /* Fonts */,
+				25CF3ACE2133AAD10072F3C1 /* web3.min.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		25CF3ABE2133AAD10072F3C1 /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3ABF2133AAD10072F3C1 /* config_env_production.json */,
+				25CF3AC02133AAD10072F3C1 /* config_env_ropsten.json */,
+				25CF3AC12133AAD10072F3C1 /* config_env_mainnet_test.json */,
+				25CF3AC22133AAD10072F3C1 /* config_env_staging.json */,
+				25CF3AC32133AAD10072F3C1 /* config_env_kovan.json */,
+			);
+			path = Configs;
+			sourceTree = "<group>";
+		};
+		25CF3AC42133AAD10072F3C1 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3AC52133AAD10072F3C1 /* Montserrat */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		25CF3AC52133AAD10072F3C1 /* Montserrat */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3AC62133AAD10072F3C1 /* Montserrat-Medium.ttf */,
+				25CF3AC72133AAD10072F3C1 /* Montserrat-BoldItalic.ttf */,
+				25CF3AC82133AAD10072F3C1 /* Montserrat-Bold.ttf */,
+				25CF3AC92133AAD10072F3C1 /* Montserrat-MediumItalic.ttf */,
+				25CF3ACA2133AAD10072F3C1 /* Montserrat-SemiBold.ttf */,
+				25CF3ACB2133AAD10072F3C1 /* OFL.txt */,
+				25CF3ACC2133AAD10072F3C1 /* Montserrat-Regular.ttf */,
+				25CF3ACD2133AAD10072F3C1 /* Montserrat-SemiBoldItalic.ttf */,
+			);
+			path = Montserrat;
+			sourceTree = "<group>";
+		};
+		25CF3ADE2133AB3A0072F3C1 /* Web3Swift */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3ADF2133AB3A0072F3C1 /* Request */,
+				25CF3AE82133AB3A0072F3C1 /* Commands */,
+				25CF3AF12133AB3A0072F3C1 /* KWWeb3Swift.swift */,
+			);
+			path = Web3Swift;
+			sourceTree = "<group>";
+		};
+		25CF3ADF2133AB3A0072F3C1 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3AE02133AB3A0072F3C1 /* KWCallRequest.swift */,
+				25CF3AE12133AB3A0072F3C1 /* KWBalanceRequest.swift */,
+				25CF3AE22133AB3A0072F3C1 /* KWEtherServiceRequest.swift */,
+				25CF3AE32133AB3A0072F3C1 /* KWGetTransactionCountRequest.swift */,
+				25CF3AE42133AB3A0072F3C1 /* KWEstimateGasLimitRequest.swift */,
+				25CF3AE52133AB3A0072F3C1 /* KWEstimateGasRequest.swift */,
+				25CF3AE72133AB3A0072F3C1 /* KWSendRawTransactionRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		25CF3AE82133AB3A0072F3C1 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3AEA2133AB3A0072F3C1 /* KWGetExpectedRate.swift */,
+				25CF3AEB2133AB3A0072F3C1 /* KWGetTokenAllowance.swift */,
+				25CF3AEC2133AB3A0072F3C1 /* KWGetTokenBalance.swift */,
+				25CF3AED2133AB3A0072F3C1 /* KWGetUserCapInWei.swift */,
+				25CF3AEE2133AB3A0072F3C1 /* KWExchangeRequest.swift */,
+				25CF3AEF2133AB3A0072F3C1 /* KWSendApproveToken.swift */,
+				25CF3AF02133AB3A0072F3C1 /* KWTokenTransfer.swift */,
+			);
+			path = Commands;
+			sourceTree = "<group>";
+		};
+		25CF3B032133B0110072F3C1 /* Provider */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3B042133B0110072F3C1 /* KWGeneralProvider.swift */,
+				25CF3B052133B0110072F3C1 /* InternalLoad */,
+				25CF3B092133B0110072F3C1 /* KWExternalProvider.swift */,
+			);
+			path = Provider;
+			sourceTree = "<group>";
+		};
+		25CF3B052133B0110072F3C1 /* InternalLoad */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3B062133B0110072F3C1 /* KWNetworkProvider.swift */,
+				25CF3B072133B0110072F3C1 /* KWGasCoordinator.swift */,
+				25CF3B082133B0110072F3C1 /* KWSupportedToken.swift */,
+			);
+			path = InternalLoad;
+			sourceTree = "<group>";
+		};
+		25CF3B422133B1670072F3C1 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3B432133B1670072F3C1 /* PaymentMethod */,
+				25CF3B472133B1670072F3C1 /* CommonView */,
+				25CF3B4E2133B1670072F3C1 /* Confirm */,
+				25CF3B522133B1670072F3C1 /* SearchToken */,
+				25CF3B582133B1670072F3C1 /* Import */,
+				25CF3B5C2133B1670072F3C1 /* MinAcceptableRatePopup */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		25CF3B432133B1670072F3C1 /* PaymentMethod */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3B442133B1670072F3C1 /* KWPaymentMethodViewController.xib */,
+				25CF3B452133B1670072F3C1 /* KWPaymentMethodViewModel.swift */,
+				25CF3B462133B1670072F3C1 /* KWPaymentMethodViewController.swift */,
+			);
+			path = PaymentMethod;
+			sourceTree = "<group>";
+		};
+		25CF3B472133B1670072F3C1 /* CommonView */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3B482133B1670072F3C1 /* AdvancedSettingsView */,
+				25CF3B4B2133B1670072F3C1 /* StepView */,
+			);
+			path = CommonView;
+			sourceTree = "<group>";
+		};
+		25CF3B482133B1670072F3C1 /* AdvancedSettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3B492133B1670072F3C1 /* KAdvancedSettingsView.swift */,
+				25CF3B4A2133B1670072F3C1 /* KAdvancedSettingsView.xib */,
+			);
+			path = AdvancedSettingsView;
+			sourceTree = "<group>";
+		};
+		25CF3B4B2133B1670072F3C1 /* StepView */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3B4C2133B1670072F3C1 /* KWStepView.swift */,
+				25CF3B4D2133B1670072F3C1 /* KWStepView.xib */,
+			);
+			path = StepView;
+			sourceTree = "<group>";
+		};
+		25CF3B4E2133B1670072F3C1 /* Confirm */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3B4F2133B1670072F3C1 /* KWConfirmPaymentViewController.xib */,
+				25CF3B502133B1670072F3C1 /* KWConfirmPaymentViewModel.swift */,
+				25CF3B512133B1670072F3C1 /* KWConfirmPaymentViewController.swift */,
+			);
+			path = Confirm;
+			sourceTree = "<group>";
+		};
+		25CF3B522133B1670072F3C1 /* SearchToken */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3B752133B2C70072F3C1 /* KWSearchTokenViewController.swift */,
+				25CF3B542133B1670072F3C1 /* KWSearchTokenViewController.xib */,
+				25CF3B552133B1670072F3C1 /* TableViewCell */,
+			);
+			path = SearchToken;
+			sourceTree = "<group>";
+		};
+		25CF3B552133B1670072F3C1 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3B562133B1670072F3C1 /* KWSearchTokenTableViewCell.xib */,
+				25CF3B572133B1670072F3C1 /* KWSearchTokenTableViewCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		25CF3B582133B1670072F3C1 /* Import */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3B592133B1670072F3C1 /* KWImportViewController.xib */,
+				25CF3B5A2133B1670072F3C1 /* KWImportViewController.swift */,
+				25CF3B5B2133B1670072F3C1 /* KWImportViewModel.swift */,
+			);
+			path = Import;
+			sourceTree = "<group>";
+		};
+		25CF3B5C2133B1670072F3C1 /* MinAcceptableRatePopup */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3B5D2133B1670072F3C1 /* KWMinAcceptableRatePopupViewController.swift */,
+				25CF3B5E2133B1670072F3C1 /* KWMinAcceptableRatePopupViewController.xib */,
+			);
+			path = MinAcceptableRatePopup;
+			sourceTree = "<group>";
+		};
+		25CF3B5F2133B1670072F3C1 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				25CF3B602133B1670072F3C1 /* KWCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		6FE1672A996E6EAE497D7CA2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9F7F7F9FC99847B4658EC44A /* Pods-KyberWidget.debug.xcconfig */,
+				8778C457DF21680B127AA3F6 /* Pods-KyberWidget.release.xcconfig */,
+				9510865A608F09061DFF840A /* Pods-KyberWidgetTests.debug.xcconfig */,
+				1B6800345CC5B213915C0981 /* Pods-KyberWidgetTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		B73B5F4117FF74BDFA9F1067 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				366D1B46AAC5E7A1065E705D /* Pods_KyberWidget.framework */,
+				ABC5571C42DB4CEDAB9509A7 /* Pods_KyberWidgetTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		25CF3A6D2133A0760072F3C1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25CF3A812133A0760072F3C1 /* KyberWidget.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		25CF3A6F2133A0760072F3C1 /* KyberWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25CF3A842133A0760072F3C1 /* Build configuration list for PBXNativeTarget "KyberWidget" */;
+			buildPhases = (
+				D7EFF1BC3EFD8B96A3B9FC7F /* [CP] Check Pods Manifest.lock */,
+				25CF3A6B2133A0760072F3C1 /* Sources */,
+				25CF3A6C2133A0760072F3C1 /* Frameworks */,
+				25CF3A6D2133A0760072F3C1 /* Headers */,
+				25CF3A6E2133A0760072F3C1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KyberWidget;
+			productName = KyberWidget;
+			productReference = 25CF3A702133A0760072F3C1 /* KyberWidget.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		25CF3A782133A0760072F3C1 /* KyberWidgetTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25CF3A872133A0760072F3C1 /* Build configuration list for PBXNativeTarget "KyberWidgetTests" */;
+			buildPhases = (
+				ADE0C214B60FED5A32E18877 /* [CP] Check Pods Manifest.lock */,
+				25CF3A752133A0760072F3C1 /* Sources */,
+				25CF3A762133A0760072F3C1 /* Frameworks */,
+				25CF3A772133A0760072F3C1 /* Resources */,
+				E6B43661CFCDE265DEA42848 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				25CF3A7C2133A0760072F3C1 /* PBXTargetDependency */,
+			);
+			name = KyberWidgetTests;
+			productName = KyberWidgetTests;
+			productReference = 25CF3A792133A0760072F3C1 /* KyberWidgetTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		25CF3A672133A0760072F3C1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				KnownAssetTags = (
+					Resources,
+				);
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = kyber.network;
+				TargetAttributes = {
+					25CF3A6F2133A0760072F3C1 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+					25CF3A782133A0760072F3C1 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 25CF3A6A2133A0760072F3C1 /* Build configuration list for PBXProject "KyberWidget" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 25CF3A662133A0760072F3C1;
+			productRefGroup = 25CF3A712133A0760072F3C1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				25CF3A6F2133A0760072F3C1 /* KyberWidget */,
+				25CF3A782133A0760072F3C1 /* KyberWidgetTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		25CF3A6E2133A0760072F3C1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25CF3AD82133AAD10072F3C1 /* Montserrat-MediumItalic.ttf in Resources */,
+				25CF3B652133B1680072F3C1 /* KAdvancedSettingsView.xib in Resources */,
+				25CF3B672133B1680072F3C1 /* KWStepView.xib in Resources */,
+				25CF3AD72133AAD10072F3C1 /* Montserrat-Bold.ttf in Resources */,
+				25CF3ADB2133AAD10072F3C1 /* Montserrat-Regular.ttf in Resources */,
+				25CF3ADC2133AAD10072F3C1 /* Montserrat-SemiBoldItalic.ttf in Resources */,
+				25CF3B6F2133B1680072F3C1 /* KWImportViewController.xib in Resources */,
+				25CF3AD62133AAD10072F3C1 /* Montserrat-BoldItalic.ttf in Resources */,
+				25CF3ABB2133AA7F0072F3C1 /* Assets.xcassets in Resources */,
+				25CF3AD02133AAD10072F3C1 /* config_env_production.json in Resources */,
+				25CF3B612133B1680072F3C1 /* KWPaymentMethodViewController.xib in Resources */,
+				25CF3ACF2133AAD10072F3C1 /* index.html in Resources */,
+				25CF3AD92133AAD10072F3C1 /* Montserrat-SemiBold.ttf in Resources */,
+				25CF3B6C2133B1680072F3C1 /* KWSearchTokenViewController.xib in Resources */,
+				25CF3ADD2133AAD10072F3C1 /* web3.min.js in Resources */,
+				25CF3B682133B1680072F3C1 /* KWConfirmPaymentViewController.xib in Resources */,
+				25CF3AD32133AAD10072F3C1 /* config_env_staging.json in Resources */,
+				25CF3B6D2133B1680072F3C1 /* KWSearchTokenTableViewCell.xib in Resources */,
+				25CF3ADA2133AAD10072F3C1 /* OFL.txt in Resources */,
+				25CF3AD42133AAD10072F3C1 /* config_env_kovan.json in Resources */,
+				25CF3AD22133AAD10072F3C1 /* config_env_mainnet_test.json in Resources */,
+				25CF3B732133B1680072F3C1 /* KWMinAcceptableRatePopupViewController.xib in Resources */,
+				25CF3AD52133AAD10072F3C1 /* Montserrat-Medium.ttf in Resources */,
+				25CF3AD12133AAD10072F3C1 /* config_env_ropsten.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25CF3A772133A0760072F3C1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		ADE0C214B60FED5A32E18877 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KyberWidgetTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D7EFF1BC3EFD8B96A3B9FC7F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KyberWidget-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E6B43661CFCDE265DEA42848 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-KyberWidgetTests/Pods-KyberWidgetTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/APIKit/APIKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework",
+				"${BUILT_PRODUCTS_DIR}/JSONRPCKit/JSONRPCKit.framework",
+				"${BUILT_PRODUCTS_DIR}/JavaScriptKit/JavaScriptKit.framework",
+				"${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
+				"${BUILT_PRODUCTS_DIR}/QRCodeReaderViewController/QRCodeReaderViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
+				"${BUILT_PRODUCTS_DIR}/TrezorCrypto/TrezorCrypto.framework",
+				"${BUILT_PRODUCTS_DIR}/TrustCore/TrustCore.framework",
+				"${BUILT_PRODUCTS_DIR}/TrustKeystore/TrustKeystore.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APIKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSONRPCKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JavaScriptKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReaderViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrezorCrypto.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrustCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrustKeystore.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KyberWidgetTests/Pods-KyberWidgetTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		25CF3A6B2133A0760072F3C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25CF3AF72133AB3A0072F3C1 /* KWEstimateGasRequest.swift in Sources */,
+				25CF3A962133A5840072F3C1 /* UIView.swift in Sources */,
+				25CF3B622133B1680072F3C1 /* KWPaymentMethodViewModel.swift in Sources */,
+				25CF3AA92133A64D0072F3C1 /* KWPayment.swift in Sources */,
+				25CF3AA62133A64D0072F3C1 /* KWTokenObject.swift in Sources */,
+				25CF3B742133B1680072F3C1 /* KWCoordinator.swift in Sources */,
+				25CF3B6A2133B1680072F3C1 /* KWConfirmPaymentViewController.swift in Sources */,
+				25CF3A9F2133A5840072F3C1 /* UINavigationController.swift in Sources */,
+				25CF3AA82133A64D0072F3C1 /* KWEthereumUnit.swift in Sources */,
+				25CF3B712133B1680072F3C1 /* KWImportViewModel.swift in Sources */,
+				25CF3AF92133AB3A0072F3C1 /* KWSendRawTransactionRequest.swift in Sources */,
+				25CF3AB22133A6E80072F3C1 /* KWNumberUtil.swift in Sources */,
+				25CF3A9E2133A5840072F3C1 /* UIImageView.swift in Sources */,
+				25CF3AA72133A64D0072F3C1 /* KWDraftTransaction.swift in Sources */,
+				25CF3AFD2133AB3A0072F3C1 /* KWGetTokenBalance.swift in Sources */,
+				25CF3A992133A5840072F3C1 /* Dictionary.swift in Sources */,
+				25CF3AFC2133AB3A0072F3C1 /* KWGetTokenAllowance.swift in Sources */,
+				25CF3AFB2133AB3A0072F3C1 /* KWGetExpectedRate.swift in Sources */,
+				25CF3B632133B1680072F3C1 /* KWPaymentMethodViewController.swift in Sources */,
+				25CF3B0E2133B0110072F3C1 /* KWExternalProvider.swift in Sources */,
+				25CF3A9A2133A5840072F3C1 /* String.swift in Sources */,
+				25CF3B0B2133B0110072F3C1 /* KWNetworkProvider.swift in Sources */,
+				25CF3AF22133AB3A0072F3C1 /* KWCallRequest.swift in Sources */,
+				25CF3B022133AB3A0072F3C1 /* KWWeb3Swift.swift in Sources */,
+				25CF3B662133B1680072F3C1 /* KWStepView.swift in Sources */,
+				25CF3AF32133AB3A0072F3C1 /* KWBalanceRequest.swift in Sources */,
+				25CF3AB82133A81A0072F3C1 /* KWEnvironment.swift in Sources */,
+				25CF3AB92133A81A0072F3C1 /* KWGasConfiguration.swift in Sources */,
+				25CF3A982133A5840072F3C1 /* UIColor.swift in Sources */,
+				25CF3AFE2133AB3A0072F3C1 /* KWGetUserCapInWei.swift in Sources */,
+				25CF3B6E2133B1680072F3C1 /* KWSearchTokenTableViewCell.swift in Sources */,
+				25CF3AA02133A5840072F3C1 /* BigInt.swift in Sources */,
+				25CF3AB02133A6E80072F3C1 /* KWJSONLoadUtil.swift in Sources */,
+				25CF3B762133B2C70072F3C1 /* KWSearchTokenViewController.swift in Sources */,
+				25CF3B642133B1680072F3C1 /* KAdvancedSettingsView.swift in Sources */,
+				25CF3B002133AB3A0072F3C1 /* KWSendApproveToken.swift in Sources */,
+				25CF3A972133A5840072F3C1 /* Data.swift in Sources */,
+				25CF3AAF2133A6E80072F3C1 /* KWKeystore.swift in Sources */,
+				25CF3AB12133A6E80072F3C1 /* KWXibLoaderView.swift in Sources */,
+				25CF3B0D2133B0110072F3C1 /* KWSupportedToken.swift in Sources */,
+				25CF3B722133B1680072F3C1 /* KWMinAcceptableRatePopupViewController.swift in Sources */,
+				25CF3B702133B1680072F3C1 /* KWImportViewController.swift in Sources */,
+				25CF3B692133B1680072F3C1 /* KWConfirmPaymentViewModel.swift in Sources */,
+				25CF3AF42133AB3A0072F3C1 /* KWEtherServiceRequest.swift in Sources */,
+				25CF3A9B2133A5840072F3C1 /* UIButton.swift in Sources */,
+				25CF3AFF2133AB3A0072F3C1 /* KWExchangeRequest.swift in Sources */,
+				25CF3AF62133AB3A0072F3C1 /* KWEstimateGasLimitRequest.swift in Sources */,
+				25CF3A9D2133A5840072F3C1 /* UIViewController.swift in Sources */,
+				25CF3AB72133A81A0072F3C1 /* KWThemeConfig.swift in Sources */,
+				25CF3B0C2133B0110072F3C1 /* KWGasCoordinator.swift in Sources */,
+				25CF3B0A2133B0110072F3C1 /* KWGeneralProvider.swift in Sources */,
+				25CF3AF52133AB3A0072F3C1 /* KWGetTransactionCountRequest.swift in Sources */,
+				25CF3A9C2133A5840072F3C1 /* UIImage.swift in Sources */,
+				25CF3B012133AB3A0072F3C1 /* KWTokenTransfer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25CF3A752133A0760072F3C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25CF3A7F2133A0760072F3C1 /* KyberWidgetTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		25CF3A7C2133A0760072F3C1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 25CF3A6F2133A0760072F3C1 /* KyberWidget */;
+			targetProxy = 25CF3A7B2133A0760072F3C1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		25CF3A822133A0760072F3C1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		25CF3A832133A0760072F3C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		25CF3A852133A0760072F3C1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F7F7F9FC99847B4658EC44A /* Pods-KyberWidget.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = HMT2AL7Q6Y;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_ON_DEMAND_RESOURCES = NO;
+				INFOPLIST_FILE = KyberWidget/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = manhlx.kyber.network.KyberWidget;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		25CF3A862133A0760072F3C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8778C457DF21680B127AA3F6 /* Pods-KyberWidget.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = HMT2AL7Q6Y;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_ON_DEMAND_RESOURCES = NO;
+				INFOPLIST_FILE = KyberWidget/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = manhlx.kyber.network.KyberWidget;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		25CF3A882133A0760072F3C1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9510865A608F09061DFF840A /* Pods-KyberWidgetTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HMT2AL7Q6Y;
+				INFOPLIST_FILE = KyberWidgetTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = manhlx.kyber.network.KyberWidgetTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		25CF3A892133A0760072F3C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1B6800345CC5B213915C0981 /* Pods-KyberWidgetTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HMT2AL7Q6Y;
+				INFOPLIST_FILE = KyberWidgetTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = manhlx.kyber.network.KyberWidgetTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		25CF3A6A2133A0760072F3C1 /* Build configuration list for PBXProject "KyberWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25CF3A822133A0760072F3C1 /* Debug */,
+				25CF3A832133A0760072F3C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25CF3A842133A0760072F3C1 /* Build configuration list for PBXNativeTarget "KyberWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25CF3A852133A0760072F3C1 /* Debug */,
+				25CF3A862133A0760072F3C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25CF3A872133A0760072F3C1 /* Build configuration list for PBXNativeTarget "KyberWidgetTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25CF3A882133A0760072F3C1 /* Debug */,
+				25CF3A892133A0760072F3C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 25CF3A672133A0760072F3C1 /* Project object */;
+}
