@@ -393,21 +393,7 @@ public class KWImportViewController: UIViewController {
       )
       return
     }
-    if self.viewModel.receiverAddress.lowercased() == account.address.description.lowercased() {
-      // Sending payment to the same address as imported address
-      let alertController = UIAlertController(
-        title: "Same address?",
-        message: "You are paying to the same address. Do you want to continue?",
-        preferredStyle: .alert
-      )
-      alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-      alertController.addAction(UIAlertAction(title: "Continue", style: .default, handler: { _ in
-        self.delegate?.importViewController(self, run: .successImported(account: account))
-      }))
-      self.present(alertController, animated: true, completion: nil)
-    } else {
-      self.delegate?.importViewController(self, run: .successImported(account: account))
-    }
+    self.delegate?.importViewController(self, run: .successImported(account: account))
   }
 
   fileprivate func openAlertViewChangeWallet(title: String, message: String) {

@@ -13,9 +13,6 @@ import TrustCore
 import Result
 
 public class KWImportViewModel: NSObject {
-  let receiverAddress: String
-  let receiverTokenSymbol: String
-  let receiverTokenAmount: String?
   let network: KWEnvironment
 
   let signer: String?
@@ -33,9 +30,6 @@ public class KWImportViewModel: NSObject {
   private(set) var balance: BigInt? = nil
 
   public init(
-    receiverAddress: String,
-    receiverTokenSymbol: String,
-    receiverTokenAmount: String?,
     network: KWEnvironment,
     signer: String? = nil,
     commissionID: String? = nil,
@@ -43,9 +37,6 @@ public class KWImportViewModel: NSObject {
     tokens: [KWTokenObject],
     payment: KWPayment
     ) {
-    self.receiverAddress = receiverAddress
-    self.receiverTokenSymbol = receiverTokenSymbol
-    self.receiverTokenAmount = receiverTokenAmount
     self.network = network
     self.signer = signer
     self.commissionID = commissionID
@@ -67,19 +58,6 @@ public class KWImportViewModel: NSObject {
         }
       })
     }
-  }
-
-  var address: Address? {
-    return Address(string: self.receiverAddress)
-  }
-
-  var receiverToken: KWTokenObject? {
-    return self.tokens.first(where: { $0.symbol.uppercased() == receiverTokenSymbol.uppercased() })
-  }
-
-  var receivedAmount: BigInt? {
-    guard let token = self.receiverToken else { return nil }
-    return self.receiverTokenAmount?.toBigInt(decimals: token.decimals)
   }
 
   func updateSelectedType(_ type: Int) {

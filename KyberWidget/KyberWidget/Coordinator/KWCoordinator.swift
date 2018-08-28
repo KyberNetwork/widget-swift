@@ -15,7 +15,8 @@ import TrustCore
 public enum KWError {
   case unsupportedToken
   case invalidAddress(errorMessage: String)
-  case invalidAmount
+  case invalidToken(errorMessage: String)
+  case invalidAmount(errorMessage: String)
   case failedToLoadSupportedToken(errorMessage: String)
   case failedToSendPayment(errorMessage: String)
 }
@@ -23,12 +24,55 @@ public enum KWError {
 public protocol KWCoordinatorDelegate: class {
   func coordinatorDidCancel()
   func coordinatorDidFailed(with error: KWError)
-  func coordinatorDidCreatePaymentTransaction(with hash: String)
+  func coordinatorDidBroadcastTransaction(with hash: String)
 }
 
 public enum KWDataType {
   case payment
   case kyberswap
+}
+
+// Use these 2 subclasses to initialize only
+public class KWPaymentCoordinator: KWCoordinator {
+  public init(
+    baseViewController: UIViewController,
+    receiveAddr: String,
+    receiveToken: String,
+    receiveAmount: Double?,
+    network: KWEnvironment = .ropsten,
+    signer: String? = nil,
+    commissionID: String? = nil
+    ) throws {
+    try super.init(
+      baseViewController: baseViewController,
+      receiveAddr: receiveAddr,
+      receiveToken: receiveToken,
+      receiveAmount: receiveAmount,
+      network: network,
+      signer: signer,
+      commissionID: commissionID
+    )
+  }
+}
+
+public class KWSwapCoordinator: KWCoordinator {
+  public init(
+    baseViewController: UIViewController,
+    receiveToken: String?,
+    network: KWEnvironment = .ropsten,
+    signer: String? = nil,
+    commissionID: String? = nil
+    ) throws {
+    try super.init(
+      baseViewController: baseViewController,
+      receiveAddr: "self",
+      receiveToken: receiveToken,
+      receiveAmount: nil,
+      network: network,
+      signer: signer,
+      commissionID: commissionID
+    )
+  }
 }
 
 public class KWCoordinator {
@@ -38,7 +82,7 @@ public class KWCoordinator {
   let receiverAddress: String
   let receiverTokenSymbol: String
   var receiverToken: KWTokenObject? = nil
-  let receiverTokenAmount: String?
+  let receiverTokenAmount: Double?
   let dataType: KWDataType
 
   let network: KWEnvironment
@@ -58,30 +102,18 @@ public class KWCoordinator {
     return KWExternalProvider(keystore: keystore, network: network)
   }()
 
-  lazy var paymentMethodVC: KWPaymentMethodViewController = {
-    let viewModel = KWPaymentMethodViewModel(
-      receiverAddress: self.receiverAddress,
-      receiverToken: self.receiverToken ?? KWTokenObject.ethToken(env: self.network),
-      receiverTokenAmount: self.receiverTokenAmount,
-      network: self.network,
-      dataType: self.dataType,
-      keystore: self.keystore
-    )
-    let controller = KWPaymentMethodViewController(viewModel: viewModel)
-    controller.loadViewIfNeeded()
-    controller.delegate = self
-    return controller
-  }()
+  fileprivate var paymentMethodVC: KWPaymentMethodViewController!
 
   fileprivate var searchTokenVC: KWSearchTokenViewController?
+  fileprivate var isSelectingSource: Bool = true
   fileprivate var importWalletVC: KWImportViewController?
   fileprivate var confirmVC: KWConfirmPaymentViewController?
 
   public init(
     baseViewController: UIViewController,
-    receiverAddr: String,
-    receiverToken: String,
-    receiverAmount: String?,
+    receiveAddr: String,
+    receiveToken: String?,
+    receiveAmount: Double?,
     network: KWEnvironment,
     signer: String? = nil,
     commissionID: String? = nil
@@ -95,15 +127,21 @@ public class KWCoordinator {
       )
       return navController
     }()
-    self.receiverAddress = receiverAddr
-    self.receiverTokenSymbol = receiverToken
-    self.receiverTokenAmount = receiverAmount
+    self.receiverAddress = receiveAddr
+    self.receiverTokenSymbol = receiveToken ?? ""
+
+    if (receiveToken ?? "").isEmpty {
+      // receive amount is ignored if receive token is empty
+      self.receiverTokenAmount = nil
+    } else {
+      self.receiverTokenAmount = receiveAmount
+    }
     self.network = network
     self.signer = signer
     self.commissionID = commissionID
     self.keystore = try KWKeystore()
 
-    if receiverAddr == "self" {
+    if receiveAddr == "self" {
       self.dataType = .kyberswap
     } else {
       self.dataType = .payment
@@ -116,6 +154,16 @@ public class KWCoordinator {
       self.startSession(error: .invalidAddress(errorMessage: errorMessage), completion: completion)
       return
     }
+    if self.dataType == .payment && self.receiverTokenSymbol.isEmpty {
+      let errorMessage: String = "Needs to pass token symbol for payment transaction"
+      self.startSession(error: .invalidToken(errorMessage: errorMessage), completion: completion)
+      return
+    }
+    if self.dataType == .kyberswap && self.receiverTokenAmount != nil {
+      let errorMessage: String = "Please do not set receiver amount if performing KyberSwap"
+      self.startSession(error: .invalidAmount(errorMessage: errorMessage), completion: completion)
+      return
+    }
     self.baseViewController.displayLoading(text: "Loading...", animated: true)
     self.loadSupportedTokensIfNeeded { [weak self] result in
       guard let `self` = self else { return }
@@ -125,10 +173,14 @@ public class KWCoordinator {
         self.tokens = tokens
         self.receiverToken = tokens.first(where: { $0.symbol == self.receiverTokenSymbol })
         let error: KWError? = {
-          guard let token = self.receiverToken else {
+          // token is empty, it must be kyberswap (already checked above)
+          if self.receiverTokenSymbol.isEmpty { return nil }
+          guard self.receiverToken != nil else {
             return .unsupportedToken
           }
-          if let amount = self.receiverTokenAmount, amount.toBigInt(decimals: token.decimals) == nil { return .invalidAmount }
+          if let amount = self.receiverTokenAmount, amount <= 0.0 {
+            return .invalidAmount(errorMessage: "Amount can not be zero or negative.")
+          }
           return nil
         }()
         self.startSession(error: error, completion: completion)
@@ -148,8 +200,24 @@ public class KWCoordinator {
         completion?()
       }
     } else {
+      self.paymentMethodVC = {
+        let viewModel = KWPaymentMethodViewModel(
+          receiverAddress: self.receiverAddress,
+          receiverToken: self.receiverToken,
+          toAmount: self.receiverTokenAmount,
+          network: self.network,
+          dataType: self.dataType,
+          tokens: self.tokens,
+          keystore: self.keystore
+        )
+        let controller = KWPaymentMethodViewController(viewModel: viewModel)
+        controller.loadViewIfNeeded()
+        controller.delegate = self
+        return controller
+      }()
       self.navigationController.viewControllers = [self.paymentMethodVC]
       self.baseViewController.present(self.navigationController, animated: true, completion: completion)
+      self.paymentMethodVC.coordinatorUpdateSupportedTokens(self.tokens)
     }
   }
 
@@ -226,7 +294,7 @@ extension KWCoordinator: KWSearchTokenViewControllerDelegate {
   func searchTokenViewController(_ controller: KWSearchTokenViewController, run event: KWSearchTokenViewEvent) {
     self.navigationController.popViewController(animated: true) {
       if case .select(let token) = event {
-        self.paymentMethodVC.coordinatorUpdatePayToken(token)
+        self.paymentMethodVC.coordinatorUpdatePayToken(token, isSource: self.isSelectingSource)
       }
     }
   }
@@ -237,14 +305,15 @@ extension KWCoordinator: KWPaymentMethodViewControllerDelegate {
     switch event {
     case .close:
       self.delegate?.coordinatorDidCancel()
-    case .searchToken(let token):
-      self.openSearchTokenView(token)
+    case .searchToken(let token, let isSource):
+      self.openSearchTokenView(token, isSource: isSource)
     case .next(let payment):
       self.openImportView(with: payment)
     }
   }
 
-  fileprivate func openSearchTokenView(_ selectedToken: KWTokenObject) {
+  fileprivate func openSearchTokenView(_ selectedToken: KWTokenObject, isSource: Bool) {
+    self.isSelectingSource = isSource
     self.searchTokenVC = {
       let viewModel = KWSearchTokenViewModel(supportedTokens: self.tokens)
       let controller = KWSearchTokenViewController(viewModel: viewModel)
@@ -259,9 +328,6 @@ extension KWCoordinator: KWPaymentMethodViewControllerDelegate {
     self.payment = payment
     self.importWalletVC = {
       let viewModel = KWImportViewModel(
-        receiverAddress: self.receiverAddress,
-        receiverTokenSymbol: self.receiverTokenSymbol,
-        receiverTokenAmount: self.receiverTokenAmount,
         network: self.network,
         signer: self.signer,
         commissionID: self.commissionID,
@@ -286,7 +352,7 @@ extension KWCoordinator: KWConfirmPaymentViewControllerDelegate {
       self.navigationController.displayLoading(text: "Paying...", animated: true)
       self.sendPaymentRequest(payment: payment) { (isSuccess, message) in
         if isSuccess {
-          self.delegate?.coordinatorDidCreatePaymentTransaction(with: message ?? "")
+          self.delegate?.coordinatorDidBroadcastTransaction(with: message ?? "")
         } else {
           self.delegate?.coordinatorDidFailed(with: .failedToSendPayment(errorMessage: message ?? ""))
         }

@@ -19,6 +19,7 @@ public class KWStringConfig: NSObject {
   public var address: String = "Address"
   public var amount: String = "Amount"
   public var payWith: String = "PAY WITH"
+  public var swap: String = "SWAP"
   public var estimateDestAmount: String = "Estimate dest amount"
 
   public var gasFee: String = "GAS fee"

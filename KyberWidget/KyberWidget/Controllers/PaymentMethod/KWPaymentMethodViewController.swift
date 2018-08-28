@@ -12,7 +12,7 @@ import SafariServices
 
 public enum KWPaymentMethodViewEvent {
   case close
-  case searchToken(token: KWTokenObject)
+  case searchToken(token: KWTokenObject, isSource: Bool)
   case next(payment: KWPayment)
 }
 
@@ -28,6 +28,8 @@ public class KWPaymentMethodViewController: UIViewController {
   @IBOutlet weak var youAreAboutToPayTextLabel: UILabel!
   @IBOutlet weak var destAddressLabel: UILabel!
   @IBOutlet weak var destAmountLabel: UILabel!
+  @IBOutlet weak var destDataContainerView: UIView!
+  @IBOutlet weak var heightConstraintForDestDataView: NSLayoutConstraint!
 
   @IBOutlet weak var advancedSettingsView: KAdvancedSettingsView!
   @IBOutlet weak var advancedSettingsHeightConstraint: NSLayoutConstraint!
@@ -35,9 +37,14 @@ public class KWPaymentMethodViewController: UIViewController {
 
   @IBOutlet weak var payWithTextLabel: UILabel!
   
+  @IBOutlet weak var heightConstraintForTokenContainerView: NSLayoutConstraint!
   @IBOutlet weak var tokenContainerView: UIView!
   @IBOutlet weak var tokenButton: UIButton!
   @IBOutlet weak var tokenAmountTextField: UITextField!
+  @IBOutlet weak var receiveTokenButton: UIButton!
+  @IBOutlet weak var receiveAmountLabel: UILabel!
+  @IBOutlet weak var heightConstraintForReceiveTokenData: NSLayoutConstraint!
+  @IBOutlet weak var toButton: UIButton!
 
   @IBOutlet weak var estimateRateLoadingView: UIActivityIndicatorView!
   @IBOutlet weak var estimateRateLabel: UILabel!
@@ -117,11 +124,13 @@ public class KWPaymentMethodViewController: UIViewController {
     self.destAddressLabel.attributedText = self.viewModel.destAddressAttributedString
     self.destAmountLabel.isHidden = self.viewModel.isDestAmountLabelHidden
     self.destAmountLabel.attributedText = self.viewModel.destAmountAttributedString
+    self.destDataContainerView.isHidden = self.viewModel.isDestDataViewHidden
+    self.heightConstraintForDestDataView.constant = self.viewModel.heightForDestDataView
   }
 
   fileprivate func setupFromTokenView() {
     self.tokenContainerView.rounded(radius: 4.0)
-    self.payWithTextLabel.text = KWStringConfig.current.payWith
+    self.payWithTextLabel.text = self.viewModel.transactionTypeText
 
 //    self.tokenButton.titleLabel?.numberOfLines = 2
 //    self.tokenButton.titleLabel?.lineBreakMode = .byTruncatingTail
@@ -131,6 +140,15 @@ public class KWPaymentMethodViewController: UIViewController {
     self.tokenAmountTextField.delegate = self
     self.viewModel.updateFromAmount("")
     self.tokenAmountTextField.text = ""
+
+    self.toButton.rounded(radius: self.toButton.frame.height / 2.0)
+    self.toButton.isHidden = self.viewModel.isToButtonHidden
+    self.receiveTokenButton.isHidden = self.viewModel.isToButtonHidden
+    self.receiveAmountLabel.isHidden = self.viewModel.isToButtonHidden
+
+    self.heightConstraintForTokenContainerView.constant = self.viewModel.heightForTokenData
+    self.heightConstraintForReceiveTokenData.constant = self.viewModel.heightForReceiverTokenView
+
     self.updateSelectedToken()
   }
 
@@ -199,10 +217,20 @@ public class KWPaymentMethodViewController: UIViewController {
       size: self.viewModel.defaultTokenIconImg?.size
     )
     self.tokenButton.setAttributedTitle(
-      self.viewModel.tokenButtonAttributedText,
+      self.viewModel.tokenButtonAttributedText(isSource: true),
       for: .normal
     )
     self.tokenAmountTextField.text = self.viewModel.estimatedFromAmountDisplay
+
+    self.receiveTokenButton.setTokenImage(
+      token: self.viewModel.to,
+      size: self.viewModel.defaultTokenIconImg?.size
+    )
+    self.receiveTokenButton.setAttributedTitle(
+      self.viewModel.tokenButtonAttributedText(isSource: false),
+      for: .normal
+    )
+    self.receiveAmountLabel.text = self.viewModel.estimatedReceiverAmountString
     self.updateAdvancedSettingsView()
   }
 
@@ -240,10 +268,11 @@ public class KWPaymentMethodViewController: UIViewController {
       slow: KWGasCoordinator.shared.slowGas,
       gasLimit: self.viewModel.gasLimit
     )
-    if self.advancedSettingsView.updateHasMinRate(self.viewModel.from != self.viewModel.receiverToken) {
+    if self.advancedSettingsView.updateHasMinRate(self.viewModel.from != self.viewModel.to) {
       self.advancedSettingsHeightConstraint.constant = self.advancedSettingsView.height
       self.view.updateConstraints()
     }
+    self.updateViewConstraints()
   }
 
   fileprivate func updateNextButton() {
@@ -282,7 +311,17 @@ public class KWPaymentMethodViewController: UIViewController {
   }
 
   @IBAction func tokenButtonPressed(_ sender: Any) {
-    self.delegate?.paymentMethodViewController(self, run: .searchToken(token: self.viewModel.from))
+    self.delegate?.paymentMethodViewController(
+      self,
+      run: .searchToken(token: self.viewModel.from, isSource: true)
+    )
+  }
+
+  @IBAction func receiveTokenButtonPressed(_ sender: Any) {
+    self.delegate?.paymentMethodViewController(
+      self,
+      run: .searchToken(token: self.viewModel.from, isSource: false)
+    )
   }
 
   @IBAction func nextButtonPressed(_ sender: Any) {
@@ -324,6 +363,7 @@ extension KWPaymentMethodViewController: UITextFieldDelegate {
     if self.viewModel.isFromAmountTextFieldEnabled {
       // update estimate dest amount
       self.estimateDestAmountLabel.attributedText = self.viewModel.estimateDestAmountAttributedString
+      self.receiveAmountLabel.text = self.viewModel.estimatedReceiverAmountString
     } else {
       // update expected source amount
       self.tokenAmountTextField.text = self.viewModel.estimatedFromAmountDisplay
@@ -341,14 +381,14 @@ extension KWPaymentMethodViewController {
     self.view.layoutIfNeeded()
   }
 
-  func coordinatorUpdatePayToken(_ token: KWTokenObject) {
-    if self.viewModel.from == token { return }
-    self.viewModel.updateSelectedToken(token)
-    self.updateSelectedToken()
-    self.reloadDataFromNode()
-    self.updateEstimatedRate()
-    self.updateViewAmountDidChange()
-    self.view.layoutIfNeeded()
+  func coordinatorUpdatePayToken(_ token: KWTokenObject, isSource: Bool) {
+    if self.viewModel.updateSelectedToken(token, isSource: isSource) {
+      self.updateSelectedToken()
+      self.reloadDataFromNode()
+      self.updateEstimatedRate()
+      self.updateViewAmountDidChange()
+      self.view.layoutIfNeeded()
+    }
   }
   
   func coordinatorUpdateEstGasLimit() {
@@ -390,7 +430,7 @@ extension KWPaymentMethodViewController: KAdvancedSettingsViewDelegate {
       let minRateDescVC: KWMinAcceptableRatePopupViewController = {
         let viewModel = KWMinAcceptableRatePopupViewModel(
           minRate: self.viewModel.minRateText ?? "0.0",
-          symbol: self.viewModel.receiverToken.symbol
+          symbol: self.viewModel.to.symbol
         )
         return KWMinAcceptableRatePopupViewController(viewModel: viewModel)
       }()

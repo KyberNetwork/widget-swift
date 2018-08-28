@@ -34,11 +34,13 @@ public struct KWPayment {
   let commissionID: String?
 
   func newObject(with account: Account) -> KWPayment {
+    // if dest wallet is empty -> kyberswap transaction
+    let destAddr: String = self.destWallet.isEmpty ? account.address.description : self.destWallet
     return KWPayment(
       from: self.from,
       to: self.to,
       account: account,
-      destWallet: self.destWallet,
+      destWallet: destAddr,
       amountFrom: self.amountFrom,
       amountTo: self.amountTo,
       minRate: self.minRate,
