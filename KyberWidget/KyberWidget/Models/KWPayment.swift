@@ -33,6 +33,19 @@ public struct KWPayment {
   let chainID: Int
   let commissionID: String?
 
+  func expectedFromAmount(dataType: KWDataType) -> BigInt {
+    // KyberSwap
+    if dataType == .kyberswap { return self.amountFrom }
+    // Normal transfer
+    if self.from == self.to { return self.amountFrom }
+    // Not fixed receive amount
+    if self.amountTo == nil { return self.amountFrom }
+    guard let minRate = self.minRate, let expectedRate = self.expectedRate, !expectedRate.isZero else {
+      return BigInt(0)
+    }
+    return self.amountFrom * minRate / expectedRate
+  }
+
   func newObject(with account: Account) -> KWPayment {
     // if dest wallet is empty -> kyberswap transaction
     let destAddr: String = self.destWallet.isEmpty ? account.address.description : self.destWallet

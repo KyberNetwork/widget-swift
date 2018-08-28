@@ -74,13 +74,21 @@ public class KWPaymentMethodViewModel: NSObject {
       keystore: keystore,
       network: network
     )
+
+    let eth = tokens.first(where: { $0.isETH })!
+    let knc = tokens.first(where: { $0.isKNC })!
+
     self.tokens = tokens
     if let token = receiverToken {
       self.from = token
       self.to = token
+      if dataType == .kyberswap {
+        // if kyberswap, from and to should be different tokens
+        self.from = token.isETH ? knc : eth
+      }
     } else {
-      self.from = tokens.first(where: { $0.isETH })!
-      self.to = tokens.first(where: { $0.isKNC })!
+      self.from = eth
+      self.to = knc
     }
 
     super.init()
@@ -125,6 +133,10 @@ public class KWPaymentMethodViewModel: NSObject {
     }()
     return expected
   }
+
+  var navigationTitle: String {
+    return self.dataType == .kyberswap ? KWStringConfig.current.swap : KWStringConfig.current.payment
+  }
 }
 
 // MARK: Source data
@@ -149,7 +161,7 @@ extension KWPaymentMethodViewModel {
   var isFromAmountTextFieldEnabled: Bool { return self.toAmount == nil }
 
   var transactionTypeText: String {
-    return self.dataType == .payment ? KWStringConfig.current.payWith : KWStringConfig.current.swap
+    return self.dataType == .payment ? KWStringConfig.current.payWith : KWStringConfig.current.swapUppercased
   }
 
   // convert from amount to BigInt
@@ -357,9 +369,21 @@ extension KWPaymentMethodViewModel {
     if self.from == token && isSource { return false }
     if self.to == token && !isSource { return false }
 
-    if isSource { self.from = token } else { self.to = token }
+    let oldFrom = self.from
+    let oldTo = self.to
 
-    self.amountFrom = ""
+    if isSource { self.from = token } else { self.to = token }
+    if self.dataType == .kyberswap && self.from == self.to {
+      if isSource {
+        // just updata from token
+        self.to = oldFrom
+      } else {
+        // just update to token
+        self.from = oldTo
+      }
+    }
+
+    if self.from != oldFrom { self.amountFrom = "" }
     self.estimatedRate = nil
     self.slippageRate = nil
 

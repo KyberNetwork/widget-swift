@@ -45,6 +45,7 @@ public class KWPaymentMethodViewController: UIViewController {
   @IBOutlet weak var receiveAmountLabel: UILabel!
   @IBOutlet weak var heightConstraintForReceiveTokenData: NSLayoutConstraint!
   @IBOutlet weak var toButton: UIButton!
+  @IBOutlet weak var tokensSeparatorView: UIView!
 
   @IBOutlet weak var estimateRateLoadingView: UIActivityIndicatorView!
   @IBOutlet weak var estimateRateLabel: UILabel!
@@ -74,7 +75,7 @@ public class KWPaymentMethodViewController: UIViewController {
 
   override public func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.navigationItem.title = KWStringConfig.current.paymentMethod
+    self.navigationItem.title = self.viewModel.navigationTitle
     self.loadTimer?.invalidate()
     self.reloadDataFromNode()
     self.loadTimer = Timer.scheduledTimer(
@@ -108,7 +109,7 @@ public class KWPaymentMethodViewController: UIViewController {
   }
 
   fileprivate func setupNavigationBar() {
-    self.navigationItem.title = KWStringConfig.current.paymentMethod
+    self.navigationItem.title = self.viewModel.navigationTitle
     let image = UIImage(named: "back_white_icon", in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil)
     let leftItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.leftButtonPressed(_:)))
     self.navigationItem.leftBarButtonItem = leftItem
@@ -116,7 +117,10 @@ public class KWPaymentMethodViewController: UIViewController {
   }
 
   fileprivate func setupStepView() {
-    self.stepView.updateView(with: .paymentMethod)
+    self.stepView.updateView(
+      with: .chooseToken,
+      isPayment: self.viewModel.dataType == .payment
+    )
   }
 
   fileprivate func setupDestAddressView() {
@@ -143,6 +147,7 @@ public class KWPaymentMethodViewController: UIViewController {
 
     self.toButton.rounded(radius: self.toButton.frame.height / 2.0)
     self.toButton.isHidden = self.viewModel.isToButtonHidden
+    self.tokensSeparatorView.isHidden = self.viewModel.isToButtonHidden
     self.receiveTokenButton.isHidden = self.viewModel.isToButtonHidden
     self.receiveAmountLabel.isHidden = self.viewModel.isToButtonHidden
 
@@ -220,7 +225,12 @@ public class KWPaymentMethodViewController: UIViewController {
       self.viewModel.tokenButtonAttributedText(isSource: true),
       for: .normal
     )
-    self.tokenAmountTextField.text = self.viewModel.estimatedFromAmountDisplay
+    if self.tokenAmountTextField.isEnabled {
+      self.tokenAmountTextField.text = self.viewModel.amountFrom
+    } else {
+      self.tokenAmountTextField.text = self.viewModel.estimatedFromAmountDisplay
+      self.viewModel.updateFromAmount(self.tokenAmountTextField.text ?? "")
+    }
 
     self.receiveTokenButton.setTokenImage(
       token: self.viewModel.to,
@@ -329,15 +339,15 @@ public class KWPaymentMethodViewController: UIViewController {
   }
 
   fileprivate func reloadDataFromNode() {
-    self.viewModel.getEstimatedGasLimit {
-      self.coordinatorUpdateEstGasLimit()
-    }
     self.viewModel.getExpectedRateRequest {
       self.coordinatorUpdateExpectedRate()
     }
     KWGasCoordinator.shared.getKNCachedGasPrice {
       self.viewModel.updateEstimatedGasPrices()
       self.updateAdvancedSettingsView()
+    }
+    self.viewModel.getEstimatedGasLimit {
+      self.coordinatorUpdateEstGasLimit()
     }
   }
 }
@@ -362,6 +372,7 @@ extension KWPaymentMethodViewController: UITextFieldDelegate {
   fileprivate func updateViewAmountDidChange() {
     if self.viewModel.isFromAmountTextFieldEnabled {
       // update estimate dest amount
+      self.tokenAmountTextField.text = self.viewModel.amountFrom
       self.estimateDestAmountLabel.attributedText = self.viewModel.estimateDestAmountAttributedString
       self.receiveAmountLabel.text = self.viewModel.estimatedReceiverAmountString
     } else {
@@ -373,6 +384,7 @@ extension KWPaymentMethodViewController: UITextFieldDelegate {
   }
 }
 
+// MARK: Update from coordinator
 extension KWPaymentMethodViewController {
   func coordinatorUpdateExpectedRate() {
     self.updateEstimatedRate()

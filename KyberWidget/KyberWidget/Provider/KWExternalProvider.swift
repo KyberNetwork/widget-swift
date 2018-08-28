@@ -189,9 +189,17 @@ public class KWExternalProvider: NSObject {
     self.generalProvider.getExpectedRate(
       from: from,
       to: to,
-      amount: amount,
-      completion: completion
-    )
+      amount: amount) { [weak self] result in
+      guard let _ = self else { return }
+      switch result {
+      case .success(let data):
+        let expectedRate = data.0 / BigInt(10).power(18 - to.decimals)
+        let slippageRate = data.1 / BigInt(10).power(18 - to.decimals)
+        completion(.success((expectedRate, slippageRate)))
+      case .failure(let error):
+        completion(.failure(error))
+      }
+    }
   }
 
   // MARK: Estimate Gas

@@ -21,11 +21,17 @@ public class KWConfirmPaymentViewController: UIViewController {
 
   @IBOutlet weak var stepView: KWStepView!
 
- @IBOutlet weak var destAddressLabel: UILabel!
-
+  @IBOutlet weak var paymentDataView: UIView!
+  @IBOutlet weak var destAddressLabel: UILabel!
   @IBOutlet weak var amounToPayTextLabel: UILabel!
   @IBOutlet weak var estimateSrcAmountLabel: UILabel!
   @IBOutlet weak var estimateDestAmountLabel: UILabel!
+
+  @IBOutlet weak var swapDataView: UIView!
+  @IBOutlet weak var fromAmountLabel: UILabel!
+  @IBOutlet weak var toAmountLabel: UILabel!
+  @IBOutlet weak var toTextLabel: UILabel!
+  @IBOutlet weak var expectedRateLabel: UILabel!
 
   @IBOutlet weak var minAcceptableRateTextLabel: UILabel!
   @IBOutlet weak var minRateLabel: UILabel!
@@ -87,7 +93,38 @@ public class KWConfirmPaymentViewController: UIViewController {
   fileprivate func setupUI() {
     self.setupNavigationBar()
     self.setupStepView()
-    self.setupUIElements()
+    self.setupPaymentDataView()
+    self.setupSwapDataView()
+    self.setupCommonElements()
+  }
+
+  fileprivate func setupPaymentDataView() {
+    self.paymentDataView.isHidden = self.viewModel.isPaymentDataViewHidden
+    self.destAddressLabel.attributedText = self.viewModel.paymentDestAddressAttributedString
+
+    self.amounToPayTextLabel.text = KWStringConfig.current.amountToPay
+    self.amounToPayTextLabel.textColor = KWThemeConfig.current.confirmAmountToPayTextColor
+
+    self.estimateSrcAmountLabel.text = self.viewModel.paymentFromAmountString
+    self.estimateSrcAmountLabel.textColor = KWThemeConfig.current.confirmPayFromAmountColor
+
+    self.estimateDestAmountLabel.text = self.viewModel.paymentEstimatedReceivedAmountString
+    self.estimateDestAmountLabel.textColor = KWThemeConfig.current.confirmPayReceivedAmountColor
+  }
+
+  fileprivate func setupSwapDataView() {
+    self.swapDataView.isHidden = self.viewModel.isSwapDataViewHidden
+    self.fromAmountLabel.text = self.viewModel.swapFromAmountString
+    self.fromAmountLabel.textColor = KWThemeConfig.current.confirmSwapFromAmountColor
+
+    self.toAmountLabel.text = self.viewModel.swapToAmountString
+    self.toAmountLabel.textColor = KWThemeConfig.current.confirmSwapToAmountColor
+
+    self.toTextLabel.text = "\(KWStringConfig.current.to):"
+    self.toTextLabel.textColor = KWThemeConfig.current.confirmToTextColor
+
+    self.expectedRateLabel.text = self.viewModel.swapExpectedRateString
+    self.expectedRateLabel.textColor = KWThemeConfig.current.confirmSwapExpectedRateColor
   }
 
   fileprivate func setupNavigationBar() {
@@ -99,16 +136,10 @@ public class KWConfirmPaymentViewController: UIViewController {
   }
 
   fileprivate func setupStepView() {
-    self.stepView.updateView(with: .confirm)
+    self.stepView.updateView(with: .confirm, isPayment: self.viewModel.dataType == .payment)
   }
 
-  fileprivate func setupUIElements() {
-    self.destAddressLabel.attributedText = self.viewModel.destAddressAttributedString
-
-    self.amounToPayTextLabel.text = KWStringConfig.current.amountToPay
-    self.estimateSrcAmountLabel.text = self.viewModel.displayFromAmount
-    self.estimateDestAmountLabel.text = self.viewModel.displayEstimatedReceivedAmountBigInt
-
+  fileprivate func setupCommonElements() {
     self.minAcceptableRateTextLabel.text = KWStringConfig.current.minAcceptableRate
     self.minAcceptableRateTextLabel.isHidden = self.viewModel.isMinRateHidden
     self.minRateLabel.isHidden = self.viewModel.isMinRateHidden

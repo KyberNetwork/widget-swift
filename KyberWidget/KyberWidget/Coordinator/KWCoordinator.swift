@@ -328,6 +328,7 @@ extension KWCoordinator: KWPaymentMethodViewControllerDelegate {
     self.payment = payment
     self.importWalletVC = {
       let viewModel = KWImportViewModel(
+        dataType: self.dataType,
         network: self.network,
         signer: self.signer,
         commissionID: self.commissionID,

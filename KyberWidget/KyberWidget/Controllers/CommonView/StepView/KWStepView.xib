@@ -70,8 +70,8 @@
                         <constraint firstAttribute="height" constant="32" id="G5p-eg-4R7"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment Method" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nmC-D4-KL3">
-                    <rect key="frame" x="12" y="76" width="105.5" height="15"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nmC-D4-KL3">
+                    <rect key="frame" x="8.5" y="76" width="55" height="15"/>
                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                     <color key="textColor" red="0.19215686269999999" green="0.79607843140000001" blue="0.61960784310000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
@@ -104,10 +104,10 @@
                 <constraint firstItem="qZy-fe-uLA" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="20" id="gNV-6X-1Wl"/>
                 <constraint firstItem="BNC-7k-nJ7" firstAttribute="leading" secondItem="nD8-ar-dZW" secondAttribute="trailing" id="hqw-Wt-QpT"/>
                 <constraint firstItem="nD8-ar-dZW" firstAttribute="leading" secondItem="SCm-gz-6wA" secondAttribute="trailing" id="o1v-zo-YHL"/>
-                <constraint firstItem="nmC-D4-KL3" firstAttribute="leading" secondItem="qZy-fe-uLA" secondAttribute="leading" constant="-8" id="oDd-oa-Mfo"/>
                 <constraint firstItem="3Ft-rI-z1N" firstAttribute="centerY" secondItem="nD8-ar-dZW" secondAttribute="centerY" id="oeR-mF-Qbr"/>
                 <constraint firstItem="zpg-LF-t2l" firstAttribute="centerX" secondItem="nD8-ar-dZW" secondAttribute="centerX" id="pQN-JU-nnP"/>
                 <constraint firstItem="WP3-BA-oTE" firstAttribute="trailing" secondItem="3Ft-rI-z1N" secondAttribute="trailing" constant="8" id="pvb-Lo-mqd"/>
+                <constraint firstItem="nmC-D4-KL3" firstAttribute="centerX" secondItem="qZy-fe-uLA" secondAttribute="centerX" id="qiI-Tn-3vv"/>
                 <constraint firstItem="nD8-ar-dZW" firstAttribute="centerY" secondItem="qZy-fe-uLA" secondAttribute="centerY" id="zhv-06-WaF"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

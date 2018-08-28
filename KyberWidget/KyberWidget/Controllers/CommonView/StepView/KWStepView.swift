@@ -9,7 +9,7 @@
 import UIKit
 
 enum KWStepViewState: Int {
-  case paymentMethod = 0
+  case chooseToken = 0
   case importAddress = 1
   case confirm = 2
 }
@@ -51,17 +51,19 @@ class KWStepView: KWXibLoaderView {
     self.importWalletImageView.backgroundColor = KWThemeConfig.current.inactiveBackgroundColor
     self.confirmImageView.backgroundColor = KWThemeConfig.current.inactiveBackgroundColor
 
-    self.paymentLabel.text = KWStringConfig.current.paymentMethod
+    self.paymentLabel.text = KWStringConfig.current.payment
     self.importLabel.text = KWStringConfig.current.importWallet
     self.confirmLabel.text = KWStringConfig.current.confirm
   }
 
-  func updateView(with state: KWStepViewState) {
+  func updateView(with state: KWStepViewState, isPayment: Bool) {
     let paymentState: Int = 1
-    let importState: Int = state == .paymentMethod ? 0 : 1
+    let importState: Int = state == .chooseToken ? 0 : 1
     let confirmState: Int = state == .confirm ? 1 : 0
 
-    self.updatePaymentMethod(stateID: paymentState)
+    self.paymentLabel.text = isPayment ? KWStringConfig.current.payment : KWStringConfig.current.swap
+
+    self.updateChooseToken(stateID: paymentState)
     self.updateImportWallet(stateID: importState)
     self.updateConfirm(stateID: confirmState)
   }
@@ -69,7 +71,7 @@ class KWStepView: KWXibLoaderView {
   /*
    3 states: inactive, active corresponding to 0, 1
    */
-  fileprivate func updatePaymentMethod(stateID: Int) {
+  fileprivate func updateChooseToken(stateID: Int) {
     self.paymentStepImageView.image = self.images[stateID]
     self.paymentStepImageView.backgroundColor = self.backgroudColors[stateID]
     self.paymentLabel.textColor = self.textColors[stateID]

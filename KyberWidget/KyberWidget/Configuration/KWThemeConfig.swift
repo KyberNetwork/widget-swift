@@ -11,7 +11,8 @@ import UIKit
 public class KWStringConfig: NSObject {
   public static let current = KWStringConfig()
 
-  public var paymentMethod: String = "Payment Method"
+  public var payment: String = "Payment"
+  public var swap: String = "Swap"
   public var importWallet: String = "Import Wallet"
   public var confirm: String = "Confirm"
 
@@ -19,7 +20,7 @@ public class KWStringConfig: NSObject {
   public var address: String = "Address"
   public var amount: String = "Amount"
   public var payWith: String = "PAY WITH"
-  public var swap: String = "SWAP"
+  public var swapUppercased: String = "SWAP"
   public var estimateDestAmount: String = "Estimate dest amount"
 
   public var gasFee: String = "GAS fee"
@@ -41,6 +42,8 @@ public class KWStringConfig: NSObject {
   public var enterPrivateKey: String = "Enter private key"
   public var enterSeeds: String = "Enter seeds"
   public var cancel: String = "Cancel"
+
+  public var to: String = "To"
 
   public var addressToPay: String = "Address to pay"
   public var amountToPay: String = "Amount to pay".uppercased()
@@ -72,6 +75,17 @@ public class KWThemeConfig: NSObject {
   public var payMinRateSliderMaxTrackColor: UIColor = UIColor.Kyber.shamrock.withAlphaComponent(0.5)
   public var payMinRateThumbTintColor: UIColor = UIColor.Kyber.background
   public var payMinRatePercentColor: UIColor = UIColor.Kyber.shamrock
+
+  public var confirmSwapFromAmountColor: UIColor = UIColor.Kyber.black
+  public var confirmSwapToAmountColor: UIColor = UIColor.Kyber.black
+  public var confirmSwapExpectedRateColor: UIColor = UIColor.Kyber.black
+  public var confirmToTextColor: UIColor = UIColor.Kyber.shamrock
+
+  public var confirmAddressToPayTextColor: UIColor = UIColor.Kyber.segment
+  public var confirmAddressTextColor: UIColor = UIColor(red: 102, green: 102, blue: 102)
+  public var confirmAmountToPayTextColor: UIColor = UIColor.Kyber.segment
+  public var confirmPayFromAmountColor: UIColor = UIColor.Kyber.background
+  public var confirmPayReceivedAmountColor: UIColor = UIColor.Kyber.black
 
   public var actionButtonNormalBackgroundColor: UIColor = UIColor.Kyber.background
   public var actionButtonDisableBackgroundColor: UIColor = UIColor(red: 225, green: 225, blue: 225)

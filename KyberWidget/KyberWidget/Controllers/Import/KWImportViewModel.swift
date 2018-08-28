@@ -15,6 +15,7 @@ import Result
 public class KWImportViewModel: NSObject {
   let network: KWEnvironment
 
+  let dataType: KWDataType
   let signer: String?
   let commissionID: String?
 
@@ -30,6 +31,7 @@ public class KWImportViewModel: NSObject {
   private(set) var balance: BigInt? = nil
 
   public init(
+    dataType: KWDataType,
     network: KWEnvironment,
     signer: String? = nil,
     commissionID: String? = nil,
@@ -37,6 +39,7 @@ public class KWImportViewModel: NSObject {
     tokens: [KWTokenObject],
     payment: KWPayment
     ) {
+    self.dataType = dataType
     self.network = network
     self.signer = signer
     self.commissionID = commissionID
@@ -114,15 +117,7 @@ public class KWImportViewModel: NSObject {
 
   var isBalanceEnough: Bool {
     guard let balance = self.balance else { return false }
-    let amountFrom: BigInt = {
-      if self.payment.from == self.payment.to { return self.payment.amountFrom }
-      if self.payment.amountTo == nil { return self.payment.amountFrom }
-      // amountFrom is computed using min rate
-      guard let minRate = self.payment.minRate, let expectedRate = self.payment.expectedRate, !expectedRate.isZero else {
-        return BigInt(0)
-      }
-      return self.payment.amountFrom * minRate / expectedRate
-    }()
+    let amountFrom: BigInt = self.payment.expectedFromAmount(dataType: self.dataType)
     return amountFrom <= balance
   }
 
