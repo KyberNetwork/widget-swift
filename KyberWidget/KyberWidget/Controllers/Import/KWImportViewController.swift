@@ -279,8 +279,7 @@ public class KWImportViewController: UIViewController {
         self.privateKeyButton.isSelected = true
         self.textField.placeholder =
           KWStringConfig.current.enterPrivateKey
-        //TODO: Remove
-        self.textField.text = "f4e72838eb3b07d2508289042e49c7996d06c3c4907922485fd6565646bc3f1e"
+        self.textField.text = ""
       } else {
         self.seedsButton.isSelected = true
         self.textField.placeholder = KWStringConfig.current.enterSeeds
