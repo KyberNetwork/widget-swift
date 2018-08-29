@@ -78,7 +78,7 @@ public class KWPaymentMethodViewController: UIViewController {
     super.viewWillAppear(animated)
     self.navigationItem.title = self.viewModel.navigationTitle
     self.loadTimer?.invalidate()
-    self.reloadDataFromNode()
+    self.reloadDataFromNode(isFirstTime: true)
     self.loadTimer = Timer.scheduledTimer(
       withTimeInterval: 10.0,
       repeats: true,
@@ -342,7 +342,7 @@ public class KWPaymentMethodViewController: UIViewController {
     self.delegate?.paymentMethodViewController(self, run: .next(payment: self.viewModel.payment))
   }
 
-  fileprivate func reloadDataFromNode() {
+  fileprivate func reloadDataFromNode(isFirstTime: Bool = false) {
     self.viewModel.getExpectedRateRequest {
       self.coordinatorUpdateExpectedRate()
     }

@@ -109,6 +109,10 @@ public class KWConfirmPaymentViewModel: NSObject {
     return "~ \(string.prefix(12)) \(self.payment.to.symbol)"
   }
 
+  var isPaymentEstimatedReceivedAmountHidden: Bool {
+    return !(self.dataType == .pay) || self.payment.from == self.payment.to
+  }
+
   var isSwapDataViewHidden: Bool { return self.dataType != .swap }
   var swapFromAmountString: String { return self.paymentFromAmountString }
   var swapToAmountString: String {

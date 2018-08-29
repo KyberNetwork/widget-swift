@@ -116,7 +116,7 @@ public class KWConfirmPaymentViewController: UIViewController {
     self.estimateSrcAmountLabel.textColor = KWThemeConfig.current.confirmPayFromAmountColor
 
     self.estimateDestAmountLabel.text = self.viewModel.paymentEstimatedReceivedAmountString
-    self.estimateDestAmountLabel.isHidden = !(self.viewModel.dataType == .pay)
+    self.estimateDestAmountLabel.isHidden = self.viewModel.isPaymentEstimatedReceivedAmountHidden
     self.estimateDestAmountLabel.textColor = KWThemeConfig.current.confirmPayReceivedAmountColor
   }
 
