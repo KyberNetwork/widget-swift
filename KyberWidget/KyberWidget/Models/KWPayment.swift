@@ -35,7 +35,9 @@ public struct KWPayment {
 
   func expectedFromAmount(dataType: KWDataType) -> BigInt {
     // KyberSwap
-    if dataType == .kyberswap { return self.amountFrom }
+    if dataType == .swap { return self.amountFrom }
+    // Buy but not fixed receive amount
+    if dataType == .buy && self.amountTo == nil { return self.amountFrom }
     // Normal transfer
     if self.from == self.to { return self.amountFrom }
     // Not fixed receive amount

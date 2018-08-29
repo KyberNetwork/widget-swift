@@ -23,7 +23,8 @@
                 <outlet property="amounToPayTextLabel" destination="1Bc-pM-Xe4" id="PDY-Lp-Jie"/>
                 <outlet property="cancelButton" destination="mNk-E4-Qj9" id="CdV-ao-LOv"/>
                 <outlet property="confirmButton" destination="dcO-Yu-edd" id="62Z-Qr-KTl"/>
-                <outlet property="destAddressLabel" destination="PZN-12-AXO" id="ZQV-EY-4mX"/>
+                <outlet property="destDataLabel" destination="zXN-dr-dxI" id="I6K-mZ-NXY"/>
+                <outlet property="destTextLabel" destination="PZN-12-AXO" id="8rY-IR-o8Q"/>
                 <outlet property="estimateDestAmountLabel" destination="UwQ-jR-OOf" id="Q5Z-MI-JPU"/>
                 <outlet property="estimateSrcAmountLabel" destination="p78-iB-AUB" id="niU-MU-Kqp"/>
                 <outlet property="expectedRateLabel" destination="XRR-0Q-B9R" id="hBd-CT-DNh"/>
@@ -79,10 +80,16 @@
                             <color key="textColor" red="0.058823529409999999" green="0.66666666669999997" blue="0.63529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PZN-12-AXO">
-                            <rect key="frame" x="20" y="16" width="335" height="17.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address to pay:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PZN-12-AXO">
+                            <rect key="frame" x="20" y="16" width="108.5" height="17.5"/>
                             <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="14"/>
-                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" red="0.61960784313725492" green="0.63137254901960782" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="T009nbve726e3a7e…6a044" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zXN-dr-dxI">
+                            <rect key="frame" x="164.5" y="16" width="190.5" height="17.5"/>
+                            <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="14"/>
+                            <color key="textColor" red="0.3529411764705882" green="0.36862745098039218" blue="0.40392156862745099" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="~ 20.493 ETH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UwQ-jR-OOf">
@@ -101,8 +108,9 @@
                         <constraint firstItem="UwQ-jR-OOf" firstAttribute="centerX" secondItem="p78-iB-AUB" secondAttribute="centerX" id="LNP-Oj-v5e"/>
                         <constraint firstItem="1Bc-pM-Xe4" firstAttribute="top" secondItem="FrE-XD-dzv" secondAttribute="bottom" constant="16" id="Qic-6h-xCv"/>
                         <constraint firstItem="FrE-XD-dzv" firstAttribute="leading" secondItem="zsO-Lx-2DI" secondAttribute="leading" constant="20" id="XzB-wo-Nxi"/>
-                        <constraint firstAttribute="trailing" secondItem="PZN-12-AXO" secondAttribute="trailing" constant="20" id="a62-Vn-olb"/>
                         <constraint firstAttribute="trailing" secondItem="FrE-XD-dzv" secondAttribute="trailing" constant="20" id="bYH-Ph-HqG"/>
+                        <constraint firstItem="zXN-dr-dxI" firstAttribute="centerY" secondItem="PZN-12-AXO" secondAttribute="centerY" id="cYb-oK-Tcd"/>
+                        <constraint firstAttribute="trailing" secondItem="zXN-dr-dxI" secondAttribute="trailing" constant="20" id="d4s-hm-tNk"/>
                         <constraint firstItem="FrE-XD-dzv" firstAttribute="top" secondItem="PZN-12-AXO" secondAttribute="bottom" constant="32" id="gmV-ku-RrX"/>
                         <constraint firstItem="p78-iB-AUB" firstAttribute="top" secondItem="1Bc-pM-Xe4" secondAttribute="bottom" constant="24" id="naC-Fm-934"/>
                         <constraint firstItem="PZN-12-AXO" firstAttribute="top" secondItem="zsO-Lx-2DI" secondAttribute="top" constant="16" id="q9i-UK-YUH"/>

@@ -28,12 +28,13 @@ public protocol KWCoordinatorDelegate: class {
 }
 
 public enum KWDataType {
-  case payment
-  case kyberswap
+  case pay
+  case swap
+  case buy
 }
 
-// Use these 2 subclasses to initialize only
-public class KWPaymentCoordinator: KWCoordinator {
+// Use these 3 subclasses to initialize only
+public class KWPayCoordinator: KWCoordinator {
   public init(
     baseViewController: UIViewController,
     receiveAddr: String,
@@ -41,16 +42,21 @@ public class KWPaymentCoordinator: KWCoordinator {
     receiveAmount: Double?,
     network: KWEnvironment = .ropsten,
     signer: String? = nil,
-    commissionID: String? = nil
+    commissionId: String? = nil,
+    productName: String,
+    productAvatar: String
     ) throws {
     try super.init(
       baseViewController: baseViewController,
       receiveAddr: receiveAddr,
       receiveToken: receiveToken,
       receiveAmount: receiveAmount,
+      type: .pay,
       network: network,
       signer: signer,
-      commissionID: commissionID
+      commissionId: commissionId,
+      productName: productName,
+      productAvatar: productAvatar
     )
   }
 }
@@ -58,19 +64,49 @@ public class KWPaymentCoordinator: KWCoordinator {
 public class KWSwapCoordinator: KWCoordinator {
   public init(
     baseViewController: UIViewController,
-    receiveToken: String?,
     network: KWEnvironment = .ropsten,
     signer: String? = nil,
-    commissionID: String? = nil
+    commissionId: String? = nil,
+    productName: String,
+    productAvatar: String
     ) throws {
     try super.init(
       baseViewController: baseViewController,
-      receiveAddr: "self",
-      receiveToken: receiveToken,
+      receiveAddr: "",
+      receiveToken: nil,
       receiveAmount: nil,
+      type: .swap,
       network: network,
       signer: signer,
-      commissionID: commissionID
+      commissionId: commissionId,
+      productName: productName,
+      productAvatar: productAvatar
+    )
+  }
+}
+
+public class KWBuyCoordinator: KWCoordinator {
+  public init(
+    baseViewController: UIViewController,
+    receiveToken: String,
+    receiveAmount: Double?,
+    network: KWEnvironment,
+    signer: String?,
+    commissionId: String?,
+    productName: String,
+    productAvatar: String
+    ) throws {
+    try super.init(
+      baseViewController: baseViewController,
+      receiveAddr: "",
+      receiveToken: receiveToken,
+      receiveAmount: receiveAmount,
+      type: .buy,
+      network: network,
+      signer: signer,
+      commissionId: commissionId,
+      productName: productName,
+      productAvatar: productAvatar
     )
   }
 }
@@ -84,13 +120,15 @@ public class KWCoordinator {
   var receiverToken: KWTokenObject? = nil
   let receiverTokenAmount: Double?
   let dataType: KWDataType
+  let productName: String
+  let productAvatar: String
 
   let network: KWEnvironment
 
   var payment: KWPayment?
 
   let signer: String?
-  let commissionID: String?
+  let commissionId: String?
 
   fileprivate(set) var keystore: KWKeystore
   fileprivate(set) var account: Account?
@@ -114,9 +152,12 @@ public class KWCoordinator {
     receiveAddr: String,
     receiveToken: String?,
     receiveAmount: Double?,
+    type: KWDataType,
     network: KWEnvironment,
     signer: String? = nil,
-    commissionID: String? = nil
+    commissionId: String? = nil,
+    productName: String,
+    productAvatar: String
     ) throws {
     self.baseViewController = baseViewController
     self.navigationController = {
@@ -138,30 +179,28 @@ public class KWCoordinator {
     }
     self.network = network
     self.signer = signer
-    self.commissionID = commissionID
+    self.commissionId = commissionId
     self.keystore = try KWKeystore()
 
-    if receiveAddr == "self" {
-      self.dataType = .kyberswap
-    } else {
-      self.dataType = .payment
-    }
+    self.dataType = type
+    self.productName = productName
+    self.productAvatar = productAvatar
   }
 
   public func start(completion: (() -> Void)? = nil) {
-    if self.receiverAddress != "self" && Address(string: self.receiverAddress) == nil {
-      let errorMessage: String = "Receiver address should be a valid ETH address or `self`"
+    if self.receiverAddress != "" && Address(string: self.receiverAddress) == nil {
+      let errorMessage: String = "Pass empty string if you want to swap or buy, otherwise receiver address must be a valid ETH addres"
       self.startSession(error: .invalidAddress(errorMessage: errorMessage), completion: completion)
       return
     }
-    if self.dataType == .payment && self.receiverTokenSymbol.isEmpty {
+    if self.dataType == .pay && self.receiverTokenSymbol.isEmpty {
       let errorMessage: String = "Needs to pass token symbol for payment transaction"
       self.startSession(error: .invalidToken(errorMessage: errorMessage), completion: completion)
       return
     }
-    if self.dataType == .kyberswap && self.receiverTokenAmount != nil {
-      let errorMessage: String = "Please do not set receiver amount if performing KyberSwap"
-      self.startSession(error: .invalidAmount(errorMessage: errorMessage), completion: completion)
+    if self.dataType == .buy && self.receiverTokenSymbol.isEmpty {
+      let errorMessage: String = "Buy must have receive token"
+      self.startSession(error: .invalidToken(errorMessage: errorMessage), completion: completion)
       return
     }
     self.baseViewController.displayLoading(text: "Loading...", animated: true)
@@ -226,7 +265,7 @@ public class KWCoordinator {
   }
 
   fileprivate func loadSupportedTokensIfNeeded(completion: @escaping (Result<[KWTokenObject], AnyError>) -> Void) {
-    if self.network != .mainnetTest && self.network != .production {
+    if self.network != .mainnet && self.network != .production {
       // list suppported tokens only works for production, mainnet
       let supportedTokens = KWJSONLoadUtil.loadListSupportedTokensFromJSONFile(env: network)
       completion(.success(supportedTokens))
@@ -331,7 +370,7 @@ extension KWCoordinator: KWPaymentMethodViewControllerDelegate {
         dataType: self.dataType,
         network: self.network,
         signer: self.signer,
-        commissionID: self.commissionID,
+        commissionID: self.commissionId,
         keystore: self.keystore,
         tokens: self.tokens,
         payment: payment

@@ -10,7 +10,7 @@ import UIKit
 
 public enum KWEnvironment: Int {
 
-  case mainnetTest = 0
+  case mainnet = 0
   case production = 1
   case staging = 2
   case ropsten = 3
@@ -18,7 +18,7 @@ public enum KWEnvironment: Int {
 
   var displayName: String {
     switch self {
-    case .mainnetTest: return "Mainnet"
+    case .mainnet: return "Mainnet"
     case .production: return "Production"
     case .staging: return "Staging"
     case .ropsten: return "Ropsten"
@@ -27,7 +27,7 @@ public enum KWEnvironment: Int {
   }
 
   static let allEnvs: [KWEnvironment] = [
-    KWEnvironment.mainnetTest,
+    KWEnvironment.mainnet,
     KWEnvironment.production,
     KWEnvironment.staging,
     KWEnvironment.ropsten,
@@ -53,7 +53,7 @@ public enum KWEnvironment: Int {
 
   var configFileName: String {
     switch self {
-    case .mainnetTest: return "config_env_mainnet_test"
+    case .mainnet: return "config_env_mainnet_test"
     case .production: return "config_env_production"
     case .staging: return "config_env_staging"
     case .ropsten: return "config_env_ropsten"
@@ -63,7 +63,7 @@ public enum KWEnvironment: Int {
 
   var apiEtherScanEndpoint: String {
     switch self {
-    case .mainnetTest: return "http://api.etherscan.io/"
+    case .mainnet: return "http://api.etherscan.io/"
     case .production: return "http://api.etherscan.io/"
     case .staging: return "http://api-kovan.etherscan.io/"
     case .ropsten: return "http://api-ropsten.etherscan.io/"

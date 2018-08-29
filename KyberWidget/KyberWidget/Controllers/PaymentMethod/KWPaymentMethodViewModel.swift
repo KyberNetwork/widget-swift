@@ -82,8 +82,8 @@ public class KWPaymentMethodViewModel: NSObject {
     if let token = receiverToken {
       self.from = token
       self.to = token
-      if dataType == .kyberswap {
-        // if kyberswap, from and to should be different tokens
+      if dataType == .swap || dataType == .buy {
+        // if kyberswap or buy, from and to should be different tokens
         self.from = token.isETH ? knc : eth
       }
     } else {
@@ -108,7 +108,7 @@ public class KWPaymentMethodViewModel: NSObject {
       from: self.from,
       to: self.to,
       account: nil,
-      destWallet: self.dataType == .kyberswap ? "" : self.receiverAddress,
+      destWallet: self.receiverAddress,
       amountFrom: self.amountToSendMinRate,
       amountTo: self.receiverAmountBigInt,
       minRate: self.minRate,
@@ -122,7 +122,10 @@ public class KWPaymentMethodViewModel: NSObject {
 
   // The actual amount to send is computed using min rate, however, the est amount user need to pay is still the same
   var amountToSendMinRate: BigInt {
-    if self.from == self.to || self.dataType == .kyberswap  || self.toAmount == nil {
+    if self.from == self.to || self.dataType == .swap  || self.toAmount == nil {
+      return self.amountFromBigInt
+    }
+    if self.dataType == .buy && self.toAmount == nil {
       return self.amountFromBigInt
     }
     guard let minRate = self.minRate, !minRate.isZero else { return self.amountFromBigInt }
@@ -135,19 +138,16 @@ public class KWPaymentMethodViewModel: NSObject {
   }
 
   var navigationTitle: String {
-    return self.dataType == .kyberswap ? KWStringConfig.current.swap : KWStringConfig.current.payment
+    switch self.dataType {
+    case .pay: return KWStringConfig.current.payment
+    case .swap: return KWStringConfig.current.swap
+    case .buy: return KWStringConfig.current.buy
+    }
   }
 }
 
 // MARK: Source data
 extension KWPaymentMethodViewModel {
-  // The UI for payment and kyberswap are different
-  var isDestDataViewHidden: Bool { return self.dataType == .kyberswap }
-
-  var heightForDestDataView: CGFloat {
-    return self.isDestDataViewHidden ? 0.0 : 100.0
-  }
-
   var heightForTokenData: CGFloat {
     return self.receiverToken == nil ? 124.0 : 74.0
   }
@@ -159,9 +159,15 @@ extension KWPaymentMethodViewModel {
   var isToButtonHidden: Bool { return self.receiverToken != nil }
 
   var isFromAmountTextFieldEnabled: Bool { return self.toAmount == nil }
+  var fromAmountTextFieldColor: UIColor {
+    if self.isFromAmountTextFieldEnabled {
+      return KWThemeConfig.current.amountTextFieldEnable
+    }
+    return KWThemeConfig.current.amountTextFieldDisable
+  }
 
   var transactionTypeText: String {
-    return self.dataType == .payment ? KWStringConfig.current.payWith : KWStringConfig.current.swapUppercased
+    return self.dataType == .swap ? KWStringConfig.current.swapUppercased : KWStringConfig.current.payWith
   }
 
   // convert from amount to BigInt
@@ -185,6 +191,27 @@ extension KWPaymentMethodViewModel {
 
 // MARK: Receiver Data
 extension KWPaymentMethodViewModel {
+  var isDestDataViewHidden: Bool {
+    if self.dataType == .swap { return true }
+    if self.dataType == .buy && self.toAmount == nil { return true }
+    return false
+  }
+
+  // The UI for payment and kyberswap are different
+  var heightForDestDataView: CGFloat {
+    if self.isDestDataViewHidden { return 0.0 }
+    return self.dataType == .pay ? 100.0 : 80.0
+  }
+
+  var destDataTitleLabelString: String {
+    if self.isDestDataViewHidden { return "" }
+    if self.dataType == .pay { return KWStringConfig.current.youAreAboutToPay.uppercased() }
+    if self.dataType == .buy { return KWStringConfig.current.youAreAboutToBuy.uppercased() }
+    return ""
+  }
+
+  var isDestAddressLabelHidden: Bool { return self.receiverAddress.isEmpty }
+
   var destAddressAttributedString: NSAttributedString {
     let attributedString = NSMutableAttributedString()
     let addressTextAttributes: [NSAttributedStringKey: Any] = [
@@ -205,6 +232,10 @@ extension KWPaymentMethodViewModel {
   var receiverAmountBigInt: BigInt? {
     guard let receiverAmount = self.toAmount else { return nil }
     return BigInt(receiverAmount * pow(10.0, Double(self.to.decimals)))
+  }
+
+  var topPaddingForDestAmountLabel: CGFloat {
+    return self.isDestAddressLabelHidden ? 8 : 32
   }
 
   var destAmountAttributedString: NSAttributedString {
@@ -373,7 +404,7 @@ extension KWPaymentMethodViewModel {
     let oldTo = self.to
 
     if isSource { self.from = token } else { self.to = token }
-    if self.dataType == .kyberswap && self.from == self.to {
+    if self.dataType == .swap && self.from == self.to {
       if isSource {
         // just updata from token
         self.to = oldFrom
@@ -381,6 +412,9 @@ extension KWPaymentMethodViewModel {
         // just update to token
         self.from = oldTo
       }
+    } else if self.dataType == .buy && self.from == self.to {
+      // For buy, can not change from token but from must be different from to
+      self.from = oldFrom
     }
 
     if self.from != oldFrom { self.amountFrom = "" }

@@ -49,21 +49,39 @@ public class KWConfirmPaymentViewModel: NSObject {
     )
   }
 
-  var isPaymentDataViewHidden: Bool { return self.dataType != .payment }
+  var isPaymentDataViewHidden: Bool {
+    return self.dataType != .pay && self.dataType != .buy
+  }
 
-  var paymentDestAddressAttributedString: NSAttributedString {
-    let attributedString = NSMutableAttributedString()
-    let addressTextAttributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium),
-      NSAttributedStringKey.foregroundColor: KWThemeConfig.current.confirmAddressToPayTextColor,
-    ]
-    let addressValueAttributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium),
-      NSAttributedStringKey.foregroundColor: KWThemeConfig.current.confirmAddressTextColor,
-    ]
-    attributedString.append(NSAttributedString(string: "\(KWStringConfig.current.addressToPay): ", attributes: addressTextAttributes))
-    attributedString.append(NSAttributedString(string: "\(self.payment.destWallet.prefix(14))...\(self.payment.destWallet.suffix(5))", attributes: addressValueAttributes))
-    return attributedString
+  var paymentOrBuyDestTextString: String {
+    switch self.dataType {
+    case .pay:
+      return "\(KWStringConfig.current.addressToPay): "
+    case .buy:
+      return "\(KWStringConfig.current.youAreAboutToPay): "
+    default:
+      return ""
+    }
+  }
+
+  var paymentOrBuyDestValueString: String {
+    switch self.dataType {
+    case .pay:
+      return "\(self.payment.destWallet.prefix(16))...\(self.payment.destWallet.suffix(5))"
+    case .buy:
+      return self.paymentFromAmountString
+    default:
+      return ""
+    }
+  }
+
+  var buyAmountReceiveString: String {
+    guard let expectedReceive = self.estimatedReceivedAmountBigInt else { return "" }
+    let string = expectedReceive.string(
+      decimals: self.payment.to.decimals,
+      maxFractionDigits: max(9, self.payment.to.decimals)
+    )
+    return "\(string.prefix(12)) \(self.payment.to.symbol)"
   }
 
   var paymentFromAmountString: String {
@@ -91,7 +109,7 @@ public class KWConfirmPaymentViewModel: NSObject {
     return "~ \(string.prefix(12)) \(self.payment.to.symbol)"
   }
 
-  var isSwapDataViewHidden: Bool { return self.dataType != .kyberswap }
+  var isSwapDataViewHidden: Bool { return self.dataType != .swap }
   var swapFromAmountString: String { return self.paymentFromAmountString }
   var swapToAmountString: String {
     let valueString: String = {

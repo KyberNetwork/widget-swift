@@ -30,6 +30,7 @@ public class KWPaymentMethodViewController: UIViewController {
   @IBOutlet weak var destAmountLabel: UILabel!
   @IBOutlet weak var destDataContainerView: UIView!
   @IBOutlet weak var heightConstraintForDestDataView: NSLayoutConstraint!
+  @IBOutlet weak var topPaddingConstraintForDestAmountLabel: NSLayoutConstraint!
 
   @IBOutlet weak var advancedSettingsView: KAdvancedSettingsView!
   @IBOutlet weak var advancedSettingsHeightConstraint: NSLayoutConstraint!
@@ -119,26 +120,28 @@ public class KWPaymentMethodViewController: UIViewController {
   fileprivate func setupStepView() {
     self.stepView.updateView(
       with: .chooseToken,
-      isPayment: self.viewModel.dataType == .payment
+      dataType: self.viewModel.dataType
     )
   }
 
   fileprivate func setupDestAddressView() {
-    self.youAreAboutToPayTextLabel.text = KWStringConfig.current.youAreAboutToPay
-    self.destAddressLabel.attributedText = self.viewModel.destAddressAttributedString
-    self.destAmountLabel.isHidden = self.viewModel.isDestAmountLabelHidden
-    self.destAmountLabel.attributedText = self.viewModel.destAmountAttributedString
     self.destDataContainerView.isHidden = self.viewModel.isDestDataViewHidden
+    self.destAddressLabel.isHidden = self.viewModel.isDestAddressLabelHidden
+    self.destAmountLabel.isHidden = self.viewModel.isDestAmountLabelHidden
     self.heightConstraintForDestDataView.constant = self.viewModel.heightForDestDataView
+    self.topPaddingConstraintForDestAmountLabel.constant = self.viewModel.topPaddingForDestAmountLabel
+
+    self.youAreAboutToPayTextLabel.text = self.viewModel.destDataTitleLabelString
+    self.destAddressLabel.attributedText = self.viewModel.destAddressAttributedString
+    self.destAmountLabel.attributedText = self.viewModel.destAmountAttributedString
   }
 
   fileprivate func setupFromTokenView() {
     self.tokenContainerView.rounded(radius: 4.0)
     self.payWithTextLabel.text = self.viewModel.transactionTypeText
 
-//    self.tokenButton.titleLabel?.numberOfLines = 2
-//    self.tokenButton.titleLabel?.lineBreakMode = .byTruncatingTail
     self.tokenAmountTextField.isEnabled = self.viewModel.isFromAmountTextFieldEnabled
+    self.tokenAmountTextField.textColor = self.viewModel.fromAmountTextFieldColor
     self.tokenAmountTextField.adjustsFontSizeToFitWidth = true
 
     self.tokenAmountTextField.delegate = self
@@ -150,6 +153,7 @@ public class KWPaymentMethodViewController: UIViewController {
     self.tokensSeparatorView.isHidden = self.viewModel.isToButtonHidden
     self.receiveTokenButton.isHidden = self.viewModel.isToButtonHidden
     self.receiveAmountLabel.isHidden = self.viewModel.isToButtonHidden
+    self.receiveAmountLabel.textColor = KWThemeConfig.current.amountTextFieldDisable
 
     self.heightConstraintForTokenContainerView.constant = self.viewModel.heightForTokenData
     self.heightConstraintForReceiveTokenData.constant = self.viewModel.heightForReceiverTokenView

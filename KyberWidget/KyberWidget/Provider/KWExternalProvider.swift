@@ -62,15 +62,19 @@ public class KWExternalProvider: NSObject {
 
   // MARK: Transaction
   public func getTransactionCount(for address: String, completion: @escaping (Result<Int, AnyError>) -> Void) {
-    self.generalProvider.getTransactionCount(
-    for: address) { [weak self] result in
-      guard let `self` = self else { return }
-      switch result {
-      case .success(let txCount):
-        self.minTxCount = max(self.minTxCount, txCount)
-        completion(.success(txCount))
-      case .failure(let error):
-        completion(.failure(error))
+    DispatchQueue.global(qos: .background).async {
+      self.generalProvider.getTransactionCount(
+      for: address) { [weak self] result in
+        DispatchQueue.main.async {
+          guard let `self` = self else { return }
+          switch result {
+          case .success(let txCount):
+            self.minTxCount = max(self.minTxCount, txCount)
+            completion(.success(txCount))
+          case .failure(let error):
+            completion(.failure(error))
+          }
+        }
       }
     }
   }
@@ -91,12 +95,16 @@ public class KWExternalProvider: NSObject {
               switch signResult {
               case .success(let signData):
                 print("Transfer: Success signed transaction")
-                self.generalProvider.sendSignedTransactionData(signData, completion: { [weak self] result in
-                  guard let `self` = self else { return }
-                  print("Transfer: Done sending transfer request")
-                  if case .success = result { self.minTxCount += 1 }
-                  completion(result)
-                })
+                DispatchQueue.global(qos: .background).async {
+                  self.generalProvider.sendSignedTransactionData(signData, completion: { [weak self] result in
+                    DispatchQueue.main.async {
+                      guard let `self` = self else { return }
+                      print("Transfer: Done sending transfer request")
+                      if case .success = result { self.minTxCount += 1 }
+                      completion(result)
+                    }
+                  })
+                }
               case .failure(let error):
                 print("Transfer: Failed signed transaction")
                 completion(.failure(error))
@@ -130,12 +138,16 @@ public class KWExternalProvider: NSObject {
               switch signResult {
               case .success(let signData):
                 print("Swap: Success signed transaction")
-                self.generalProvider.sendSignedTransactionData(signData, completion: { [weak self] result in
-                  guard let `self` = self else { return }
-                  print("Swap: Done sending swap transaction")
-                  if case .success = result { self.minTxCount += 1 }
-                  completion(result)
-                })
+                DispatchQueue.global(qos: .background).async {
+                  self.generalProvider.sendSignedTransactionData(signData, completion: { [weak self] result in
+                    DispatchQueue.main.async {
+                      guard let `self` = self else { return }
+                      print("Swap: Done sending swap transaction")
+                      if case .success = result { self.minTxCount += 1 }
+                      completion(result)
+                    }
+                  })
+                }
               case .failure(let error):
                 print("Swap: Failed signed transaction")
                 completion(.failure(error))
@@ -166,38 +178,46 @@ public class KWExternalProvider: NSObject {
 
   // Encode function, get transaction count, sign transaction, send signed data
   public func sendApproveERC20Token(exchangeTransaction: KWPayment, completion: @escaping (Result<Bool, AnyError>) -> Void) {
-    self.generalProvider.approve(
-      token: exchangeTransaction.from,
-      account: exchangeTransaction.account!,
-      keystore: self.keystore,
-      networkAddress: self.networkAddress,
-      networkID: self.network.chainID
-    ) { [weak self] result in
-        guard let `self` = self else { return }
-        switch result {
-        case .success(let txCount):
-          self.minTxCount = txCount
-          completion(.success(true))
-        case .failure(let error):
-          completion(.failure(error))
+    DispatchQueue.global(qos: .background).async {
+      self.generalProvider.approve(
+        token: exchangeTransaction.from,
+        account: exchangeTransaction.account!,
+        keystore: self.keystore,
+        networkAddress: self.networkAddress,
+        networkID: self.network.chainID
+      ) { [weak self] result in
+        DispatchQueue.main.async {
+          guard let `self` = self else { return }
+          switch result {
+          case .success(let txCount):
+            self.minTxCount = txCount
+            completion(.success(true))
+          case .failure(let error):
+            completion(.failure(error))
+          }
         }
+      }
     }
   }
 
   // MARK: Rate
   public func getExpectedRate(from: KWTokenObject, to: KWTokenObject, amount: BigInt, completion: @escaping (Result<(BigInt, BigInt), AnyError>) -> Void) {
-    self.generalProvider.getExpectedRate(
-      from: from,
-      to: to,
-      amount: amount) { [weak self] result in
-      guard let _ = self else { return }
-      switch result {
-      case .success(let data):
-        let expectedRate = data.0 / BigInt(10).power(18 - to.decimals)
-        let slippageRate = data.1 / BigInt(10).power(18 - to.decimals)
-        completion(.success((expectedRate, slippageRate)))
-      case .failure(let error):
-        completion(.failure(error))
+    DispatchQueue.global(qos: .background).async {
+      self.generalProvider.getExpectedRate(
+        from: from,
+        to: to,
+        amount: amount) { [weak self] result in
+        DispatchQueue.main.async {
+          guard let _ = self else { return }
+          switch result {
+          case .success(let data):
+            let expectedRate = data.0 / BigInt(10).power(18 - to.decimals)
+            let slippageRate = data.1 / BigInt(10).power(18 - to.decimals)
+            completion(.success((expectedRate, slippageRate)))
+          case .failure(let error):
+            completion(.failure(error))
+          }
+        }
       }
     }
   }
@@ -268,20 +288,24 @@ public class KWExternalProvider: NSObject {
       batch: BatchFactory().create(request),
       endpoint: self.network.endpoint
     )
-    Session.send(etherServiceRequest) { result in
-      switch result {
-      case .success(let value):
-        let gasLimit: BigInt = {
-          var limit = BigInt(value.drop0x, radix: 16) ?? BigInt()
-          // Used  120% of estimated gas for safer
-          limit += (limit * 20 / 100)
-          return min(limit, defaultGasLimit)
-        }()
-        NSLog("------ Estimate gas used: \(gasLimit.fullString(units: .wei)) ------")
-        completion(.success(gasLimit))
-      case .failure(let error):
-        NSLog("------ Estimate gas used failed: \(error.localizedDescription) ------")
-        completion(.failure(AnyError(error)))
+    DispatchQueue.global(qos: .background).async {
+      Session.send(etherServiceRequest) { result in
+        DispatchQueue.main.async {
+          switch result {
+          case .success(let value):
+            let gasLimit: BigInt = {
+              var limit = BigInt(value.drop0x, radix: 16) ?? BigInt()
+              // Used  120% of estimated gas for safer
+              limit += (limit * 20 / 100)
+              return min(limit, defaultGasLimit)
+            }()
+            NSLog("------ Estimate gas used: \(gasLimit.fullString(units: .wei)) ------")
+            completion(.success(gasLimit))
+          case .failure(let error):
+            NSLog("------ Estimate gas used failed: \(error.localizedDescription) ------")
+            completion(.failure(AnyError(error)))
+          }
+        }
       }
     }
   }

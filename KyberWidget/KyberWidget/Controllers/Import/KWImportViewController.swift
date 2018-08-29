@@ -98,7 +98,10 @@ public class KWImportViewController: UIViewController {
   }
 
   fileprivate func setupStepView() {
-    self.stepView.updateView(with: .importAddress, isPayment: self.viewModel.dataType == .payment)
+    self.stepView.updateView(
+      with: .importAddress,
+      dataType: self.viewModel.dataType
+    )
   }
 
   fileprivate func setupImportTypeButtons() {

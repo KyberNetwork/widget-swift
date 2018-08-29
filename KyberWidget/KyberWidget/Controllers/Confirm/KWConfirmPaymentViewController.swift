@@ -22,7 +22,8 @@ public class KWConfirmPaymentViewController: UIViewController {
   @IBOutlet weak var stepView: KWStepView!
 
   @IBOutlet weak var paymentDataView: UIView!
-  @IBOutlet weak var destAddressLabel: UILabel!
+  @IBOutlet weak var destTextLabel: UILabel!
+  @IBOutlet weak var destDataLabel: UILabel!
   @IBOutlet weak var amounToPayTextLabel: UILabel!
   @IBOutlet weak var estimateSrcAmountLabel: UILabel!
   @IBOutlet weak var estimateDestAmountLabel: UILabel!
@@ -100,15 +101,22 @@ public class KWConfirmPaymentViewController: UIViewController {
 
   fileprivate func setupPaymentDataView() {
     self.paymentDataView.isHidden = self.viewModel.isPaymentDataViewHidden
-    self.destAddressLabel.attributedText = self.viewModel.paymentDestAddressAttributedString
+    self.destTextLabel.text = self.viewModel.paymentOrBuyDestTextString
 
-    self.amounToPayTextLabel.text = KWStringConfig.current.amountToPay
+    // if pay: dest data = address to pay, if buy: dest data = amount to pay (source amount)
+    self.destDataLabel.text = self.viewModel.paymentOrBuyDestValueString
+
+    // pay: Amount to pay, buy: Amount to buy
+    self.amounToPayTextLabel.text = self.viewModel.dataType == .pay ? KWStringConfig.current.amountToPayUppercased : KWStringConfig.current.amountToBuyUppercased
     self.amounToPayTextLabel.textColor = KWThemeConfig.current.confirmAmountToPayTextColor
 
-    self.estimateSrcAmountLabel.text = self.viewModel.paymentFromAmountString
+    // pay: source amount (amount to pay), buy: dest amount (amount to receive)
+    self.estimateSrcAmountLabel.text = self.viewModel.dataType == .pay ? self.viewModel.paymentFromAmountString : self.viewModel.buyAmountReceiveString
+
     self.estimateSrcAmountLabel.textColor = KWThemeConfig.current.confirmPayFromAmountColor
 
     self.estimateDestAmountLabel.text = self.viewModel.paymentEstimatedReceivedAmountString
+    self.estimateDestAmountLabel.isHidden = !(self.viewModel.dataType == .pay)
     self.estimateDestAmountLabel.textColor = KWThemeConfig.current.confirmPayReceivedAmountColor
   }
 
@@ -136,7 +144,7 @@ public class KWConfirmPaymentViewController: UIViewController {
   }
 
   fileprivate func setupStepView() {
-    self.stepView.updateView(with: .confirm, isPayment: self.viewModel.dataType == .payment)
+    self.stepView.updateView(with: .confirm, dataType: self.viewModel.dataType)
   }
 
   fileprivate func setupCommonElements() {
