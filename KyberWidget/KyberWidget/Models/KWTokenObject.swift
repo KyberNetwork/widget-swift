@@ -63,11 +63,9 @@ public struct KWTokenObject {
   }
 
   var iconURL: String {
-    // Token image from Trust public repo
-    let url = "https://github.com/KyberNetwork/KyberNetwork.github.io/tree/master/DesignAssets/tokens/\(self.symbol.lowercased()).png"
+    // Token icons from Kyber public repo
+    let url = "https://files.kyber.network/DesignAssets/tokens/iOS/\(self.symbol.lowercased()).png"
     return url
-    // Trust token icons repo
-    //"https://raw.githubusercontent.com/TrustWallet/tokens/master/images/\(self.address.lowercased()).png"
   }
 
   var isETH: Bool { return symbol == "ETH" }
