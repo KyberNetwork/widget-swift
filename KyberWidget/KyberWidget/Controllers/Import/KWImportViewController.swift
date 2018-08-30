@@ -47,7 +47,7 @@ public class KWImportViewController: UIViewController {
   public init(viewModel: KWImportViewModel, delegate: KWImportViewControllerDelegate?) {
     self.viewModel = viewModel
     self.delegate = delegate
-    super.init(nibName: "KWImportViewController", bundle: Bundle(identifier: "manhlx.kyber.network.KyberWidget"))
+    super.init(nibName: "KWImportViewController", bundle: Bundle.framework)
   }
 
   required public init?(coder aDecoder: NSCoder) {
@@ -86,19 +86,22 @@ public class KWImportViewController: UIViewController {
   }
 
   fileprivate func setupNavigationBar() {
-    let image = UIImage(named: "back_white_icon", in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil)
+    let image = UIImage(named: "back_white_icon", in: Bundle.framework, compatibleWith: nil)
     let leftItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.leftButtonPressed(_:)))
     self.navigationItem.leftBarButtonItem = leftItem
     self.navigationItem.leftBarButtonItem?.tintColor = KWThemeConfig.current.navigationBarTintColor
 
-    let qrcodeImage = UIImage(named: "qrcode_white_icon", in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil)
+    let qrcodeImage = UIImage(named: "qrcode_white_icon", in: Bundle.framework, compatibleWith: nil)
     let rightItem = UIBarButtonItem(image: qrcodeImage, style: .plain, target: self, action: #selector(self.scanQRCodePressed(_:)))
     self.navigationItem.rightBarButtonItem = rightItem
     self.navigationItem.rightBarButtonItem?.tintColor = KWThemeConfig.current.navigationBarTintColor
   }
 
   fileprivate func setupStepView() {
-    self.stepView.updateView(with: .importAddress, isPayment: self.viewModel.dataType == .payment)
+    self.stepView.updateView(
+      with: .importAddress,
+      dataType: self.viewModel.dataType
+    )
   }
 
   fileprivate func setupImportTypeButtons() {
@@ -109,8 +112,8 @@ public class KWImportViewController: UIViewController {
       forState: .selected
     )
     self.jsonButton.setBackgroundColor(UIColor.white, forState: .normal)
-    self.jsonButton.setImage(UIImage(named: "json_import_select_icon", in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil), for: .selected)
-    self.jsonButton.setImage(UIImage(named: "json_import_icon", in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil), for: .normal)
+    self.jsonButton.setImage(UIImage(named: "json_import_select_icon", in: Bundle.framework, compatibleWith: nil), for: .selected)
+    self.jsonButton.setImage(UIImage(named: "json_import_icon", in: Bundle.framework, compatibleWith: nil), for: .normal)
     self.jsonButton.setTitleColor(UIColor.white, for: .selected)
     self.jsonButton.setTitleColor(
       UIColor(red: 46, green: 57, blue: 87),
@@ -124,8 +127,8 @@ public class KWImportViewController: UIViewController {
       KWThemeConfig.current.importTypeButtonColor,
       forState: .selected
     )
-    self.privateKeyButton.setImage(UIImage(named: "private_key_import_select_icon", in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil), for: .selected)
-    self.privateKeyButton.setImage(UIImage(named: "private_key_import_icon", in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil), for: .normal)
+    self.privateKeyButton.setImage(UIImage(named: "private_key_import_select_icon", in: Bundle.framework, compatibleWith: nil), for: .selected)
+    self.privateKeyButton.setImage(UIImage(named: "private_key_import_icon", in: Bundle.framework, compatibleWith: nil), for: .normal)
     self.privateKeyButton.setBackgroundColor(UIColor.white, forState: .normal)
     self.privateKeyButton.setTitleColor(UIColor.white, for: .selected)
     self.privateKeyButton.setTitleColor(
@@ -140,8 +143,8 @@ public class KWImportViewController: UIViewController {
       KWThemeConfig.current.importTypeButtonColor,
       forState: .selected
     )
-    self.seedsButton.setImage(UIImage(named: "seeds_import_select_icon", in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil), for: .selected)
-    self.seedsButton.setImage(UIImage(named: "seeds_import_icon", in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil), for: .normal)
+    self.seedsButton.setImage(UIImage(named: "seeds_import_select_icon", in: Bundle.framework, compatibleWith: nil), for: .selected)
+    self.seedsButton.setImage(UIImage(named: "seeds_import_icon", in: Bundle.framework, compatibleWith: nil), for: .normal)
     self.seedsButton.setBackgroundColor(UIColor.white, forState: .normal)
     self.seedsButton.setTitleColor(UIColor.white, for: .selected)
     self.seedsButton.setTitleColor(

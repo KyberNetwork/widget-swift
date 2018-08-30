@@ -76,7 +76,7 @@ class KWSearchTokenViewController: UIViewController {
 
   init(viewModel: KWSearchTokenViewModel) {
     self.viewModel = viewModel
-    super.init(nibName: "KWSearchTokenViewController", bundle: Bundle(identifier: "manhlx.kyber.network.KyberWidget"))
+    super.init(nibName: "KWSearchTokenViewController", bundle: Bundle.framework)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -119,7 +119,7 @@ class KWSearchTokenViewController: UIViewController {
   }
 
   fileprivate func setupUI() {
-    let image = UIImage(named: "back_white_icon", in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil)
+    let image = UIImage(named: "back_white_icon", in: Bundle.framework, compatibleWith: nil)
     let leftItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.leftButtonPressed(_:)))
     leftItem.tintColor = .white
     self.navigationItem.leftBarButtonItem = leftItem
@@ -134,7 +134,7 @@ class KWSearchTokenViewController: UIViewController {
       radius: 5.0
     )
 
-    let nib = UINib(nibName: "KWSearchTokenTableViewCell", bundle: Bundle(identifier: "manhlx.kyber.network.KyberWidget"))
+    let nib = UINib(nibName: "KWSearchTokenTableViewCell", bundle: Bundle.framework)
     self.tokensTableView.register(nib, forCellReuseIdentifier: kSearchTokenTableViewCellID)
     self.tokensTableView.rowHeight = 46
     self.tokensTableView.delegate = self

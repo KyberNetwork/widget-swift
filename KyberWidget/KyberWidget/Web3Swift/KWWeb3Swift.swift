@@ -36,7 +36,7 @@ class KWWeb3Swift: NSObject {
   }
 
   private func loadWeb3() {
-    guard let bundle = Bundle(identifier: "manhlx.kyber.network.KyberWidget") else { return }
+    guard let bundle = Bundle.framework else { return }
     if let url = bundle.url(forResource: "index", withExtension: "html") {
       webView.load(URLRequest(url: url))
     }

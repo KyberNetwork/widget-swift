@@ -16,7 +16,7 @@ struct KWExchangeRequestEncode: KWWeb3Request {
 
   static let abi = "{\"constant\":false,\"inputs\":[{\"name\":\"src\",\"type\":\"address\"}, {\"name\":\"srcAmount\",\"type\":\"uint256\"},{\"name\":\"dest\",\"type\":\"address\"}, {\"name\":\"destAddress\",\"type\":\"address\"},{\"name\":\"maxDestAmount\",\"type\":\"uint256\"},{\"name\":\"minConversionRate\",\"type\":\"uint256\"},{\"name\":\"walletId\",\"type\":\"address\"}],\"name\":\"trade\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"}"
 
-  let exchange: KWPayment
+  let exchange: KWTransaction
   let address: String
 
   var command: String {

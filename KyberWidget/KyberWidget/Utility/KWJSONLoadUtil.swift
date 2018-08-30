@@ -22,7 +22,7 @@ public class KWJSONLoadUtil {
   }
 
   static public func jsonDataFromFile(with name: String) -> JSONDictionary? {
-    guard let bundle = Bundle(identifier: "manhlx.kyber.network.KyberWidget") else {
+    guard let bundle = Bundle.framework else {
       print("---> Error: Bundle not found")
       return nil
     }

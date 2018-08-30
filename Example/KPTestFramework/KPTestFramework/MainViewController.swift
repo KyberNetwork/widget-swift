@@ -60,23 +60,37 @@ class MainViewController: UIViewController {
     do {
       if self.flowTypeSegmentedControl.selectedSegmentIndex == 0 {
         // Payment
-        self.coordinator = try KWPaymentCoordinator(
+        self.coordinator = try KWPayCoordinator(
           baseViewController: self,
           receiveAddr: address,
           receiveToken: symbol ?? "",
           receiveAmount: amount,
           network: network,
           signer: signer,
-          commissionID: commissionID
+          commissionId: commissionID,
+          productName: "",
+          productAvatar: ""
         )
-      } else {
+      } else if self.flowTypeSegmentedControl.selectedSegmentIndex == 1 {
         // Swap
         self.coordinator = try KWSwapCoordinator(
           baseViewController: self,
-          receiveToken: symbol,
           network: network,
           signer: signer,
-          commissionID: commissionID
+          commissionId: commissionID,
+          productName: "",
+          productAvatar: ""
+        )
+      } else {
+        self.coordinator = try KWBuyCoordinator(
+          baseViewController: self,
+          receiveToken: symbol!,
+          receiveAmount: amount,
+          network: network,
+          signer: signer,
+          commissionId: commissionID,
+          productName: "",
+          productAvatar: ""
         )
       }
       self.coordinator?.delegate = self
@@ -107,15 +121,29 @@ class MainViewController: UIViewController {
       self.addressTextField.text = "0x63b42a7662538a1da732488c252433313396eade"
       self.addressTextField.isEnabled = true
 
+      self.tokenSymbolTextField.isEnabled = true
+
       self.amountTextField.text = ""
       self.amountTextField.isEnabled = true
-    } else {
+    } else if sender.selectedSegmentIndex == 1 {
       // swap
-      self.addressTextField.text = "self"
+      self.addressTextField.text = ""
       self.addressTextField.isEnabled = false
+
+      self.tokenSymbolTextField.isEnabled = false
+      self.tokenSymbolTextField.text = ""
 
       self.amountTextField.text = ""
       self.amountTextField.isEnabled = false
+    } else {
+      self.addressTextField.text = ""
+      self.addressTextField.isEnabled = false
+
+      self.tokenSymbolTextField.text = "ETH"
+      self.tokenSymbolTextField.isEnabled = true
+
+      self.amountTextField.text = "0.001"
+      self.amountTextField.isEnabled = true
     }
   }
 
@@ -136,7 +164,7 @@ extension MainViewController: QRCodeReaderDelegate {
     reader.dismiss(animated: true) {
       if self.qrcodeID == 0 {
         // address to pay
-        self.addressTextField.text = result
+        if self.addressTextField.isEnabled { self.addressTextField.text = result }
       } else if self.qrcodeID == 1 {
         // signer
         self.signerTextField.text = result
@@ -167,7 +195,7 @@ extension MainViewController: KWCoordinatorDelegate {
         case .invalidAmount: return "Invalid Amount"
         case .failedToLoadSupportedToken(let errorMessage):
           return errorMessage
-        case .failedToSendPayment(let errorMessage):
+        case .failedToSendTransaction(let errorMessage):
           return errorMessage
         }
       }()

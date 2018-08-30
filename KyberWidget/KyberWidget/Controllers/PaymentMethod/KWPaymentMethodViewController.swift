@@ -13,7 +13,7 @@ import SafariServices
 public enum KWPaymentMethodViewEvent {
   case close
   case searchToken(token: KWTokenObject, isSource: Bool)
-  case next(payment: KWPayment)
+  case next(transaction: KWTransaction)
 }
 
 public protocol KWPaymentMethodViewControllerDelegate: class {
@@ -30,6 +30,7 @@ public class KWPaymentMethodViewController: UIViewController {
   @IBOutlet weak var destAmountLabel: UILabel!
   @IBOutlet weak var destDataContainerView: UIView!
   @IBOutlet weak var heightConstraintForDestDataView: NSLayoutConstraint!
+  @IBOutlet weak var topPaddingConstraintForDestAmountLabel: NSLayoutConstraint!
 
   @IBOutlet weak var advancedSettingsView: KAdvancedSettingsView!
   @IBOutlet weak var advancedSettingsHeightConstraint: NSLayoutConstraint!
@@ -61,7 +62,7 @@ public class KWPaymentMethodViewController: UIViewController {
 
   public init(viewModel: KWPaymentMethodViewModel) {
     self.viewModel = viewModel
-    super.init(nibName: "KWPaymentMethodViewController", bundle: Bundle(identifier: "manhlx.kyber.network.KyberWidget"))
+    super.init(nibName: "KWPaymentMethodViewController", bundle: Bundle.framework)
   }
 
   required public init?(coder aDecoder: NSCoder) {
@@ -77,7 +78,7 @@ public class KWPaymentMethodViewController: UIViewController {
     super.viewWillAppear(animated)
     self.navigationItem.title = self.viewModel.navigationTitle
     self.loadTimer?.invalidate()
-    self.reloadDataFromNode()
+    self.reloadDataFromNode(isFirstTime: true)
     self.loadTimer = Timer.scheduledTimer(
       withTimeInterval: 10.0,
       repeats: true,
@@ -110,7 +111,7 @@ public class KWPaymentMethodViewController: UIViewController {
 
   fileprivate func setupNavigationBar() {
     self.navigationItem.title = self.viewModel.navigationTitle
-    let image = UIImage(named: "back_white_icon", in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil)
+    let image = UIImage(named: "back_white_icon", in: Bundle.framework, compatibleWith: nil)
     let leftItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.leftButtonPressed(_:)))
     self.navigationItem.leftBarButtonItem = leftItem
     self.navigationItem.leftBarButtonItem?.tintColor = KWThemeConfig.current.navigationBarTintColor
@@ -119,26 +120,28 @@ public class KWPaymentMethodViewController: UIViewController {
   fileprivate func setupStepView() {
     self.stepView.updateView(
       with: .chooseToken,
-      isPayment: self.viewModel.dataType == .payment
+      dataType: self.viewModel.dataType
     )
   }
 
   fileprivate func setupDestAddressView() {
-    self.youAreAboutToPayTextLabel.text = KWStringConfig.current.youAreAboutToPay
-    self.destAddressLabel.attributedText = self.viewModel.destAddressAttributedString
-    self.destAmountLabel.isHidden = self.viewModel.isDestAmountLabelHidden
-    self.destAmountLabel.attributedText = self.viewModel.destAmountAttributedString
     self.destDataContainerView.isHidden = self.viewModel.isDestDataViewHidden
+    self.destAddressLabel.isHidden = self.viewModel.isDestAddressLabelHidden
+    self.destAmountLabel.isHidden = self.viewModel.isDestAmountLabelHidden
     self.heightConstraintForDestDataView.constant = self.viewModel.heightForDestDataView
+    self.topPaddingConstraintForDestAmountLabel.constant = self.viewModel.topPaddingForDestAmountLabel
+
+    self.youAreAboutToPayTextLabel.text = self.viewModel.destDataTitleLabelString
+    self.destAddressLabel.attributedText = self.viewModel.destAddressAttributedString
+    self.destAmountLabel.attributedText = self.viewModel.destAmountAttributedString
   }
 
   fileprivate func setupFromTokenView() {
     self.tokenContainerView.rounded(radius: 4.0)
     self.payWithTextLabel.text = self.viewModel.transactionTypeText
 
-//    self.tokenButton.titleLabel?.numberOfLines = 2
-//    self.tokenButton.titleLabel?.lineBreakMode = .byTruncatingTail
     self.tokenAmountTextField.isEnabled = self.viewModel.isFromAmountTextFieldEnabled
+    self.tokenAmountTextField.textColor = self.viewModel.fromAmountTextFieldColor
     self.tokenAmountTextField.adjustsFontSizeToFitWidth = true
 
     self.tokenAmountTextField.delegate = self
@@ -150,6 +153,7 @@ public class KWPaymentMethodViewController: UIViewController {
     self.tokensSeparatorView.isHidden = self.viewModel.isToButtonHidden
     self.receiveTokenButton.isHidden = self.viewModel.isToButtonHidden
     self.receiveAmountLabel.isHidden = self.viewModel.isToButtonHidden
+    self.receiveAmountLabel.textColor = KWThemeConfig.current.amountTextFieldDisable
 
     self.heightConstraintForTokenContainerView.constant = self.viewModel.heightForTokenData
     self.heightConstraintForReceiveTokenData.constant = self.viewModel.heightForReceiverTokenView
@@ -287,7 +291,6 @@ public class KWPaymentMethodViewController: UIViewController {
 
   fileprivate func updateNextButton() {
     let enabled: Bool = {
-      if self.viewModel.isAmountTooSmall { return false }
       if !self.viewModel.isMinRateValidForTransaction { return false }
       if self.viewModel.estimatedRate == nil { return false }
       if !self.viewModel.hasAgreed { return false }
@@ -307,7 +310,7 @@ public class KWPaymentMethodViewController: UIViewController {
       width: 1.0,
       radius: 4.0
     )
-    let image = UIImage(named: "done_white_icon", in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil)
+    let image = UIImage(named: "done_white_icon", in: Bundle.framework, compatibleWith: nil)
     self.agreeTermsAndConditionsButton.backgroundColor = self.viewModel.hasAgreed ? UIColor.Kyber.shamrock : UIColor.white
     self.agreeTermsAndConditionsButton.setImage(
       self.viewModel.hasAgreed ? image : nil, for: .normal)
@@ -335,10 +338,10 @@ public class KWPaymentMethodViewController: UIViewController {
   }
 
   @IBAction func nextButtonPressed(_ sender: Any) {
-    self.delegate?.paymentMethodViewController(self, run: .next(payment: self.viewModel.payment))
+    self.delegate?.paymentMethodViewController(self, run: .next(transaction: self.viewModel.transaction))
   }
 
-  fileprivate func reloadDataFromNode() {
+  fileprivate func reloadDataFromNode(isFirstTime: Bool = false) {
     self.viewModel.getExpectedRateRequest {
       self.coordinatorUpdateExpectedRate()
     }

@@ -11,12 +11,14 @@ import UIKit
 public class KWStringConfig: NSObject {
   public static let current = KWStringConfig()
 
-  public var payment: String = "Payment"
+  public var payment: String = "Pay"
   public var swap: String = "Swap"
+  public var buy: String = "Buy"
   public var importWallet: String = "Import Wallet"
   public var confirm: String = "Confirm"
 
-  public var youAreAboutToPay: String = "YOU ARE ABOUT TO PAY"
+  public var youAreAboutToPay: String = "You are about to pay"
+  public var youAreAboutToBuy: String = "You are about to buy"
   public var address: String = "Address"
   public var amount: String = "Amount"
   public var payWith: String = "PAY WITH"
@@ -46,7 +48,8 @@ public class KWStringConfig: NSObject {
   public var to: String = "To"
 
   public var addressToPay: String = "Address to pay"
-  public var amountToPay: String = "Amount to pay".uppercased()
+  public var amountToPayUppercased: String = "Amount to pay".uppercased()
+  public var amountToBuyUppercased: String = "Amount to buy".uppercased()
 }
 
 public class KWThemeConfig: NSObject {
@@ -76,6 +79,9 @@ public class KWThemeConfig: NSObject {
   public var payMinRateThumbTintColor: UIColor = UIColor.Kyber.background
   public var payMinRatePercentColor: UIColor = UIColor.Kyber.shamrock
 
+  public var amountTextFieldEnable: UIColor = UIColor.Kyber.shamrock
+  public var amountTextFieldDisable: UIColor = UIColor.Kyber.black
+
   public var confirmSwapFromAmountColor: UIColor = UIColor.Kyber.black
   public var confirmSwapToAmountColor: UIColor = UIColor.Kyber.black
   public var confirmSwapExpectedRateColor: UIColor = UIColor.Kyber.black
@@ -94,6 +100,6 @@ public class KWThemeConfig: NSObject {
   public var activeStepBackgroundColor: UIColor = UIColor.Kyber.background
   public var inactiveBackgroundColor: UIColor = UIColor(red: 225, green: 225, blue: 225)
 
-  public var doneIcon: UIImage? = UIImage(named: "done_white_icon", in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil)
+  public var doneIcon: UIImage? = UIImage(named: "done_white_icon", in: Bundle.framework, compatibleWith: nil)
   public override init() { }
 }

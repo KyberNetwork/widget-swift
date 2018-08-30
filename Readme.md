@@ -3,10 +3,11 @@ The KyberWidget iOS lib allows developers to easily add crytocurrency payment an
 
 ## What does it do
 
-The library enables 2 use cases:
+The library enables 3 use cases:
 
-- **Payment**: allow users to buy goods or services from within your app,  paying with any tokens supported by KyberNetwork
+- **Pay**: Allow users to buy goods or services from within your app, paying with any tokens supported by KyberNetwork
 - **Swap**: Allow users to swap between token pairs supported by KyberNetowrk
+- **Buy**: Allow users to buy a given token that is supported by KyberNetwork within your app, paying with any tokens supported by KyberNetwork.
 
 The lib shipped with a standard, ready-to-use UI. It also let developers to customize many aspects of UI to fit their needs.
 
@@ -18,7 +19,7 @@ Download the zip file [here](https://github.com/KyberNetwork/widget-swift/tree/m
 
 Go to your project `General settings`, add KyberWidget into `Embedded Binaries`.
 
-Add these dependency frameworks below into your project via ([Cocoapods](https://cocoapods.org/):
+Add these dependency frameworks below into your project via ([Cocoapods](https://cocoapods.org/)):
 ```swift
   pod 'Moya', '~> 10.0.1'
   pod 'BigInt', '~> 3.0'
@@ -49,7 +50,26 @@ fileprivate var coordinator: KWCoordinator?
 
 #### Create KWCoordinator instance
 
-First, you need to create and initialize the `KWCoordinator` instance. There are 2 sub-classes `KWPaymentCoordinator` and `KWSwapCoordinator` and you should use these 2 classes depend on your purpose.
+First, you need to create and initialize the `KWCoordinator` instance.
+There are 3 sub-classes `KWPayCoordinator`, `KWSwapCoordinator`, and `KWBuyCoordinator` corresponding to 3 use cases. You should only use these 3 classes depend on your purpose.
+
+To use the widget for _pay_ use case:
+
+```swift
+do {
+  self.coordinator = try KWPayCoordinator(
+    baseViewController: UIViewController,
+    receiveAddr: String,
+    receiveToken: String,
+    receiveAmount: Double?,
+    network: KWEnvironment, // ETH network, default ropsten
+    signer: String? = nil,
+    commissionId: String? = nil,
+    productName: String,
+    productAvatar: String
+  )
+} catch {}
+```
 
 To use the widget for _swap_ use case:
 
@@ -57,28 +77,30 @@ To use the widget for _swap_ use case:
 do {
   self.coordinator = try KWSwapCoordinator(
     baseViewController: UIViewController,
-    receiveToken: String?,
-    network: KWEnvironment,
-    signer: String?,
-    commissionID: String?
+    network: KWEnvironment, // ETH network, default ropsten
+    signer: String? = nil,
+    commissionId: String? = nil,
+    productName: String,
+    productAvatar: String
   )
- } catch {}
+} catch {}
 ```
 
-To use the widget for _payment_ use case:
+To use the widget for _buy_ use case:
 
 ```swift
-  do {
-      self.coordinator = try KWPaymentCoordinator(
-        baseViewController: UIViewController,
-        receiveAddr: String?,
-        receiveToken: String?,
-        receiveAmount: Double?,
-        network: KWEnvironment,
-        signer: String?,
-        commissionID: String?
-      )
-  } catch {}
+do {
+  self.coordinator = try KWBuyCoordinator(
+    baseViewController: UIViewController,
+    receiveToken: String,
+    receiveAmount: Double?,
+    network: KWEnvironment, // ETH network, default ropsten
+    signer: String?,
+    commissionId: String?,
+    productName: String,
+    productAvatar: String
+  )
+} catch {}
 ```
 
 ***Parameter details:***
@@ -95,7 +117,11 @@ To use the widget for _payment_ use case:
 
 - ***signer*** (String) - concatenation of a list of ethereum address by underscore `_`, eg. 0xFDF28Bf25779ED4cA74e958d54653260af604C20_0xFDF28Bf25779ED4cA74e958d54653260af604C20 - If you pass this param, the user will be forced to pay from one of those addresses.
 
-- ***commissionID*** - (String - Ethereum address) - your Ethereum wallet to get commission of the fees for the transaction. Your wallet must be whitelisted by KyberNetwork (the permissionless registration will be available soon) in order to get the commission, otherwise it will be ignored.
+- ***commissionId*** - (String - Ethereum address) - your Ethereum wallet to get commission of the fees for the transaction. Your wallet must be whitelisted by KyberNetwork (the permissionless registration will be available soon) in order to get the commission, otherwise it will be ignored.
+
+- ***productName*** - (String - optional) - your product name you want to display
+
+- ***productAvatar*** - (String - optional) - url string to your produce avatar. Please use a png image with resolution of 60x60 for best displaying as we will scale your image to this size.
 
 Check our **_Valid use cases_** for more details.
 
@@ -132,7 +158,7 @@ This function is called when something went wrong, some possible errors (please 
 - `invalidAddress(errorMessage: String)`: the receive address is not set as `self` or a valid ETH address, check `errorMessage` for more details.
 - `invalidAmount(errorMessage: String)`: the receive amount is not valid (negative, zero, ...), or if you are performing _swap_, the receive amount must be empty.
 - `failedToLoadSupportedToken(errorMessage: String)`: something went wrong and we could not load supported tokens by Kyber.
-- `failedToSendPayment(errorMessage: String)`: Could not send payment request.
+- `failedToSendTransaction(errorMessage: String)`: Could not send the transaction request.
 
 In most cases, we provide a meaningful error message for you to either display it to user directly, or use the message to test/debug.
 
@@ -162,7 +188,7 @@ let config = KWStringConfig.current
 config.youAreAboutToPay = "You are going to buy"
 ```
 
-The string *You are about to pay* should be changed to *You are going to buy*
+The string "*You are about to pay*" should be changed to "*You are going to buy*"
 
 ### Create your own UIs
 
@@ -215,28 +241,30 @@ Some useful functions:
 func getETHBalance(address: String, completion: @escaping (Result<BigInt, AnyError>) -> Void)
 func getTokenBalance(for contract: Address, address: Address, completion: @escaping (Result<BigInt, AnyError>) -> Void)
 func getTransactionCount(for address: String, completion: @escaping (Result<Int, AnyError>) -> Void)
-func transfer(transaction: KWPayment, completion: @escaping (Result<String, AnyError>) -> Void)
-func exchange(exchange: KWPayment, completion: @escaping (Result<String, AnyError>) -> Void)
+func transfer(transaction: KWTransaction, completion: @escaping (Result<String, AnyError>) -> Void)
+func exchange(exchange: KWTransaction, completion: @escaping (Result<String, AnyError>) -> Void)
 func getAllowance(token: KWTokenObject, address: Address, completion: @escaping (Result<Bool, AnyError>) -> Void)
-func sendApproveERC20Token(exchangeTransaction: KWPayment, completion: @escaping (Result<Bool, AnyError>) -> Void)
+func sendApproveERC20Token(exchangeTransaction: KWTransaction, completion: @escaping (Result<Bool, AnyError>)
 func getExpectedRate(from: KWTokenObject, to: KWTokenObject, amount: BigInt, completion: @escaping (Result<(BigInt, BigInt), AnyError>) -> Void)
-func getTransferEstimateGasLimit(for transaction: KWPayment, completion: @escaping (Result<BigInt, AnyError>) -> Void)
-func getSwapEstimateGasLimit(for transaction: KWPayment, completion: @escaping (Result<BigInt, AnyError>) -> Void)
+func getTransferEstimateGasLimit(for transaction: KWTransaction, completion: @escaping (Result<BigInt, AnyError>) -> Void)
+func getSwapEstimateGasLimit(for transaction: KWTransaction, completion: @escaping (Result<BigInt, AnyError>) -> Void)
 func estimateGasLimit(from: String, to: String?, gasPrice: BigInt, value: BigInt, data: Data, defaultGasLimit: BigInt, completion: @escaping (Result<BigInt, AnyError>) -> Void)
 ```
 
 ## Valid use cases
 
-##### Payment Widget
+##### Pay Widget
 
-- **receiveAddr**: must be a valid ETH address with 0x prefix
-- **receiveToken**: must be a supported token symbol by Kyber
+- **receiveAddr** - **required**: must be a valid ETH address with 0x prefix
+- **receiveToken** - **required**: must be a supported token symbol by KyberNetwork
 - **receiveAmount**: an optional value
 
 ##### Swap Widget
-- **receiveAddr**: must be set to `self`. If you use `KWSwapCoordinator`, you can see that there is no field for `receiveAddr` as we will set it as `self` for you.
-- **receiveToken**: an optional value to allow your users to choose the receive token as it is swapping.
-- **receiveAmount**: must be empty since we are not supporting swapping tokens with fixed receive amount.
+- **receiveAddr**, **receiveToken** and **receiveAmount** are all ignored
+
+##### Buy Widget
+- **receiveToken** - **required**:  must be a supported token symbol by KyberNetwork
+- **receiveAmount**: optional value
 
 NOTE: 
   - In any cases, **receiveAmount** will be ignored if **receiveToken** is empty.
@@ -261,4 +289,3 @@ The KyberWidget iOS uses following open source softwares:
 - [JavaScriptKit](https://github.com/alexaubry/JavaScriptKit)
 
 Special thank to [TrustWallet](https://github.com/TrustWallet) team for their awesome works
-

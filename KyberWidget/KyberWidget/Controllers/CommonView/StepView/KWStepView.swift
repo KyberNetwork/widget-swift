@@ -56,13 +56,18 @@ class KWStepView: KWXibLoaderView {
     self.confirmLabel.text = KWStringConfig.current.confirm
   }
 
-  func updateView(with state: KWStepViewState, isPayment: Bool) {
+  func updateView(with state: KWStepViewState, dataType: KWDataType) {
     let paymentState: Int = 1
     let importState: Int = state == .chooseToken ? 0 : 1
     let confirmState: Int = state == .confirm ? 1 : 0
 
-    self.paymentLabel.text = isPayment ? KWStringConfig.current.payment : KWStringConfig.current.swap
-
+    self.paymentLabel.text = {
+      switch dataType {
+      case .pay: return KWStringConfig.current.payment
+      case .swap: return KWStringConfig.current.swap
+      case .buy: return KWStringConfig.current.buy
+      }
+    }()
     self.updateChooseToken(stateID: paymentState)
     self.updateImportWallet(stateID: importState)
     self.updateConfirm(stateID: confirmState)

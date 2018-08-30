@@ -36,14 +36,18 @@ public class KWGeneralProvider: NSObject {
 
   // MARK: Balance
   public func getETHBalanace(for address: String, completion: @escaping (Result<BigInt, AnyError>) -> Void) {
-    let batch = BatchFactory().create(KWBalanceRequest(address: address))
-    let request = KWEtherServiceRequest(batch: batch, endpoint: self.network.endpoint)
-    Session.send(request) { result in
-      switch result {
-      case .success(let balance):
-        completion(.success(balance))
-      case .failure(let error):
-        completion(.failure(AnyError(error)))
+    DispatchQueue.global(qos: .background).async {
+      let batch = BatchFactory().create(KWBalanceRequest(address: address))
+      let request = KWEtherServiceRequest(batch: batch, endpoint: self.network.endpoint)
+      Session.send(request) { result in
+        DispatchQueue.main.async {
+          switch result {
+          case .success(let balance):
+            completion(.success(balance))
+          case .failure(let error):
+            completion(.failure(AnyError(error)))
+          }
+        }
       }
     }
   }
@@ -58,13 +62,17 @@ public class KWGeneralProvider: NSObject {
           batch: batch,
           endpoint: self.network.endpoint
         )
-        Session.send(request) { [weak self] result in
-          guard let `self` = self else { return }
-          switch result {
-          case .success(let balance):
-            self.getTokenBalanceDecodeData(from: balance, completion: completion)
-          case .failure(let error):
-            completion(.failure(AnyError(error)))
+        DispatchQueue.global(qos: .background).async {
+          Session.send(request) { [weak self] result in
+            DispatchQueue.main.async {
+              guard let `self` = self else { return }
+              switch result {
+              case .success(let balance):
+                self.getTokenBalanceDecodeData(from: balance, completion: completion)
+              case .failure(let error):
+                completion(.failure(AnyError(error)))
+              }
+            }
           }
         }
       case .failure(let error):
@@ -75,17 +83,21 @@ public class KWGeneralProvider: NSObject {
 
   // MARK: Transaction count
   public func getTransactionCount(for address: String, completion: @escaping (Result<Int, AnyError>) -> Void) {
-    let batch = BatchFactory().create(KWGetTransactionCountRequest(
-      address: address,
-      state: "latest"
-    ))
-    let request = KWEtherServiceRequest(batch: batch, endpoint: self.network.endpoint)
-    Session.send(request) { result in
-      switch result {
-      case .success(let count):
-        completion(.success(count))
-      case .failure(let error):
-        completion(.failure(AnyError(error)))
+    DispatchQueue.global(qos: .background).async {
+      let batch = BatchFactory().create(KWGetTransactionCountRequest(
+        address: address,
+        state: "latest"
+      ))
+      let request = KWEtherServiceRequest(batch: batch, endpoint: self.network.endpoint)
+      Session.send(request) { result in
+        DispatchQueue.main.async {
+          switch result {
+          case .success(let count):
+            completion(.success(count))
+          case .failure(let error):
+            completion(.failure(AnyError(error)))
+          }
+        }
       }
     }
   }
@@ -106,13 +118,17 @@ public class KWGeneralProvider: NSObject {
           batch: BatchFactory().create(callRequest),
           endpoint: self.network.endpoint
         )
-        Session.send(getAllowanceRequest) { [weak self] getAllowanceResult in
-          guard let `self` = self else { return }
-          switch getAllowanceResult {
-          case .success(let data):
-            self.getTokenAllowanceDecodeData(data, completion: completion)
-          case .failure(let error):
-            completion(.failure(AnyError(error)))
+        DispatchQueue.global(qos: .background).async {
+          Session.send(getAllowanceRequest) { [weak self] getAllowanceResult in
+            DispatchQueue.main.async {
+              guard let `self` = self else { return }
+              switch getAllowanceResult {
+              case .success(let data):
+                self.getTokenAllowanceDecodeData(data, completion: completion)
+              case .failure(let error):
+                completion(.failure(AnyError(error)))
+              }
+            }
           }
         }
       case .failure(let error):
@@ -133,13 +149,17 @@ public class KWGeneralProvider: NSObject {
           batch: BatchFactory().create(callRequest),
           endpoint: self.network.endpoint
         )
-        Session.send(getRateRequest) { [weak self] getRateResult in
-          guard let `self` = self else { return }
-          switch getRateResult {
-          case .success(let rateData):
-            self.getExpectedRateDecodeData(rateData: rateData, completion: completion)
-          case .failure(let error):
-            completion(.failure(AnyError(error)))
+        DispatchQueue.global(qos: .background).async {
+          Session.send(getRateRequest) { [weak self] getRateResult in
+            DispatchQueue.main.async {
+              guard let `self` = self else { return }
+              switch getRateResult {
+              case .success(let rateData):
+                self.getExpectedRateDecodeData(rateData: rateData, completion: completion)
+              case .failure(let error):
+                completion(.failure(AnyError(error)))
+              }
+            }
           }
         }
       case .failure(let error):
@@ -200,14 +220,18 @@ public class KWGeneralProvider: NSObject {
   }
 
   public func sendSignedTransactionData(_ data: Data, completion: @escaping (Result<String, AnyError>) -> Void) {
-    let batch = BatchFactory().create(KWSendRawTransactionRequest(signedData: data.hexEncoded))
-    let request = KWEtherServiceRequest(batch: batch, endpoint: self.network.endpoint)
-    Session.send(request) { result in
-      switch result {
-      case .success(let transactionID):
-        completion(.success(transactionID))
-      case .failure(let error):
-        completion(.failure(AnyError(error)))
+    DispatchQueue.global(qos: .background).async {
+      let batch = BatchFactory().create(KWSendRawTransactionRequest(signedData: data.hexEncoded))
+      let request = KWEtherServiceRequest(batch: batch, endpoint: self.network.endpoint)
+      Session.send(request) { result in
+        DispatchQueue.main.async {
+          switch result {
+          case .success(let transactionID):
+            completion(.success(transactionID))
+          case .failure(let error):
+            completion(.failure(AnyError(error)))
+          }
+        }
       }
     }
   }

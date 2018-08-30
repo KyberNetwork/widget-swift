@@ -18,7 +18,7 @@ public enum KWError {
   case invalidToken(errorMessage: String)
   case invalidAmount(errorMessage: String)
   case failedToLoadSupportedToken(errorMessage: String)
-  case failedToSendPayment(errorMessage: String)
+  case failedToSendTransaction(errorMessage: String)
 }
 
 public protocol KWCoordinatorDelegate: class {
@@ -28,12 +28,13 @@ public protocol KWCoordinatorDelegate: class {
 }
 
 public enum KWDataType {
-  case payment
-  case kyberswap
+  case pay
+  case swap
+  case buy
 }
 
-// Use these 2 subclasses to initialize only
-public class KWPaymentCoordinator: KWCoordinator {
+// Use these 3 subclasses to initialize only
+public class KWPayCoordinator: KWCoordinator {
   public init(
     baseViewController: UIViewController,
     receiveAddr: String,
@@ -41,16 +42,21 @@ public class KWPaymentCoordinator: KWCoordinator {
     receiveAmount: Double?,
     network: KWEnvironment = .ropsten,
     signer: String? = nil,
-    commissionID: String? = nil
+    commissionId: String? = nil,
+    productName: String,
+    productAvatar: String
     ) throws {
     try super.init(
       baseViewController: baseViewController,
       receiveAddr: receiveAddr,
       receiveToken: receiveToken,
       receiveAmount: receiveAmount,
+      type: .pay,
       network: network,
       signer: signer,
-      commissionID: commissionID
+      commissionId: commissionId,
+      productName: productName,
+      productAvatar: productAvatar
     )
   }
 }
@@ -58,19 +64,49 @@ public class KWPaymentCoordinator: KWCoordinator {
 public class KWSwapCoordinator: KWCoordinator {
   public init(
     baseViewController: UIViewController,
-    receiveToken: String?,
     network: KWEnvironment = .ropsten,
     signer: String? = nil,
-    commissionID: String? = nil
+    commissionId: String? = nil,
+    productName: String,
+    productAvatar: String
     ) throws {
     try super.init(
       baseViewController: baseViewController,
-      receiveAddr: "self",
-      receiveToken: receiveToken,
+      receiveAddr: "",
+      receiveToken: nil,
       receiveAmount: nil,
+      type: .swap,
       network: network,
       signer: signer,
-      commissionID: commissionID
+      commissionId: commissionId,
+      productName: productName,
+      productAvatar: productAvatar
+    )
+  }
+}
+
+public class KWBuyCoordinator: KWCoordinator {
+  public init(
+    baseViewController: UIViewController,
+    receiveToken: String,
+    receiveAmount: Double?,
+    network: KWEnvironment,
+    signer: String?,
+    commissionId: String?,
+    productName: String,
+    productAvatar: String
+    ) throws {
+    try super.init(
+      baseViewController: baseViewController,
+      receiveAddr: "",
+      receiveToken: receiveToken,
+      receiveAmount: receiveAmount,
+      type: .buy,
+      network: network,
+      signer: signer,
+      commissionId: commissionId,
+      productName: productName,
+      productAvatar: productAvatar
     )
   }
 }
@@ -84,13 +120,15 @@ public class KWCoordinator {
   var receiverToken: KWTokenObject? = nil
   let receiverTokenAmount: Double?
   let dataType: KWDataType
+  let productName: String
+  let productAvatar: String
 
   let network: KWEnvironment
 
-  var payment: KWPayment?
+  var transaction: KWTransaction?
 
   let signer: String?
-  let commissionID: String?
+  let commissionId: String?
 
   fileprivate(set) var keystore: KWKeystore
   fileprivate(set) var account: Account?
@@ -114,9 +152,12 @@ public class KWCoordinator {
     receiveAddr: String,
     receiveToken: String?,
     receiveAmount: Double?,
+    type: KWDataType,
     network: KWEnvironment,
     signer: String? = nil,
-    commissionID: String? = nil
+    commissionId: String? = nil,
+    productName: String,
+    productAvatar: String
     ) throws {
     self.baseViewController = baseViewController
     self.navigationController = {
@@ -138,30 +179,28 @@ public class KWCoordinator {
     }
     self.network = network
     self.signer = signer
-    self.commissionID = commissionID
+    self.commissionId = commissionId
     self.keystore = try KWKeystore()
 
-    if receiveAddr == "self" {
-      self.dataType = .kyberswap
-    } else {
-      self.dataType = .payment
-    }
+    self.dataType = type
+    self.productName = productName
+    self.productAvatar = productAvatar
   }
 
   public func start(completion: (() -> Void)? = nil) {
-    if self.receiverAddress != "self" && Address(string: self.receiverAddress) == nil {
-      let errorMessage: String = "Receiver address should be a valid ETH address or `self`"
+    if self.receiverAddress != "" && Address(string: self.receiverAddress) == nil {
+      let errorMessage: String = "Pass empty string if you want to swap or buy, otherwise receiver address must be a valid ETH addres"
       self.startSession(error: .invalidAddress(errorMessage: errorMessage), completion: completion)
       return
     }
-    if self.dataType == .payment && self.receiverTokenSymbol.isEmpty {
+    if self.dataType == .pay && self.receiverTokenSymbol.isEmpty {
       let errorMessage: String = "Needs to pass token symbol for payment transaction"
       self.startSession(error: .invalidToken(errorMessage: errorMessage), completion: completion)
       return
     }
-    if self.dataType == .kyberswap && self.receiverTokenAmount != nil {
-      let errorMessage: String = "Please do not set receiver amount if performing KyberSwap"
-      self.startSession(error: .invalidAmount(errorMessage: errorMessage), completion: completion)
+    if self.dataType == .buy && self.receiverTokenSymbol.isEmpty {
+      let errorMessage: String = "Buy must have receive token"
+      self.startSession(error: .invalidToken(errorMessage: errorMessage), completion: completion)
       return
     }
     self.baseViewController.displayLoading(text: "Loading...", animated: true)
@@ -226,7 +265,7 @@ public class KWCoordinator {
   }
 
   fileprivate func loadSupportedTokensIfNeeded(completion: @escaping (Result<[KWTokenObject], AnyError>) -> Void) {
-    if self.network != .mainnetTest && self.network != .production {
+    if self.network != .mainnet && self.network != .production {
       // list suppported tokens only works for production, mainnet
       let supportedTokens = KWJSONLoadUtil.loadListSupportedTokensFromJSONFile(env: network)
       completion(.success(supportedTokens))
@@ -257,8 +296,8 @@ extension KWCoordinator: KWImportViewControllerDelegate {
       return addresses.contains(address)
     }()
     if isWhitelisted {
-      guard let newPayment = self.payment?.newObject(with: account) else { return }
-      self.openConfirmationView(payment: newPayment)
+      guard let newTransaction = self.transaction?.newObject(with: account) else { return }
+      self.openConfirmationView(transaction: newTransaction)
       return
     }
     // Not whitelisted
@@ -273,11 +312,11 @@ extension KWCoordinator: KWImportViewControllerDelegate {
     self.navigationController.present(alertController, animated: true, completion: nil)
   }
 
-  fileprivate func openConfirmationView(payment: KWPayment) {
+  fileprivate func openConfirmationView(transaction: KWTransaction) {
     self.confirmVC = {
       let viewModel = KWConfirmPaymentViewModel(
         dataType: self.dataType,
-        payment: payment,
+        transaction: transaction,
         network: self.network,
         keystore: self.keystore
       )
@@ -307,8 +346,8 @@ extension KWCoordinator: KWPaymentMethodViewControllerDelegate {
       self.delegate?.coordinatorDidCancel()
     case .searchToken(let token, let isSource):
       self.openSearchTokenView(token, isSource: isSource)
-    case .next(let payment):
-      self.openImportView(with: payment)
+    case .next(let transaction):
+      self.openImportView(with: transaction)
     }
   }
 
@@ -324,17 +363,17 @@ extension KWCoordinator: KWPaymentMethodViewControllerDelegate {
     self.navigationController.pushViewController(self.searchTokenVC!, animated: true)
   }
 
-  fileprivate func openImportView(with payment: KWPayment) {
-    self.payment = payment
+  fileprivate func openImportView(with transaction: KWTransaction) {
+    self.transaction = transaction
     self.importWalletVC = {
       let viewModel = KWImportViewModel(
         dataType: self.dataType,
         network: self.network,
         signer: self.signer,
-        commissionID: self.commissionID,
+        commissionID: self.commissionId,
         keystore: self.keystore,
         tokens: self.tokens,
-        payment: payment
+        transaction: transaction
       )
       let controller = KWImportViewController(viewModel: viewModel, delegate: self)
       controller.loadViewIfNeeded()
@@ -349,71 +388,71 @@ extension KWCoordinator: KWConfirmPaymentViewControllerDelegate {
     switch event {
     case .back:
       self.navigationController.popViewController(animated: true)
-    case .confirmPayment(let payment):
+    case .confirm(let transaction):
       self.navigationController.displayLoading(text: "Paying...", animated: true)
-      self.sendPaymentRequest(payment: payment) { (isSuccess, message) in
+      self.sendTransactionRequest(transaction: transaction) { (isSuccess, message) in
         if isSuccess {
           self.delegate?.coordinatorDidBroadcastTransaction(with: message ?? "")
         } else {
-          self.delegate?.coordinatorDidFailed(with: .failedToSendPayment(errorMessage: message ?? ""))
+          self.delegate?.coordinatorDidFailed(with: .failedToSendTransaction(errorMessage: message ?? ""))
         }
       }
     }
   }
 
-  func sendPaymentRequest(payment: KWPayment, completion: @escaping (Bool, String?) -> Void) {
-    if payment.from == payment.to {
-      print("Send payment transfer request")
-      self.provider.transfer(transaction: payment) { result in
+  func sendTransactionRequest(transaction: KWTransaction, completion: @escaping (Bool, String?) -> Void) {
+    if transaction.from == transaction.to {
+      print("Send transaction transfer request")
+      self.provider.transfer(transaction: transaction) { result in
         switch result {
         case .success(let hash):
-          print("Success sending payment request with hash: \(hash)")
+          print("Success sending transaction request with hash: \(hash)")
           completion(true, hash)
         case .failure(let error):
-          print("Failed sending payment request with error: \(error.description)")
+          print("Failed sending transaction request with error: \(error.description)")
           completion(false, error.description)
         }
       }
     } else {
-      print("Send payment exchange request")
-      self.sendApprovedRequestIfNeeded(payment: payment) { (isSuccess, string) in
+      print("Send transaction exchange request")
+      self.sendApprovedRequestIfNeeded(transaction: transaction) { (isSuccess, string) in
         if isSuccess {
-          self.provider.exchange(exchange: payment, completion: { result in
+          self.provider.exchange(exchange: transaction, completion: { result in
             switch result {
             case .success(let hash):
-              print("Success sending payment request with hash: \(hash)")
+              print("Success sending transaction request with hash: \(hash)")
               completion(true, hash)
             case .failure(let error):
-              print("Failed sending payment request with error: \(error.description)")
+              print("Failed sending transaction request with error: \(error.description)")
               completion(false, error.description)
             }
           })
         } else {
-          print("Failed sending payment request with error: \(string)")
+          print("Failed sending transaction request with error: \(string)")
           completion(false, string)
         }
       }
     }
   }
 
-  fileprivate func sendApprovedRequestIfNeeded(payment: KWPayment, completion: @escaping (Bool, String) -> Void) {
-    guard let account = payment.account else {
+  fileprivate func sendApprovedRequestIfNeeded(transaction: KWTransaction, completion: @escaping (Bool, String) -> Void) {
+    guard let account = transaction.account else {
       completion(false, "Account not found")
       return
     }
-    if payment.from.isETH {
+    if transaction.from.isETH {
       print("No need send approved")
       completion(true, "")
       return
     }
-    self.provider.getAllowance(token: payment.from, address: account.address) { result in
+    self.provider.getAllowance(token: transaction.from, address: account.address) { result in
       switch result {
       case .success(let isApproved):
         if isApproved {
           print("No need send approved")
           completion(true, "")
         } else {
-          self.provider.sendApproveERC20Token(exchangeTransaction: payment, completion: { apprResult in
+          self.provider.sendApproveERC20Token(exchangeTransaction: transaction, completion: { apprResult in
             switch apprResult {
             case .success:
               print("Send approved success")
