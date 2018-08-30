@@ -65,8 +65,9 @@ do {
     network: KWEnvironment, // ETH network, default ropsten
     signer: String? = nil,
     commissionId: String? = nil,
-    productName: String,
-    productAvatar: String
+    productName: String?,
+    productAvatar: String?,
+    productAvatarImage: UIImage?
   )
 } catch {}
 ```
@@ -79,9 +80,7 @@ do {
     baseViewController: UIViewController,
     network: KWEnvironment, // ETH network, default ropsten
     signer: String? = nil,
-    commissionId: String? = nil,
-    productName: String,
-    productAvatar: String
+    commissionId: String? = nil
   )
 } catch {}
 ```
@@ -96,32 +95,32 @@ do {
     receiveAmount: Double?,
     network: KWEnvironment, // ETH network, default ropsten
     signer: String?,
-    commissionId: String?,
-    productName: String,
-    productAvatar: String
+    commissionId: String?
   )
 } catch {}
 ```
 
 ***Parameter details:***
 
-- ***baseViewController*** (UIViewController) - **required** - This is the base view controller, used to present the navigation controller of the _swap_ or _payment_ widget.
+- ***baseViewController*** (UIViewController) - **required** - This is the base view controller, used to present the navigation controller of the widget.
 
-- ***receiveAddr*** (String) - **required** - For _payment_ use case, this is the vendor's Ethereum wallet address with 0x prefix which user's payment will be sent there. *Must double check this param very carefully*. For _swap_ use case, please set this parameter as *self*.
+- ***receiveAddr*** (String) - **required** - For _payment_ use case, this is the vendor's Ethereum wallet address with 0x prefix which user's payment will be sent there. **_Must double check this param very carefully_**. For _swap_ or _buy_, please don't set this parameter.
 
-- ***receiveToken*** (String) - **required for _payment_ use case** - token that you (vendor) want to receive, it can be one of supported tokens (such as ETH, DAI, KNC...).
+- ***receiveToken*** (String) - **required** for _payment_, it is the token that you (vendor) want to receive, for _swap_ or _buy_, it is the token that you want to receive/buy. It can be one of supported tokens (such as ETH, DAI, KNC...).
 
-- ***receiveAmount*** (Double) - the amount of `receiveToken` you (vendor) want your user to pay. If you leave it blank or missing, the users can specify it in the widget interface. It could be useful for undetermined payment or pay-as-you-go payment like a charity, ICO or anything else. This param is ignored if you do not specify `receiveToken`.
+- ***receiveAmount*** (Double) - the amount of `receiveToken` you (vendor) want your user to pay (for _pay_ widget) or amount you want to buy (for _buy_ widget), not support for _swap_ widget. If you leave it blank or missing, the users can specify it in the widget interface. It could be useful for undetermined payment or pay-as-you-go payment like a charity, ICO or anything else. This param is ignored if you do not specify `receiveToken`.
 
-- ***network*** (KWEnvironment - default `ropsten`) - ethereum network that the widget will run. Possible value: `mainnetTest, production, staging, ropsten, kovan`.
+- ***network*** (KWEnvironment - default `ropsten`) - Ethereum network that the widget will run. Possible value: `mainnetTest, production, staging, ropsten, kovan`.
 
-- ***signer*** (String) - concatenation of a list of ethereum address by underscore `_`, eg. 0xFDF28Bf25779ED4cA74e958d54653260af604C20_0xFDF28Bf25779ED4cA74e958d54653260af604C20 - If you pass this param, the user will be forced to pay from one of those addresses.
+- ***signer*** (String) - concatenation of a list of Ethereum address by underscore `_`, eg. 0xFDF28Bf25779ED4cA74e958d54653260af604C20_0xFDF28Bf25779ED4cA74e958d54653260af604C20 - If you pass this param, the user will be forced to pay from one of those addresses. If you ignore or pass `nil` value, all addresses are accepted.
 
 - ***commissionId*** - (String - Ethereum address) - your Ethereum wallet to get commission of the fees for the transaction. Your wallet must be whitelisted by KyberNetwork (the permissionless registration will be available soon) in order to get the commission, otherwise it will be ignored.
 
-- ***productName*** - (String - optional) - your product name you want to display
+- ***productName*** - (String?) - your product name you want to display (only for _pay_ widget).
 
-- ***productAvatar*** - (String - optional) - url string to your produce avatar. Please use a png image with resolution of 60x60 for best displaying as we will scale your image to this size.
+- ***productAvatar*** - (String?) - url string to your product avatar (only for _pay_ widget).
+
+- ***productAvatarImage*** - (UIImage?) - image for your product avatar (only for _pay_ widget). You should either provide `productAvatar` or `productAvatarImage` (prefer `productAvatarImage` for faster displaying). If you provide both, `productAvatar` will be ignored.
 
 Check our **_Valid use cases_** for more details.
 
@@ -289,3 +288,11 @@ The KyberWidget iOS uses following open source softwares:
 - [JavaScriptKit](https://github.com/alexaubry/JavaScriptKit)
 
 Special thank to [TrustWallet](https://github.com/TrustWallet) team for their awesome works
+
+## License
+
+KyberWidget is available under MIT License, see [LICENSE](https://github.com/KyberNetwork/widget-swift/blob/master/LICENSE)  file for more information.
+
+## Bugs/Features report
+
+Please feel free to submit bugs report or any features you want to have in our KyberWidget by opening a Github issue. 
