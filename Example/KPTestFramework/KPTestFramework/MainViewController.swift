@@ -68,8 +68,9 @@ class MainViewController: UIViewController {
           network: network,
           signer: signer,
           commissionId: commissionID,
-          productName: "",
-          productAvatar: ""
+          productName: "Etheremon",
+          productAvatar: "https://pbs.twimg.com/media/DVgWFLTVwAAUarj.png",
+          productAvatarImage: nil
         )
       } else if self.flowTypeSegmentedControl.selectedSegmentIndex == 1 {
         // Swap
@@ -77,9 +78,7 @@ class MainViewController: UIViewController {
           baseViewController: self,
           network: network,
           signer: signer,
-          commissionId: commissionID,
-          productName: "",
-          productAvatar: ""
+          commissionId: commissionID
         )
       } else {
         self.coordinator = try KWBuyCoordinator(
@@ -88,9 +87,7 @@ class MainViewController: UIViewController {
           receiveAmount: amount,
           network: network,
           signer: signer,
-          commissionId: commissionID,
-          productName: "",
-          productAvatar: ""
+          commissionId: commissionID
         )
       }
       self.coordinator?.delegate = self

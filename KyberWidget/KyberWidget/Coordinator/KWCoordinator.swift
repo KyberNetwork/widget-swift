@@ -44,7 +44,8 @@ public class KWPayCoordinator: KWCoordinator {
     signer: String? = nil,
     commissionId: String? = nil,
     productName: String,
-    productAvatar: String
+    productAvatar: String?,
+    productAvatarImage: UIImage?
     ) throws {
     try super.init(
       baseViewController: baseViewController,
@@ -56,7 +57,8 @@ public class KWPayCoordinator: KWCoordinator {
       signer: signer,
       commissionId: commissionId,
       productName: productName,
-      productAvatar: productAvatar
+      productAvatar: productAvatar,
+      productAvatarImage: productAvatarImage
     )
   }
 }
@@ -66,9 +68,7 @@ public class KWSwapCoordinator: KWCoordinator {
     baseViewController: UIViewController,
     network: KWEnvironment = .ropsten,
     signer: String? = nil,
-    commissionId: String? = nil,
-    productName: String,
-    productAvatar: String
+    commissionId: String? = nil
     ) throws {
     try super.init(
       baseViewController: baseViewController,
@@ -79,8 +79,9 @@ public class KWSwapCoordinator: KWCoordinator {
       network: network,
       signer: signer,
       commissionId: commissionId,
-      productName: productName,
-      productAvatar: productAvatar
+      productName: nil,
+      productAvatar: nil,
+      productAvatarImage: nil
     )
   }
 }
@@ -92,9 +93,7 @@ public class KWBuyCoordinator: KWCoordinator {
     receiveAmount: Double?,
     network: KWEnvironment,
     signer: String?,
-    commissionId: String?,
-    productName: String,
-    productAvatar: String
+    commissionId: String?
     ) throws {
     try super.init(
       baseViewController: baseViewController,
@@ -105,8 +104,9 @@ public class KWBuyCoordinator: KWCoordinator {
       network: network,
       signer: signer,
       commissionId: commissionId,
-      productName: productName,
-      productAvatar: productAvatar
+      productName: nil,
+      productAvatar: nil,
+      productAvatarImage: nil
     )
   }
 }
@@ -120,8 +120,9 @@ public class KWCoordinator {
   var receiverToken: KWTokenObject? = nil
   let receiverTokenAmount: Double?
   let dataType: KWDataType
-  let productName: String
-  let productAvatar: String
+  let productName: String?
+  let productAvatar: String?
+  let productAvatarImage: UIImage?
 
   let network: KWEnvironment
 
@@ -156,8 +157,9 @@ public class KWCoordinator {
     network: KWEnvironment,
     signer: String? = nil,
     commissionId: String? = nil,
-    productName: String,
-    productAvatar: String
+    productName: String?,
+    productAvatar: String?,
+    productAvatarImage: UIImage?
     ) throws {
     self.baseViewController = baseViewController
     self.navigationController = {
@@ -185,6 +187,7 @@ public class KWCoordinator {
     self.dataType = type
     self.productName = productName
     self.productAvatar = productAvatar
+    self.productAvatarImage = productAvatarImage
   }
 
   public func start(completion: (() -> Void)? = nil) {
@@ -245,6 +248,9 @@ public class KWCoordinator {
           receiverToken: self.receiverToken,
           toAmount: self.receiverTokenAmount,
           network: self.network,
+          productName: self.productName,
+          productAvatar: self.productAvatar,
+          productAvatarImage: self.productAvatarImage,
           dataType: self.dataType,
           tokens: self.tokens,
           keystore: self.keystore
