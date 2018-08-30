@@ -291,7 +291,6 @@ public class KWPaymentMethodViewController: UIViewController {
 
   fileprivate func updateNextButton() {
     let enabled: Bool = {
-      if self.viewModel.isAmountTooSmall { return false }
       if !self.viewModel.isMinRateValidForTransaction { return false }
       if self.viewModel.estimatedRate == nil { return false }
       if !self.viewModel.hasAgreed { return false }

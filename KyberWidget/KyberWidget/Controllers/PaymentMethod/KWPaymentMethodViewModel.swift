@@ -148,16 +148,28 @@ public class KWPaymentMethodViewModel: NSObject {
 
 // MARK: Source data
 extension KWPaymentMethodViewModel {
+  /*
+   Depends on can choose receive token or not
+   */
   var heightForTokenData: CGFloat {
     return self.receiverToken == nil ? 124.0 : 74.0
   }
 
+  /*
+   Hidden if receive token is fixed
+   */
   var heightForReceiverTokenView: CGFloat {
     return self.receiverToken == nil ? 50.0 : 0.0
   }
 
+  /*
+   TO button when both from and to tokens are modifiable
+  */
   var isToButtonHidden: Bool { return self.receiverToken != nil }
 
+  /*
+   Enabled if receive amount is empty, disabled otherwise
+   */
   var isFromAmountTextFieldEnabled: Bool { return self.toAmount == nil }
   var fromAmountTextFieldColor: UIColor {
     if self.isFromAmountTextFieldEnabled {
@@ -166,6 +178,9 @@ extension KWPaymentMethodViewModel {
     return KWThemeConfig.current.amountTextFieldDisable
   }
 
+  /*
+   Either PAY WITH or SWAP
+   */
   var transactionTypeText: String {
     return self.dataType == .swap ? KWStringConfig.current.swapUppercased : KWStringConfig.current.payWith
   }
@@ -175,7 +190,9 @@ extension KWPaymentMethodViewModel {
     return self.amountFrom.toBigInt(decimals: self.from.decimals) ?? BigInt(0)
   }
 
-  // In case user fixed receiver amount,
+  /*
+   From amount is computed instead of typing if receive amount is fixed
+   */
   var estimatedFromAmountBigInt: BigInt? {
     guard let receivedAmount = self.receiverAmountBigInt else { return nil }
     if self.from == self.to { return receivedAmount }
@@ -183,6 +200,10 @@ extension KWPaymentMethodViewModel {
     return receivedAmount * BigInt(10).power(self.from.decimals) / rate
   }
 
+  /*
+   Display string for amount computed using expected rate & receive amount
+   If receive amount is nil, use amountFrom
+   */
   var estimatedFromAmountDisplay: String? {
     guard let estAmount = self.estimatedFromAmountBigInt else { return nil }
     return "\(estAmount.string(decimals: self.from.decimals, minFractionDigits: 0, maxFractionDigits: 9))"
@@ -191,18 +212,26 @@ extension KWPaymentMethodViewModel {
 
 // MARK: Receiver Data
 extension KWPaymentMethodViewModel {
+  /*
+   Hidden if swap, or buy with no amount specified, otherwise not hidden
+   */
   var isDestDataViewHidden: Bool {
     if self.dataType == .swap { return true }
     if self.dataType == .buy && self.toAmount == nil { return true }
     return false
   }
 
-  // The UI for payment and kyberswap are different
+  /*
+   Hidden, show 1 line data or 2 lines data
+  */
   var heightForDestDataView: CGFloat {
     if self.isDestDataViewHidden { return 0.0 }
     return self.dataType == .pay ? 100.0 : 80.0
   }
 
+  /*
+   YOU ARE ABOUT TO PAY or YOU ARE ABOUT TO BUY
+   */
   var destDataTitleLabelString: String {
     if self.isDestDataViewHidden { return "" }
     if self.dataType == .pay { return KWStringConfig.current.youAreAboutToPay.uppercased() }
@@ -210,8 +239,14 @@ extension KWPaymentMethodViewModel {
     return ""
   }
 
+  /*
+   Dest address label for pay widget only
+  */
   var isDestAddressLabelHidden: Bool { return self.receiverAddress.isEmpty }
 
+  /*
+   Dest address label for pay widget only
+  */
   var destAddressAttributedString: NSAttributedString {
     let attributedString = NSMutableAttributedString()
     let addressTextAttributes: [NSAttributedStringKey: Any] = [
@@ -227,8 +262,14 @@ extension KWPaymentMethodViewModel {
     return attributedString
   }
 
+  /*
+   Dest amount label for pay or buy widget
+  */
   var isDestAmountLabelHidden: Bool { return self.toAmount == nil }
 
+  /*
+   nil if receive amount is not set, otherwise computed from toAmount
+   */
   var receiverAmountBigInt: BigInt? {
     guard let receiverAmount = self.toAmount else { return nil }
     return BigInt(receiverAmount * pow(10.0, Double(self.to.decimals)))
@@ -274,7 +315,9 @@ extension KWPaymentMethodViewModel {
     return attributedString
   }
 
-  // In case user has not given received amount
+  /*
+   In case user has not given received amount, estimated receive amount is computed from amountFrom and rate
+   */
   var estimatedReceivedAmountBigInt: BigInt? {
     guard let rate = self.estimatedRate else { return nil }
     return rate * self.amountFromBigInt / BigInt(10).power(self.from.decimals)
@@ -348,18 +391,18 @@ extension KWPaymentMethodViewModel {
     return attributedString
   }
 
-  // Validate amount
-  var isAmountTooSmall: Bool {
-    if self.toAmount != nil { return false }
-    if self.amountFromBigInt <= BigInt(0) { return true }
-    if self.from.symbol == "ETH" {
-      return self.amountFromBigInt < BigInt(0.001 * Double(KWEthereumUnit.ether.rawValue))
-    }
-    if self.to.symbol == "ETH" {
-      return self.estimatedReceivedAmountBigInt ?? BigInt(0) < BigInt(0.001 * Double(KWEthereumUnit.ether.rawValue))
-    }
-    return false
-  }
+  // Validate amount (not use for checking amount for now)
+//  var isAmountTooSmall: Bool {
+//    if self.toAmount != nil { return false }
+//    if self.amountFromBigInt <= BigInt(0) { return true }
+//    if self.from.symbol == "ETH" {
+//      return self.amountFromBigInt < BigInt(0.001 * Double(KWEthereumUnit.ether.rawValue))
+//    }
+//    if self.to.symbol == "ETH" {
+//      return self.estimatedReceivedAmountBigInt ?? BigInt(0) < BigInt(0.001 * Double(KWEthereumUnit.ether.rawValue))
+//    }
+//    return false
+//  }
 
   // Validate Rate
   var isRateValid: Bool {
@@ -404,6 +447,10 @@ extension KWPaymentMethodViewModel {
     let oldTo = self.to
 
     if isSource { self.from = token } else { self.to = token }
+
+    /*
+     For swap or buy, the from and to tokens must be different as we are not supporting swapping the same token
+     */
     if self.dataType == .swap && self.from == self.to {
       if isSource {
         // just updata from token
@@ -417,7 +464,10 @@ extension KWPaymentMethodViewModel {
       self.from = oldFrom
     }
 
+    // From token is changed, should reset the amountFrom to empty
     if self.from != oldFrom { self.amountFrom = "" }
+
+    // Reset rates
     self.estimatedRate = nil
     self.slippageRate = nil
 
@@ -429,9 +479,7 @@ extension KWPaymentMethodViewModel {
     return true
   }
 
-  func updateFromAmount(_ amount: String) {
-    self.amountFrom = amount
-  }
+  func updateFromAmount(_ amount: String) { self.amountFrom = amount }
 
   func updateSelectedGasPriceType(_ type: KWGasPriceType) {
     self.gasPriceType = type
@@ -485,6 +533,7 @@ extension KWPaymentMethodViewModel {
 
   func updateSupportedTokens(_ tokens: [KWTokenObject]) { self.tokens = tokens }
 
+  // MARK: Getting data from node
   func getExpectedRateRequest(completion: @escaping () -> Void) {
     if self.from == self.to {
       if let rate = "1".toBigInt(decimals: self.from.decimals) {

@@ -49,10 +49,12 @@ public class KWConfirmPaymentViewModel: NSObject {
     )
   }
 
+  // Payment and Buy Widgets data as they are quite similar UIs
   var isPaymentDataViewHidden: Bool {
     return self.dataType != .pay && self.dataType != .buy
   }
 
+  // YOU ARE ABOUT TO PAY or Address to pay
   var paymentOrBuyDestTextString: String {
     switch self.dataType {
     case .pay:
@@ -64,6 +66,8 @@ public class KWConfirmPaymentViewModel: NSObject {
     }
   }
 
+  // Pay Widget: show address to pay
+  // Buy Widget: Show estimated amount to pay
   var paymentOrBuyDestValueString: String {
     switch self.dataType {
     case .pay:
@@ -75,6 +79,7 @@ public class KWConfirmPaymentViewModel: NSObject {
     }
   }
 
+  // For Buy Widget only: Estimated amount receive
   var buyAmountReceiveString: String {
     guard let expectedReceive = self.estimatedReceivedAmountBigInt else { return "" }
     let string = expectedReceive.string(
@@ -84,6 +89,7 @@ public class KWConfirmPaymentViewModel: NSObject {
     return "\(string.prefix(12)) \(self.transaction.to.symbol)"
   }
 
+  // For Pay Widget only: Estimated amount to pay
   var paymentFromAmountString: String {
     let amountFrom: BigInt = self.transaction.expectedFromAmount(dataType: self.dataType)
     let string = amountFrom.string(
@@ -93,6 +99,7 @@ public class KWConfirmPaymentViewModel: NSObject {
     return "\(string.prefix(12)) \(self.transaction.from.symbol)"
   }
 
+  // Estimated receive amount for all widgets
   var estimatedReceivedAmountBigInt: BigInt? {
     if self.transaction.amountTo != nil { return self.transaction.amountTo }
     if self.transaction.from == self.transaction.to { return self.transaction.amountFrom }
@@ -113,6 +120,7 @@ public class KWConfirmPaymentViewModel: NSObject {
     return !(self.dataType == .pay) || self.transaction.from == self.transaction.to
   }
 
+  // Swap Widget confirm UIss
   var isSwapDataViewHidden: Bool { return self.dataType != .swap }
   var swapFromAmountString: String { return self.paymentFromAmountString }
   var swapToAmountString: String {
@@ -126,6 +134,7 @@ public class KWConfirmPaymentViewModel: NSObject {
     }()
     return "\(valueString) \(self.transaction.to.symbol)"
   }
+
   var swapExpectedRateString: String {
     let rateString: String = {
       guard let rate = self.transaction.expectedRate else { return "0" }
@@ -161,6 +170,7 @@ public class KWConfirmPaymentViewModel: NSObject {
     return "~ \(feeString.prefix(12)) ETH"
   }
 
+  // MARK: Now we have all valid data to get the best estimated gas limit
   func getEstimatedGasLimit(completion: @escaping () -> Void) {
     if self.transaction.from == self.transaction.to {
       print("Estimated gas for transfer token")
