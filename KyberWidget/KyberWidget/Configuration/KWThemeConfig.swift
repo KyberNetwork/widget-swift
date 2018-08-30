@@ -21,6 +21,7 @@ public class KWStringConfig: NSObject {
   public var youAreAboutToBuy: String = "You are about to buy"
   public var address: String = "Address"
   public var amount: String = "Amount"
+  public var productName: String = "Product Name"
   public var payWith: String = "PAY WITH"
   public var swapUppercased: String = "SWAP"
   public var estimateDestAmount: String = "Estimate dest amount"

@@ -29,6 +29,9 @@ public class KWPaymentMethodViewModel: NSObject {
 
   let signer: String?
   let commissionID: String?
+  let productName: String?
+  let productAvatar: String?
+  fileprivate(set) var productAvatarImage: UIImage?
 
   let keystore: KWKeystore
   let provider: KWExternalProvider
@@ -51,6 +54,19 @@ public class KWPaymentMethodViewModel: NSObject {
   fileprivate(set) var gasLimit: BigInt = KWGasConfiguration.exchangeTokensGasLimitDefault
   var hasAgreed: Bool = false
 
+  /*
+   Amount, Address & Product Name have same attributed text format
+   */
+  fileprivate let dataNameAttributes: [NSAttributedStringKey: Any] = [
+    NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium),
+    NSAttributedStringKey.foregroundColor: UIColor.Kyber.segment,
+  ]
+
+  fileprivate let dataValueAttributes: [NSAttributedStringKey: Any] = [
+    NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium),
+    NSAttributedStringKey.foregroundColor: UIColor(red: 102, green: 102, blue: 102),
+  ]
+
   public init(
     receiverAddress: String,
     receiverToken: KWTokenObject?,
@@ -58,6 +74,9 @@ public class KWPaymentMethodViewModel: NSObject {
     network: KWEnvironment,
     signer: String? = nil,
     commissionID: String? = nil,
+    productName: String?,
+    productAvatar: String?,
+    productAvatarImage: UIImage?,
     dataType: KWDataType,
     tokens: [KWTokenObject],
     keystore: KWKeystore
@@ -68,6 +87,10 @@ public class KWPaymentMethodViewModel: NSObject {
     self.network = network
     self.signer = signer
     self.commissionID = commissionID
+    self.productName = productName
+    self.productAvatar = productAvatar
+    self.productAvatarImage = productAvatarImage?.resizeImage(toWidth: UIScreen.main.bounds.width - 44.0)
+
     self.dataType = dataType
     self.keystore = keystore
     self.provider = KWExternalProvider(
@@ -226,7 +249,13 @@ extension KWPaymentMethodViewModel {
   */
   var heightForDestDataView: CGFloat {
     if self.isDestDataViewHidden { return 0.0 }
-    return self.dataType == .pay ? 100.0 : 80.0
+    if self.dataType == .buy { return 80.0 }
+    // now data type is pay
+    var height: CGFloat = 100.0 // text and address
+    if !self.isDestAmountLabelHidden { height += 24.0 }
+    if !self.isProductNameHidden { height += 24.0 }
+    height += self.heightProductAvatarImage
+    return height
   }
 
   /*
@@ -249,16 +278,8 @@ extension KWPaymentMethodViewModel {
   */
   var destAddressAttributedString: NSAttributedString {
     let attributedString = NSMutableAttributedString()
-    let addressTextAttributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium),
-      NSAttributedStringKey.foregroundColor: UIColor.Kyber.segment,
-    ]
-    let addressValueAttributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium),
-      NSAttributedStringKey.foregroundColor: UIColor(red: 102, green: 102, blue: 102),
-    ]
-    attributedString.append(NSAttributedString(string: "\(KWStringConfig.current.address): ", attributes: addressTextAttributes))
-    attributedString.append(NSAttributedString(string: "\(self.receiverAddress.prefix(14))...\(self.receiverAddress.suffix(5))", attributes: addressValueAttributes))
+    attributedString.append(NSAttributedString(string: "\(KWStringConfig.current.address): ", attributes: self.dataNameAttributes))
+    attributedString.append(NSAttributedString(string: "\(self.receiverAddress.prefix(14))...\(self.receiverAddress.suffix(5))", attributes: self.dataValueAttributes))
     return attributedString
   }
 
@@ -282,16 +303,8 @@ extension KWPaymentMethodViewModel {
   var destAmountAttributedString: NSAttributedString {
     let attributedString = NSMutableAttributedString()
     guard let amount = self.toAmount else { return attributedString }
-    let addressTextAttributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium),
-      NSAttributedStringKey.foregroundColor: UIColor.Kyber.segment,
-      ]
-    let addressValueAttributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium),
-      NSAttributedStringKey.foregroundColor: UIColor(red: 102, green: 102, blue: 102),
-      ]
-    attributedString.append(NSAttributedString(string: "\(KWStringConfig.current.amount): ", attributes: addressTextAttributes))
-    attributedString.append(NSAttributedString(string: "\(amount) \(self.to.symbol)", attributes: addressValueAttributes))
+    attributedString.append(NSAttributedString(string: "\(KWStringConfig.current.amount): ", attributes: self.dataNameAttributes))
+    attributedString.append(NSAttributedString(string: "\(amount) \(self.to.symbol)", attributes: self.dataValueAttributes))
     return attributedString
   }
 
@@ -331,6 +344,29 @@ extension KWPaymentMethodViewModel {
 
   fileprivate var estimatedReceivedAmountWithSymbolString: String {
     return "\(self.estimatedReceiverAmountString) \(self.to.symbol)"
+  }
+
+  var isProductNameHidden: Bool { return self.productName == nil }
+  var productNameAttributedString: NSAttributedString {
+    let attributedString = NSMutableAttributedString()
+    guard let productName = self.productName else { return attributedString }
+    attributedString.append(NSAttributedString(string: "\(KWStringConfig.current.productName): ", attributes: self.dataNameAttributes))
+    attributedString.append(NSAttributedString(string: "\(productName)", attributes: self.dataValueAttributes))
+    return attributedString
+  }
+  var topPaddingProductNameLabel: CGFloat {
+    return self.toAmount == nil ? 8.0 : 32.0
+  }
+
+  var isProductAvatarImageViewHidden: Bool { return self.productAvatarImage == nil }
+  var topPaddingProductAvatar: CGFloat {
+    if self.isDestAmountLabelHidden && self.isProductNameHidden { return 8.0 }
+    if !self.isDestAmountLabelHidden && !self.isProductNameHidden { return 64.0 }
+    return 32.0
+  }
+  var heightProductAvatarImage: CGFloat {
+    guard let image = self.productAvatarImage else { return 0.0 }
+    return image.size.height
   }
 }
 
@@ -604,6 +640,25 @@ extension KWPaymentMethodViewModel {
         }
         completion()
       }
+    }
+  }
+
+  func getProductAvatarIfNeeded(completion: @escaping (Bool) -> Void) {
+    guard let urlString = self.productAvatar, let url = URL(string: urlString), self.productAvatarImage == nil else {
+      completion(false)
+      return
+    }
+    DispatchQueue.global(qos: .background).async {
+      URLSession.shared.dataTask(with: url) { (data, _, error) in
+        DispatchQueue.main.async {
+          if let data = data, error == nil, let image = UIImage(data: data) {
+            self.productAvatarImage = image.resizeImage(toWidth: UIScreen.main.bounds.width - 44.0)
+            completion(true)
+          } else {
+            completion(false)
+          }
+        }
+      }.resume()
     }
   }
 }

@@ -28,9 +28,15 @@ public class KWPaymentMethodViewController: UIViewController {
   @IBOutlet weak var youAreAboutToPayTextLabel: UILabel!
   @IBOutlet weak var destAddressLabel: UILabel!
   @IBOutlet weak var destAmountLabel: UILabel!
+  @IBOutlet weak var productNameLabel: UILabel!
+  @IBOutlet weak var productAvatarImageView: UIImageView!
   @IBOutlet weak var destDataContainerView: UIView!
+
   @IBOutlet weak var heightConstraintForDestDataView: NSLayoutConstraint!
   @IBOutlet weak var topPaddingConstraintForDestAmountLabel: NSLayoutConstraint!
+  @IBOutlet weak var topPaddingConstraintForProductName: NSLayoutConstraint!
+  @IBOutlet weak var heightConstraintForProductAvatar: NSLayoutConstraint!
+  @IBOutlet weak var topPaddingConstraintForProductAvatar: NSLayoutConstraint!
 
   @IBOutlet weak var advancedSettingsView: KAdvancedSettingsView!
   @IBOutlet weak var advancedSettingsHeightConstraint: NSLayoutConstraint!
@@ -128,12 +134,34 @@ public class KWPaymentMethodViewController: UIViewController {
     self.destDataContainerView.isHidden = self.viewModel.isDestDataViewHidden
     self.destAddressLabel.isHidden = self.viewModel.isDestAddressLabelHidden
     self.destAmountLabel.isHidden = self.viewModel.isDestAmountLabelHidden
+    self.productNameLabel.isHidden = self.viewModel.isProductNameHidden
+    self.productAvatarImageView.isHidden = self.viewModel.isProductAvatarImageViewHidden
+
     self.heightConstraintForDestDataView.constant = self.viewModel.heightForDestDataView
     self.topPaddingConstraintForDestAmountLabel.constant = self.viewModel.topPaddingForDestAmountLabel
+    self.topPaddingConstraintForProductName.constant = self.viewModel.topPaddingProductNameLabel
+    self.heightConstraintForProductAvatar.constant = self.viewModel.heightProductAvatarImage
+    self.topPaddingConstraintForProductAvatar.constant = self.viewModel.topPaddingProductAvatar
 
     self.youAreAboutToPayTextLabel.text = self.viewModel.destDataTitleLabelString
     self.destAddressLabel.attributedText = self.viewModel.destAddressAttributedString
     self.destAmountLabel.attributedText = self.viewModel.destAmountAttributedString
+    self.productNameLabel.attributedText = self.viewModel.productNameAttributedString
+    self.productAvatarImageView.image = self.viewModel.productAvatarImage
+
+    self.view.updateConstraints()
+
+    self.viewModel.getProductAvatarIfNeeded { [weak self] needsUpdate in
+      guard let `self` = self else { return }
+      if !needsUpdate { return }
+      self.productAvatarImageView.isHidden = self.viewModel.isProductAvatarImageViewHidden
+      self.productAvatarImageView.image = self.viewModel.productAvatarImage
+
+      self.topPaddingConstraintForProductAvatar.constant = self.viewModel.topPaddingProductAvatar
+      self.heightConstraintForProductAvatar.constant = self.viewModel.heightProductAvatarImage
+      self.heightConstraintForDestDataView.constant = self.viewModel.heightForDestDataView
+      self.view.updateConstraints()
+    }
   }
 
   fileprivate func setupFromTokenView() {
