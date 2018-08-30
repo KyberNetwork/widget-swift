@@ -18,7 +18,7 @@ public enum KWError {
   case invalidToken(errorMessage: String)
   case invalidAmount(errorMessage: String)
   case failedToLoadSupportedToken(errorMessage: String)
-  case failedToSendPayment(errorMessage: String)
+  case failedToSendTransaction(errorMessage: String)
 }
 
 public protocol KWCoordinatorDelegate: class {
@@ -125,7 +125,7 @@ public class KWCoordinator {
 
   let network: KWEnvironment
 
-  var payment: KWPayment?
+  var transaction: KWTransaction?
 
   let signer: String?
   let commissionId: String?
@@ -296,8 +296,8 @@ extension KWCoordinator: KWImportViewControllerDelegate {
       return addresses.contains(address)
     }()
     if isWhitelisted {
-      guard let newPayment = self.payment?.newObject(with: account) else { return }
-      self.openConfirmationView(payment: newPayment)
+      guard let newTransaction = self.transaction?.newObject(with: account) else { return }
+      self.openConfirmationView(transaction: newTransaction)
       return
     }
     // Not whitelisted
@@ -312,11 +312,11 @@ extension KWCoordinator: KWImportViewControllerDelegate {
     self.navigationController.present(alertController, animated: true, completion: nil)
   }
 
-  fileprivate func openConfirmationView(payment: KWPayment) {
+  fileprivate func openConfirmationView(transaction: KWTransaction) {
     self.confirmVC = {
       let viewModel = KWConfirmPaymentViewModel(
         dataType: self.dataType,
-        payment: payment,
+        transaction: transaction,
         network: self.network,
         keystore: self.keystore
       )
@@ -346,8 +346,8 @@ extension KWCoordinator: KWPaymentMethodViewControllerDelegate {
       self.delegate?.coordinatorDidCancel()
     case .searchToken(let token, let isSource):
       self.openSearchTokenView(token, isSource: isSource)
-    case .next(let payment):
-      self.openImportView(with: payment)
+    case .next(let transaction):
+      self.openImportView(with: transaction)
     }
   }
 
@@ -363,8 +363,8 @@ extension KWCoordinator: KWPaymentMethodViewControllerDelegate {
     self.navigationController.pushViewController(self.searchTokenVC!, animated: true)
   }
 
-  fileprivate func openImportView(with payment: KWPayment) {
-    self.payment = payment
+  fileprivate func openImportView(with transaction: KWTransaction) {
+    self.transaction = transaction
     self.importWalletVC = {
       let viewModel = KWImportViewModel(
         dataType: self.dataType,
@@ -373,7 +373,7 @@ extension KWCoordinator: KWPaymentMethodViewControllerDelegate {
         commissionID: self.commissionId,
         keystore: self.keystore,
         tokens: self.tokens,
-        payment: payment
+        transaction: transaction
       )
       let controller = KWImportViewController(viewModel: viewModel, delegate: self)
       controller.loadViewIfNeeded()
@@ -388,71 +388,71 @@ extension KWCoordinator: KWConfirmPaymentViewControllerDelegate {
     switch event {
     case .back:
       self.navigationController.popViewController(animated: true)
-    case .confirmPayment(let payment):
+    case .confirm(let transaction):
       self.navigationController.displayLoading(text: "Paying...", animated: true)
-      self.sendPaymentRequest(payment: payment) { (isSuccess, message) in
+      self.sendTransactionRequest(transaction: transaction) { (isSuccess, message) in
         if isSuccess {
           self.delegate?.coordinatorDidBroadcastTransaction(with: message ?? "")
         } else {
-          self.delegate?.coordinatorDidFailed(with: .failedToSendPayment(errorMessage: message ?? ""))
+          self.delegate?.coordinatorDidFailed(with: .failedToSendTransaction(errorMessage: message ?? ""))
         }
       }
     }
   }
 
-  func sendPaymentRequest(payment: KWPayment, completion: @escaping (Bool, String?) -> Void) {
-    if payment.from == payment.to {
-      print("Send payment transfer request")
-      self.provider.transfer(transaction: payment) { result in
+  func sendTransactionRequest(transaction: KWTransaction, completion: @escaping (Bool, String?) -> Void) {
+    if transaction.from == transaction.to {
+      print("Send transaction transfer request")
+      self.provider.transfer(transaction: transaction) { result in
         switch result {
         case .success(let hash):
-          print("Success sending payment request with hash: \(hash)")
+          print("Success sending transaction request with hash: \(hash)")
           completion(true, hash)
         case .failure(let error):
-          print("Failed sending payment request with error: \(error.description)")
+          print("Failed sending transaction request with error: \(error.description)")
           completion(false, error.description)
         }
       }
     } else {
-      print("Send payment exchange request")
-      self.sendApprovedRequestIfNeeded(payment: payment) { (isSuccess, string) in
+      print("Send transaction exchange request")
+      self.sendApprovedRequestIfNeeded(transaction: transaction) { (isSuccess, string) in
         if isSuccess {
-          self.provider.exchange(exchange: payment, completion: { result in
+          self.provider.exchange(exchange: transaction, completion: { result in
             switch result {
             case .success(let hash):
-              print("Success sending payment request with hash: \(hash)")
+              print("Success sending transaction request with hash: \(hash)")
               completion(true, hash)
             case .failure(let error):
-              print("Failed sending payment request with error: \(error.description)")
+              print("Failed sending transaction request with error: \(error.description)")
               completion(false, error.description)
             }
           })
         } else {
-          print("Failed sending payment request with error: \(string)")
+          print("Failed sending transaction request with error: \(string)")
           completion(false, string)
         }
       }
     }
   }
 
-  fileprivate func sendApprovedRequestIfNeeded(payment: KWPayment, completion: @escaping (Bool, String) -> Void) {
-    guard let account = payment.account else {
+  fileprivate func sendApprovedRequestIfNeeded(transaction: KWTransaction, completion: @escaping (Bool, String) -> Void) {
+    guard let account = transaction.account else {
       completion(false, "Account not found")
       return
     }
-    if payment.from.isETH {
+    if transaction.from.isETH {
       print("No need send approved")
       completion(true, "")
       return
     }
-    self.provider.getAllowance(token: payment.from, address: account.address) { result in
+    self.provider.getAllowance(token: transaction.from, address: account.address) { result in
       switch result {
       case .success(let isApproved):
         if isApproved {
           print("No need send approved")
           completion(true, "")
         } else {
-          self.provider.sendApproveERC20Token(exchangeTransaction: payment, completion: { apprResult in
+          self.provider.sendApproveERC20Token(exchangeTransaction: transaction, completion: { apprResult in
             switch apprResult {
             case .success:
               print("Send approved success")

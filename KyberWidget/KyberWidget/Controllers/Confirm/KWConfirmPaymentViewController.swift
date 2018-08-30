@@ -10,7 +10,7 @@ import UIKit
 
 public enum KWConfirmPaymentViewEvent {
   case back
-  case confirmPayment(payment: KWPayment)
+  case confirm(transaction: KWTransaction)
 }
 
 public protocol KWConfirmPaymentViewControllerDelegate: class {
@@ -53,7 +53,7 @@ public class KWConfirmPaymentViewController: UIViewController {
 
   public init(viewModel: KWConfirmPaymentViewModel) {
     self.viewModel = viewModel
-    super.init(nibName: "KWConfirmPaymentViewController", bundle: Bundle(identifier: "manhlx.kyber.network.KyberWidget"))
+    super.init(nibName: "KWConfirmPaymentViewController", bundle: Bundle.framework)
   }
 
   required public init?(coder aDecoder: NSCoder) {
@@ -136,7 +136,7 @@ public class KWConfirmPaymentViewController: UIViewController {
   }
 
   fileprivate func setupNavigationBar() {
-    let image = UIImage(named: "back_white_icon", in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil)
+    let image = UIImage(named: "back_white_icon", in: Bundle.framework, compatibleWith: nil)
     let leftItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(self.leftButtonPressed(_:)))
     self.navigationItem.leftBarButtonItem = leftItem
     self.navigationItem.leftBarButtonItem?.tintColor = KWThemeConfig.current.navigationBarTintColor
@@ -183,7 +183,7 @@ public class KWConfirmPaymentViewController: UIViewController {
   }
 
   @IBAction func confirmButtonPressed(_ sender: Any) {
-    self.delegate?.confirmPaymentViewController(self, run: .confirmPayment(payment: self.viewModel.newPayment))
+    self.delegate?.confirmPaymentViewController(self, run: .confirm(transaction: self.viewModel.newTransaction))
   }
 
   @IBAction func cancelButtonPressed(_ sender: Any) {

@@ -163,9 +163,9 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # define SWIFT_DEPRECATED_OBJC(Msg) SWIFT_DEPRECATED_MSG(Msg)
 #endif
 #if __has_feature(modules)
+@import Foundation;
 @import UIKit;
 @import ObjectiveC;
-@import Foundation;
 @import QRCodeReaderViewController;
 #endif
 
@@ -184,8 +184,9 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # pragma pop_macro("any")
 #endif
 
+
+
 @class NSCoder;
-@class NSBundle;
 
 SWIFT_CLASS("_TtC11KyberWidget30KWConfirmPaymentViewController")
 @interface KWConfirmPaymentViewController : UIViewController

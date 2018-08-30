@@ -100,6 +100,6 @@ public class KWThemeConfig: NSObject {
   public var activeStepBackgroundColor: UIColor = UIColor.Kyber.background
   public var inactiveBackgroundColor: UIColor = UIColor(red: 225, green: 225, blue: 225)
 
-  public var doneIcon: UIImage? = UIImage(named: "done_white_icon", in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil)
+  public var doneIcon: UIImage? = UIImage(named: "done_white_icon", in: Bundle.framework, compatibleWith: nil)
   public override init() { }
 }

@@ -14,38 +14,38 @@ import TrustKeystore
 public class KWConfirmPaymentViewModel: NSObject {
 
   let dataType: KWDataType
-  let payment: KWPayment
+  let transaction: KWTransaction
   var gasLimit: BigInt?
   let provider: KWExternalProvider
   let keystore: KWKeystore
 
   init(
     dataType: KWDataType,
-    payment: KWPayment,
+    transaction: KWTransaction,
     network: KWEnvironment,
     keystore: KWKeystore
     ) {
     self.dataType = dataType
-    self.payment = payment
-    self.gasLimit = payment.gasLimit
+    self.transaction = transaction
+    self.gasLimit = transaction.gasLimit
     self.keystore = keystore
     self.provider = KWExternalProvider(keystore: keystore, network: network)
   }
 
-  var newPayment: KWPayment {
-    return KWPayment(
-      from: self.payment.from,
-      to: self.payment.to,
-      account: self.payment.account,
-      destWallet: self.payment.destWallet,
-      amountFrom: self.payment.amountFrom,
-      amountTo: self.payment.amountTo,
-      minRate: self.payment.minRate,
-      gasPrice: self.payment.gasPrice,
+  var newTransaction: KWTransaction {
+    return KWTransaction(
+      from: self.transaction.from,
+      to: self.transaction.to,
+      account: self.transaction.account,
+      destWallet: self.transaction.destWallet,
+      amountFrom: self.transaction.amountFrom,
+      amountTo: self.transaction.amountTo,
+      minRate: self.transaction.minRate,
+      gasPrice: self.transaction.gasPrice,
       gasLimit: self.gasLimit,
-      expectedRate: self.payment.expectedRate,
-      chainID: self.payment.chainID,
-      commissionID: self.payment.commissionID
+      expectedRate: self.transaction.expectedRate,
+      chainID: self.transaction.chainID,
+      commissionID: self.transaction.commissionID
     )
   }
 
@@ -67,7 +67,7 @@ public class KWConfirmPaymentViewModel: NSObject {
   var paymentOrBuyDestValueString: String {
     switch self.dataType {
     case .pay:
-      return "\(self.payment.destWallet.prefix(16))...\(self.payment.destWallet.suffix(5))"
+      return "\(self.transaction.destWallet.prefix(16))...\(self.transaction.destWallet.suffix(5))"
     case .buy:
       return self.paymentFromAmountString
     default:
@@ -78,39 +78,39 @@ public class KWConfirmPaymentViewModel: NSObject {
   var buyAmountReceiveString: String {
     guard let expectedReceive = self.estimatedReceivedAmountBigInt else { return "" }
     let string = expectedReceive.string(
-      decimals: self.payment.to.decimals,
-      maxFractionDigits: max(9, self.payment.to.decimals)
+      decimals: self.transaction.to.decimals,
+      maxFractionDigits: max(9, self.transaction.to.decimals)
     )
-    return "\(string.prefix(12)) \(self.payment.to.symbol)"
+    return "\(string.prefix(12)) \(self.transaction.to.symbol)"
   }
 
   var paymentFromAmountString: String {
-    let amountFrom: BigInt = self.payment.expectedFromAmount(dataType: self.dataType)
+    let amountFrom: BigInt = self.transaction.expectedFromAmount(dataType: self.dataType)
     let string = amountFrom.string(
-      decimals: self.payment.from.decimals,
-      maxFractionDigits: min(6, self.payment.from.decimals)
+      decimals: self.transaction.from.decimals,
+      maxFractionDigits: min(6, self.transaction.from.decimals)
     )
-    return "\(string.prefix(12)) \(self.payment.from.symbol)"
+    return "\(string.prefix(12)) \(self.transaction.from.symbol)"
   }
 
   var estimatedReceivedAmountBigInt: BigInt? {
-    if self.payment.amountTo != nil { return self.payment.amountTo }
-    if self.payment.from == self.payment.to { return self.payment.amountFrom }
-    guard let rate = self.payment.expectedRate else { return nil }
-    return rate * self.payment.amountFrom / BigInt(10).power(self.payment.from.decimals)
+    if self.transaction.amountTo != nil { return self.transaction.amountTo }
+    if self.transaction.from == self.transaction.to { return self.transaction.amountFrom }
+    guard let rate = self.transaction.expectedRate else { return nil }
+    return rate * self.transaction.amountFrom / BigInt(10).power(self.transaction.from.decimals)
   }
 
   var paymentEstimatedReceivedAmountString: String {
-    guard let estReceived = self.estimatedReceivedAmountBigInt else { return "~ --- \(self.payment.to.symbol)" }
+    guard let estReceived = self.estimatedReceivedAmountBigInt else { return "~ --- \(self.transaction.to.symbol)" }
     let string = estReceived.string(
-      decimals: self.payment.to.decimals,
-      maxFractionDigits: min(6, self.payment.to.decimals)
+      decimals: self.transaction.to.decimals,
+      maxFractionDigits: min(6, self.transaction.to.decimals)
     )
-    return "~ \(string.prefix(12)) \(self.payment.to.symbol)"
+    return "~ \(string.prefix(12)) \(self.transaction.to.symbol)"
   }
 
   var isPaymentEstimatedReceivedAmountHidden: Bool {
-    return !(self.dataType == .pay) || self.payment.from == self.payment.to
+    return !(self.dataType == .pay) || self.transaction.from == self.transaction.to
   }
 
   var isSwapDataViewHidden: Bool { return self.dataType != .swap }
@@ -119,41 +119,41 @@ public class KWConfirmPaymentViewModel: NSObject {
     let valueString: String = {
       guard let receivedAmount = self.estimatedReceivedAmountBigInt else { return "0" }
       let string = receivedAmount.string(
-        decimals: self.payment.to.decimals,
-        maxFractionDigits: max(self.payment.to.decimals, 9)
+        decimals: self.transaction.to.decimals,
+        maxFractionDigits: max(self.transaction.to.decimals, 9)
       )
       return "\(string.prefix(12))"
     }()
-    return "\(valueString) \(self.payment.to.symbol)"
+    return "\(valueString) \(self.transaction.to.symbol)"
   }
   var swapExpectedRateString: String {
     let rateString: String = {
-      guard let rate = self.payment.expectedRate else { return "0" }
+      guard let rate = self.transaction.expectedRate else { return "0" }
       let string = rate.string(
-        decimals: self.payment.to.decimals,
-        maxFractionDigits: max(self.payment.to.decimals, 9)
+        decimals: self.transaction.to.decimals,
+        maxFractionDigits: max(self.transaction.to.decimals, 9)
       )
       return "\(string.prefix(12))"
     }()
-    return "1 \(self.payment.from.symbol) ~ \(rateString) \(self.payment.to.symbol)"
+    return "1 \(self.transaction.from.symbol) ~ \(rateString) \(self.transaction.to.symbol)"
   }
 
   // A/B: want to hide min rate here
-  var isMinRateHidden: Bool {  return self.payment.from == self.payment.to }
+  var isMinRateHidden: Bool {  return self.transaction.from == self.transaction.to }
   var displayMinRate: String {
-    guard let minRate = self.payment.minRate else { return "--" }
+    guard let minRate = self.transaction.minRate else { return "--" }
     return minRate.string(
-      decimals: self.payment.to.decimals,
-      maxFractionDigits: min(6, self.payment.to.decimals)
+      decimals: self.transaction.to.decimals,
+      maxFractionDigits: min(6, self.transaction.to.decimals)
     )
   }
 
   var displayGasPrice: String {
-    return self.payment.gasPrice?.string(units: .gwei, maxFractionDigits: 2) ?? "-"
+    return self.transaction.gasPrice?.string(units: .gwei, maxFractionDigits: 2) ?? "-"
   }
 
   var displayTransactionFeeETH: String {
-    guard let gasPrice = self.payment.gasPrice, let gasLimit = self.gasLimit else {
+    guard let gasPrice = self.transaction.gasPrice, let gasLimit = self.gasLimit else {
       return "~ --"
     }
     let fee: BigInt = gasPrice * gasLimit
@@ -162,9 +162,9 @@ public class KWConfirmPaymentViewModel: NSObject {
   }
 
   func getEstimatedGasLimit(completion: @escaping () -> Void) {
-    if self.payment.from == self.payment.to {
+    if self.transaction.from == self.transaction.to {
       print("Estimated gas for transfer token")
-      self.provider.getTransferEstimateGasLimit(for: self.payment) { result in
+      self.provider.getTransferEstimateGasLimit(for: self.transaction) { result in
         if case .success(let gasLimit) = result {
           self.gasLimit = gasLimit
           print("Success loading est gas limit")
@@ -177,7 +177,7 @@ public class KWConfirmPaymentViewModel: NSObject {
       }
     } else {
       print("Estimated gas for exchange token")
-      self.provider.getSwapEstimateGasLimit(for: self.payment) { result in
+      self.provider.getSwapEstimateGasLimit(for: self.transaction) { result in
         if case .success(let gasLimit) = result {
           self.gasLimit = gasLimit
           print("Success loading est gas limit")

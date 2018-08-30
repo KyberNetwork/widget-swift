@@ -79,7 +79,7 @@ public class KWExternalProvider: NSObject {
     }
   }
 
-  public func transfer(transaction: KWPayment, completion: @escaping (Result<String, AnyError>) -> Void) {
+  public func transfer(transaction: KWTransaction, completion: @escaping (Result<String, AnyError>) -> Void) {
     print("Transfer: Getting transaction count")
     self.getTransactionCount(for: transaction.account?.address.description ?? "") { [weak self] txCountResult in
       guard let `self` = self else { return }
@@ -122,7 +122,7 @@ public class KWExternalProvider: NSObject {
     }
   }
 
-  public func exchange(exchange: KWPayment, completion: @escaping (Result<String, AnyError>) -> Void) {
+  public func exchange(exchange: KWTransaction, completion: @escaping (Result<String, AnyError>) -> Void) {
     print("Swap: getting transaction count")
     self.getTransactionCount(for: exchange.account?.address.description ?? "") { [weak self] txCountResult in
       guard let `self` = self else { return }
@@ -177,7 +177,7 @@ public class KWExternalProvider: NSObject {
   }
 
   // Encode function, get transaction count, sign transaction, send signed data
-  public func sendApproveERC20Token(exchangeTransaction: KWPayment, completion: @escaping (Result<Bool, AnyError>) -> Void) {
+  public func sendApproveERC20Token(exchangeTransaction: KWTransaction, completion: @escaping (Result<Bool, AnyError>) -> Void) {
     DispatchQueue.global(qos: .background).async {
       self.generalProvider.approve(
         token: exchangeTransaction.from,
@@ -223,7 +223,7 @@ public class KWExternalProvider: NSObject {
   }
 
   // MARK: Estimate Gas
-  public func getTransferEstimateGasLimit(for transaction: KWPayment, completion: @escaping (Result<BigInt, AnyError>) -> Void) {
+  public func getTransferEstimateGasLimit(for transaction: KWTransaction, completion: @escaping (Result<BigInt, AnyError>) -> Void) {
     let defaultGasLimit: BigInt = {
       if transaction.from.isETH && transaction.to.isETH {
         return KWGasConfiguration.transferETHGasLimitDefault
@@ -249,7 +249,7 @@ public class KWExternalProvider: NSObject {
     }
   }
 
-  public func getSwapEstimateGasLimit(for transaction: KWPayment, completion: @escaping (Result<BigInt, AnyError>) -> Void) {
+  public func getSwapEstimateGasLimit(for transaction: KWTransaction, completion: @escaping (Result<BigInt, AnyError>) -> Void) {
     let value: BigInt = transaction.from.isETH ? transaction.amountFrom : BigInt(0)
 
     let defaultGasLimit: BigInt = {
@@ -311,7 +311,7 @@ public class KWExternalProvider: NSObject {
   }
 
   // MARK: Sign transaction
-  private func signTransactionData(from transaction: KWPayment, nonce: Int, data: Data, completion: @escaping (Result<Data, AnyError>) -> Void) {
+  private func signTransactionData(from transaction: KWTransaction, nonce: Int, data: Data, completion: @escaping (Result<Data, AnyError>) -> Void) {
     let to: Address? = {
       if transaction.from != transaction.to {
         // swap
@@ -361,7 +361,7 @@ public class KWExternalProvider: NSObject {
     }
   }
 
-  private func requestDataForTokenTransfer(_ transaction: KWPayment, completion: @escaping (Result<Data, AnyError>) -> Void) {
+  private func requestDataForTokenTransfer(_ transaction: KWTransaction, completion: @escaping (Result<Data, AnyError>) -> Void) {
     if transaction.from.isETH && transaction.to.isETH {
       completion(.success(Data()))
       return
@@ -381,7 +381,7 @@ public class KWExternalProvider: NSObject {
     }
   }
 
-  public func requestDataForTokenExchange(_ exchange: KWPayment, completion: @escaping (Result<Data, AnyError>) -> Void) {
+  public func requestDataForTokenExchange(_ exchange: KWTransaction, completion: @escaping (Result<Data, AnyError>) -> Void) {
     let address = exchange.account?.address.description ?? exchange.destWallet
     let encodeRequest = KWExchangeRequestEncode(
       exchange: exchange,

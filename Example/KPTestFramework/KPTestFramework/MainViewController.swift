@@ -195,7 +195,7 @@ extension MainViewController: KWCoordinatorDelegate {
         case .invalidAmount: return "Invalid Amount"
         case .failedToLoadSupportedToken(let errorMessage):
           return errorMessage
-        case .failedToSendPayment(let errorMessage):
+        case .failedToSendTransaction(let errorMessage):
           return errorMessage
         }
       }()

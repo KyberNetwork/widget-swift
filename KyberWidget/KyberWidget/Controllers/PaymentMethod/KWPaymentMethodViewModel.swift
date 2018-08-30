@@ -19,7 +19,7 @@ public enum KWGasPriceType: Int {
 }
 
 public class KWPaymentMethodViewModel: NSObject {
-  let defaultTokenIconImg = UIImage(named: "default_token", in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil)
+  let defaultTokenIconImg = UIImage(named: "default_token", in: Bundle.framework, compatibleWith: nil)
 
   let receiverAddress: String
   let receiverToken: KWTokenObject?
@@ -103,8 +103,8 @@ public class KWPaymentMethodViewModel: NSObject {
     }()
   }
 
-  var payment: KWPayment {
-    return KWPayment(
+  var transaction: KWTransaction {
+    return KWTransaction(
       from: self.from,
       to: self.to,
       account: nil,
@@ -519,13 +519,13 @@ extension KWPaymentMethodViewModel {
   func getEstimatedGasLimit(completion: @escaping () -> Void) {
     if self.from == self.to {
       print("Estimated gas for transfer token")
-      let payment = self.payment
-      self.provider.getTransferEstimateGasLimit(for: payment) { result in
+      let transaction = self.transaction
+      self.provider.getTransferEstimateGasLimit(for: transaction) { result in
         if case .success(let gasLimit) = result {
           self.updateEstimateGasLimit(
-            for: payment.from,
-            to: payment.to,
-            amount: payment.amountFrom,
+            for: transaction.from,
+            to: transaction.to,
+            amount: transaction.amountFrom,
             gasLimit: gasLimit
           )
           print("Success loading est gas limit")
@@ -538,13 +538,13 @@ extension KWPaymentMethodViewModel {
       }
     } else {
       print("Estimated gas for exchange token")
-      let payment = self.payment
-      self.provider.getSwapEstimateGasLimit(for: payment) { result in
+      let transaction = self.transaction
+      self.provider.getSwapEstimateGasLimit(for: transaction) { result in
         if case .success(let gasLimit) = result {
           self.updateEstimateGasLimit(
-            for: payment.from,
-            to: payment.to,
-            amount: payment.amountFrom,
+            for: transaction.from,
+            to: transaction.to,
+            amount: transaction.amountFrom,
             gasLimit: gasLimit
           )
           print("Success loading est gas limit")

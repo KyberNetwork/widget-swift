@@ -20,7 +20,7 @@ public class KWImportViewModel: NSObject {
   let commissionID: String?
 
   var tokens: [KWTokenObject]
-  let payment: KWPayment
+  let transaction: KWTransaction
   let keystore: KWKeystore
   let provider: KWExternalProvider
 
@@ -37,14 +37,14 @@ public class KWImportViewModel: NSObject {
     commissionID: String? = nil,
     keystore: KWKeystore,
     tokens: [KWTokenObject],
-    payment: KWPayment
+    transaction: KWTransaction
     ) {
     self.dataType = dataType
     self.network = network
     self.signer = signer
     self.commissionID = commissionID
     self.keystore = keystore
-    self.payment = payment
+    self.transaction = transaction
     self.tokens = tokens
     self.provider = KWExternalProvider(keystore: keystore, network: network)
   }
@@ -94,8 +94,8 @@ public class KWImportViewModel: NSObject {
   var displayBalanceAttributedString: NSAttributedString {
     let attributedString = NSMutableAttributedString()
     let string = balance?.string(
-      decimals: self.payment.from.decimals,
-      maxFractionDigits: min(6, self.payment.from.decimals)
+      decimals: self.transaction.from.decimals,
+      maxFractionDigits: min(6, self.transaction.from.decimals)
       ) ?? "0"
     let balanceAttributes: [NSAttributedStringKey: Any] = [
       NSAttributedStringKey.foregroundColor: UIColor.Kyber.background,
@@ -106,7 +106,7 @@ public class KWImportViewModel: NSObject {
       NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16, weight: .medium),
     ]
     attributedString.append(NSAttributedString(string: "\(string.prefix(12)) ", attributes: balanceAttributes))
-    attributedString.append(NSAttributedString(string: self.payment.from.symbol, attributes: symbolAttributes))
+    attributedString.append(NSAttributedString(string: self.transaction.from.symbol, attributes: symbolAttributes))
     return attributedString
   }
 
@@ -117,7 +117,7 @@ public class KWImportViewModel: NSObject {
 
   var isBalanceEnough: Bool {
     guard let balance = self.balance else { return false }
-    let amountFrom: BigInt = self.payment.expectedFromAmount(dataType: self.dataType)
+    let amountFrom: BigInt = self.transaction.expectedFromAmount(dataType: self.dataType)
     return amountFrom <= balance
   }
 
@@ -140,13 +140,13 @@ public class KWImportViewModel: NSObject {
   }
 
   func getBalance(completion: @escaping () -> Void) {
-    print("Getting balance for \(self.payment.from.symbol)")
+    print("Getting balance for \(self.transaction.from.symbol)")
     guard let address = self.account?.address else {
       print("Address is nil")
       completion()
       return
     }
-    if self.payment.from.isETH {
+    if self.transaction.from.isETH {
       self.provider.getETHBalance(address: address.description) { result in
         print("Done getting ETH balance")
         switch result {
@@ -162,17 +162,17 @@ public class KWImportViewModel: NSObject {
       }
     } else {
       self.provider.getTokenBalance(
-        for: Address(string: self.payment.from.address)!,
+        for: Address(string: self.transaction.from.address)!,
         address: address) { result in
-          print("Done getting \(self.payment.from.symbol) balance")
+          print("Done getting \(self.transaction.from.symbol) balance")
           switch result {
           case .success(let bal):
-            print("Getting \(self.payment.from.symbol) balance susccess")
+            print("Getting \(self.transaction.from.symbol) balance susccess")
             if let addr = self.account?.address, addr == address {
               self.balance = bal
             }
           case .failure(let error):
-            print("Getting \(self.payment.from.symbol) balance failed error: \(error.localizedDescription)")
+            print("Getting \(self.transaction.from.symbol) balance failed error: \(error.localizedDescription)")
           }
           completion()
       }

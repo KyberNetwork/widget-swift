@@ -148,7 +148,7 @@ class KAdvancedSettingsView: KWXibLoaderView {
 
     let image = UIImage(
       named: "expand_icon",
-      in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"),
+      in: Bundle.framework,
       compatibleWith: nil
     )
     self.displayViewButton.setImage(image, for: .normal)
@@ -251,7 +251,7 @@ class KAdvancedSettingsView: KWXibLoaderView {
     self.viewModel.updateViewHidden(isHidden: isHidden)
     let image = UIImage(
       named: isHidden ? "expand_icon" : "collapse_icon",
-      in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"),
+      in: Bundle.framework,
       compatibleWith: nil
     )
     self.displayViewButton.setImage(image, for: .normal)

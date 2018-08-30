@@ -47,10 +47,10 @@ extension UIImageView {
     size: CGSize? = nil,
     state: UIControlState = .normal
     ) {
-    if let image = UIImage(named: token.icon.lowercased(), in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil) {
+    if let image = UIImage(named: token.icon.lowercased(), in: Bundle.framework, compatibleWith: nil) {
       self.image = image.resizeImage(to: size)
     } else {
-      let placeHolderImg = UIImage(named: "default_token", in: Bundle(identifier: "manhlx.kyber.network.KyberWidget"), compatibleWith: nil)
+      let placeHolderImg = UIImage(named: "default_token", in: Bundle.framework, compatibleWith: nil)
       self.setImage(
         with: token.iconURL,
         placeHolder: placeHolderImg,

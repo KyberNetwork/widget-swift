@@ -53,7 +53,7 @@ class KWMinAcceptableRatePopupViewController: UIViewController {
 
   init(viewModel: KWMinAcceptableRatePopupViewModel) {
     self.viewModel = viewModel
-    super.init(nibName: "KWMinAcceptableRatePopupViewController", bundle: Bundle(identifier: "manhlx.kyber.network.KyberWidget"))
+    super.init(nibName: "KWMinAcceptableRatePopupViewController", bundle: Bundle.framework)
   }
 
   required init?(coder aDecoder: NSCoder) {
