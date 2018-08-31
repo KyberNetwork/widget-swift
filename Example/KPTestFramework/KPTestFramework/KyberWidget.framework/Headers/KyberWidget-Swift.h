@@ -302,6 +302,12 @@ SWIFT_CLASS("_TtC11KyberWidget24KWPaymentMethodViewModel")
 
 
 
+SWIFT_CLASS("_TtC11KyberWidget17KWRateCoordinator")
+@interface KWRateCoordinator : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
 SWIFT_CLASS("_TtC11KyberWidget14KWStringConfig")
 @interface KWStringConfig : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
