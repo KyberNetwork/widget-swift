@@ -30,6 +30,8 @@ public class KWImportViewModel: NSObject {
   private(set) var account: Account?
   private(set) var balance: BigInt? = nil
 
+  private(set) var userCap: BigInt?
+
   public init(
     dataType: KWDataType,
     network: KWEnvironment,
@@ -121,6 +123,14 @@ public class KWImportViewModel: NSObject {
     return amountFrom <= balance
   }
 
+  var isAmountValidWithCap: Bool {
+    guard let cap = self.userCap else { return true }// if can not load, consider as ok
+    guard let rateETH = KWRateCoordinator.shared.rates.first(where: { $0.symbol == self.transaction.from.symbol }) else { return true }
+    let rateBig: BigInt = BigInt(rateETH.rate * pow(10.0, 18.0))
+    let valueInETH = rateBig * self.transaction.amountFrom / BigInt(10).power(self.transaction.from.decimals)
+    return valueInETH <= cap
+  }
+
   func importWallet(importType: KWImportType, completion: @escaping (Result<Account, KWKeystoreError>) -> Void) {
     self.keystore.importWallet(type: importType) { result in
       switch result {
@@ -176,6 +186,25 @@ public class KWImportViewModel: NSObject {
           }
           completion()
       }
+    }
+  }
+
+  func getUserCapInWei(completion: @escaping () -> Void) {
+    print("Getting user cap in wei")
+    guard let address = self.account?.address else {
+      print("Done getting user cap in wei")
+      completion()
+      return
+    }
+    self.provider.generalProvider.getUserCapInWei(for: address) { [weak self] result in
+      guard let `self` = self else { return }
+      print("Done getting user cap in wei")
+      switch result {
+      case .success(let resp):
+        self.userCap = resp
+      case .failure: break
+      }
+      completion()
     }
   }
 }

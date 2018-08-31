@@ -13,24 +13,28 @@ public enum KWNetworkProvider {
   case getMaxGasPrice// = "/getMaxGasPrice"
   case getGasPrice// = "/getGasPrice"
   case getSupportedTokens(env: KWEnvironment)// = "/api/tokens/supported"
+  case getRates(env: KWEnvironment)
 }
 
 extension KWNetworkProvider: TargetType {
 
   public var baseURL: URL {
     switch self {
-    case .getSupportedTokens(let env):
-      let string = env == .ropsten ? "https://staging-tracker.knstats.com/api/tokens/supported" : "https://tracker.kyber.network/api/tokens/supported"
+    case .getSupportedTokens:
+      let string = "https://tracker.kyber.network/api/tokens/supported"
+      return URL(string: string)!
+    case .getRates:
+      let string = "https://tracker.kyber.network/api/change24h"
       return URL(string: string)!
     case .getMaxGasPrice, .getGasPrice:
-      let baseURLString = "https://production-cache.kyber.network"
-      return URL(string: baseURLString)!
+      let string = "https://production-cache.kyber.network"
+      return URL(string: string)!
     }
   }
 
   public var path: String {
     switch self {
-    case .getSupportedTokens:
+    case .getSupportedTokens, .getRates:
       return ""
     case .getGasPrice:
       return "/getGasPrice"

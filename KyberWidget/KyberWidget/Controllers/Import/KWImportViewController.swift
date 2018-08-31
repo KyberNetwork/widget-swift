@@ -204,7 +204,9 @@ public class KWImportViewController: UIViewController {
   }
 
   @objc func leftButtonPressed(_ sender: Any) {
+    self.displayLoading(text: "Removing wallet...", animated: true)
     self.viewModel.removeWallets {
+      self.hideLoading()
       self.delegate?.importViewController(self, run: .back)
     }
   }
@@ -395,6 +397,13 @@ public class KWImportViewController: UIViewController {
       )
       return
     }
+    if !self.viewModel.isAmountValidWithCap {
+      self.openAlertViewChangeWallet(
+        title: "Amount too big",
+        message: "We can not handle your amount."
+      )
+      return
+    }
     self.delegate?.importViewController(self, run: .successImported(account: account))
   }
 
@@ -442,6 +451,7 @@ public class KWImportViewController: UIViewController {
         self.balanceLoadingIndicatorView.startAnimating()
       }
     }
+    self.viewModel.getUserCapInWei {}
   }
 }
 

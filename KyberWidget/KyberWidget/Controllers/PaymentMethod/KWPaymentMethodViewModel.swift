@@ -54,6 +54,7 @@ public class KWPaymentMethodViewModel: NSObject {
   fileprivate(set) var gasLimit: BigInt = KWGasConfiguration.exchangeTokensGasLimitDefault
   var hasAgreed: Bool = false
 
+  fileprivate(set) var userCap: BigInt = BigInt(0)
   /*
    Amount, Address & Product Name have same attributed text format
    */
@@ -428,17 +429,20 @@ extension KWPaymentMethodViewModel {
   }
 
   // Validate amount (not use for checking amount for now)
-//  var isAmountTooSmall: Bool {
-//    if self.toAmount != nil { return false }
-//    if self.amountFromBigInt <= BigInt(0) { return true }
-//    if self.from.symbol == "ETH" {
-//      return self.amountFromBigInt < BigInt(0.001 * Double(KWEthereumUnit.ether.rawValue))
-//    }
-//    if self.to.symbol == "ETH" {
-//      return self.estimatedReceivedAmountBigInt ?? BigInt(0) < BigInt(0.001 * Double(KWEthereumUnit.ether.rawValue))
-//    }
-//    return false
-//  }
+  var isAmountTooSmall: Bool {
+    if self.toAmount != nil { return false }
+    if self.amountFromBigInt <= BigInt(0) { return true }
+    if self.from.symbol == "ETH" {
+      return self.amountFromBigInt < BigInt(0.001 * Double(KWEthereumUnit.ether.rawValue))
+    }
+    if self.to.symbol == "ETH" {
+      return self.estimatedReceivedAmountBigInt ?? BigInt(0) < BigInt(0.001 * Double(KWEthereumUnit.ether.rawValue))
+    }
+    guard let rateETH = KWRateCoordinator.shared.rates.first(where: { $0.symbol == self.from.symbol }) else { return false }
+    let rateBig: BigInt = BigInt(rateETH.rate * pow(10.0, 18.0))
+    let valueInETH = rateBig * self.amountFromBigInt / BigInt(10).power(self.from.decimals)
+    return valueInETH <= BigInt(0.001 * Double(KWEthereumUnit.ether.rawValue))
+  }
 
   // Validate Rate
   var isRateValid: Bool {
@@ -659,6 +663,20 @@ extension KWPaymentMethodViewModel {
           }
         }
       }.resume()
+    }
+  }
+
+  func getTrackerRates(completion: @escaping (Bool) -> Void) {
+    DispatchQueue.global(qos: .background).async {
+      KWRateCoordinator.shared.fetchTrackerRates(env: self.network) { result in
+        DispatchQueue.main.async {
+          if case .success = result {
+            completion(true)
+          } else {
+            completion(false)
+          }
+        }
+      }
     }
   }
 }

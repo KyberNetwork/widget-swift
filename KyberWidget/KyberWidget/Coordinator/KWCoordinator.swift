@@ -141,6 +141,8 @@ public class KWCoordinator {
     return KWExternalProvider(keystore: keystore, network: network)
   }()
 
+  fileprivate var rateTimer: Timer?
+
   fileprivate var paymentMethodVC: KWPaymentMethodViewController!
 
   fileprivate var searchTokenVC: KWSearchTokenViewController?
@@ -263,11 +265,26 @@ public class KWCoordinator {
       self.navigationController.viewControllers = [self.paymentMethodVC]
       self.baseViewController.present(self.navigationController, animated: true, completion: completion)
       self.paymentMethodVC.coordinatorUpdateSupportedTokens(self.tokens)
+      self.loadTrackerRates()
+      self.rateTimer?.invalidate()
+      self.rateTimer = Timer.scheduledTimer(
+        withTimeInterval: 30.0,
+        repeats: true,
+        block: { [weak self] _ in
+        self?.loadTrackerRates()
+      })
     }
   }
 
   public func stop(completion: (() -> Void)? = nil) {
+    self.rateTimer?.invalidate()
+    self.rateTimer = nil
     self.baseViewController.dismiss(animated: true, completion: completion)
+  }
+
+  fileprivate func loadTrackerRates() {
+    KWRateCoordinator.shared.fetchTrackerRates(env: self.network) { _ in
+    }
   }
 
   fileprivate func loadSupportedTokensIfNeeded(completion: @escaping (Result<[KWTokenObject], AnyError>) -> Void) {
