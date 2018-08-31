@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		255846EA2137A3A300330717 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255846E92137A3A300330717 /* Bundle.swift */; };
+		255846EC2138EEB500330717 /* KWRateCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255846EB2138EEB500330717 /* KWRateCoordinator.swift */; };
 		25CF3A7A2133A0760072F3C1 /* KyberWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CF3A702133A0760072F3C1 /* KyberWidget.framework */; };
 		25CF3A7F2133A0760072F3C1 /* KyberWidgetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF3A7E2133A0760072F3C1 /* KyberWidgetTests.swift */; };
 		25CF3A812133A0760072F3C1 /* KyberWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 25CF3A732133A0760072F3C1 /* KyberWidget.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -106,6 +107,7 @@
 /* Begin PBXFileReference section */
 		1B6800345CC5B213915C0981 /* Pods-KyberWidgetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KyberWidgetTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-KyberWidgetTests/Pods-KyberWidgetTests.release.xcconfig"; sourceTree = "<group>"; };
 		255846E92137A3A300330717 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
+		255846EB2138EEB500330717 /* KWRateCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KWRateCoordinator.swift; sourceTree = "<group>"; };
 		25CF3A702133A0760072F3C1 /* KyberWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KyberWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25CF3A732133A0760072F3C1 /* KyberWidget.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KyberWidget.h; sourceTree = "<group>"; };
 		25CF3A742133A0760072F3C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -417,6 +419,7 @@
 				25CF3B062133B0110072F3C1 /* KWNetworkProvider.swift */,
 				25CF3B072133B0110072F3C1 /* KWGasCoordinator.swift */,
 				25CF3B082133B0110072F3C1 /* KWSupportedToken.swift */,
+				255846EB2138EEB500330717 /* KWRateCoordinator.swift */,
 			);
 			path = InternalLoad;
 			sourceTree = "<group>";
@@ -792,6 +795,7 @@
 				25CF3AFC2133AB3A0072F3C1 /* KWGetTokenAllowance.swift in Sources */,
 				25CF3AFB2133AB3A0072F3C1 /* KWGetExpectedRate.swift in Sources */,
 				25CF3B632133B1680072F3C1 /* KWPaymentMethodViewController.swift in Sources */,
+				255846EC2138EEB500330717 /* KWRateCoordinator.swift in Sources */,
 				25CF3B0E2133B0110072F3C1 /* KWExternalProvider.swift in Sources */,
 				25CF3A9A2133A5840072F3C1 /* String.swift in Sources */,
 				25CF3B0B2133B0110072F3C1 /* KWNetworkProvider.swift in Sources */,

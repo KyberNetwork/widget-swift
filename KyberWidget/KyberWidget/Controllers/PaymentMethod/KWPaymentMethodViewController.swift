@@ -366,6 +366,13 @@ public class KWPaymentMethodViewController: UIViewController {
   }
 
   @IBAction func nextButtonPressed(_ sender: Any) {
+    if self.viewModel.isAmountTooSmall {
+      self.showAlertController(
+        title: "Amount too small",
+        message: "Amount should be greater than 0.001 ETH"
+      )
+      return
+    }
     self.delegate?.paymentMethodViewController(self, run: .next(transaction: self.viewModel.transaction))
   }
 
