@@ -110,7 +110,7 @@ do {
 
 - ***receiveAmount*** (Double) - the amount of `receiveToken` you (vendor) want your user to pay (for _pay_ widget) or amount you want to buy (for _buy_ widget), not support for _swap_ widget. If you leave it blank or missing, the users can specify it in the widget interface. It could be useful for undetermined payment or pay-as-you-go payment like a charity, ICO or anything else. This param is ignored if you do not specify `receiveToken`.
 
-- ***network*** (KWEnvironment - default `ropsten`) - Ethereum network that the widget will run. Possible value: `mainnetTest, production, staging, ropsten, kovan`.
+- ***network*** (KWEnvironment - default `ropsten`) - Ethereum network that the widget will run. Possible value: `mainnet, production, staging, ropsten, kovan`.
 
 - ***signer*** (String) - concatenation of a list of Ethereum address by underscore `_`, eg. 0xFDF28Bf25779ED4cA74e958d54653260af604C20_0xFDF28Bf25779ED4cA74e958d54653260af604C20 - If you pass this param, the user will be forced to pay from one of those addresses. If you ignore or pass `nil` value, all addresses are accepted.
 
