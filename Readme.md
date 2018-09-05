@@ -58,16 +58,16 @@ To use the widget for _pay_ use case:
 ```swift
 do {
   self.coordinator = try KWPayCoordinator(
-    baseViewController: UIViewController,
-    receiveAddr: String,
-    receiveToken: String,
-    receiveAmount: Double?,
-    network: KWEnvironment, // ETH network, default ropsten
-    signer: String? = nil,
-    commissionId: String? = nil,
-    productName: String?,
-    productAvatar: String?,
-    productAvatarImage: UIImage?
+    baseViewController: self,
+    receiveAddr: "0x2262d4f6312805851e3b27c40db2c7282e6e4a49",
+    receiveToken: "ETH",
+    receiveAmount: 0.001604,
+    network: KWEnvironment.ropsten, // ETH network, default ropsten
+    signer: nil,
+    commissionId: nil,
+    productName: "",
+    productAvatar: "https://pbs.twimg.com/media/DVgWFLTVwAAUarj.png",
+    productAvatarImage: nil
   )
 } catch {}
 ```
@@ -77,10 +77,10 @@ To use the widget for _swap_ use case:
 ```swift
 do {
   self.coordinator = try KWSwapCoordinator(
-    baseViewController: UIViewController,
-    network: KWEnvironment, // ETH network, default ropsten
-    signer: String? = nil,
-    commissionId: String? = nil
+    baseViewController: self,
+    network: KWEnvironment.ropsten, // ETH network, default ropsten
+    signer: nil,
+    commissionId: nil
   )
 } catch {}
 ```
@@ -90,15 +90,17 @@ To use the widget for _buy_ use case:
 ```swift
 do {
   self.coordinator = try KWBuyCoordinator(
-    baseViewController: UIViewController,
-    receiveToken: String,
-    receiveAmount: Double?,
-    network: KWEnvironment, // ETH network, default ropsten
-    signer: String?,
-    commissionId: String?
+    baseViewController: self,
+    receiveToken: "ETH",
+    receiveAmount: 0.001604,
+    network: KWEnvironment.ropsten, // ETH network, default ropsten
+    signer: nil,
+    commissionId: nil
   )
 } catch {}
 ```
+
+NOTE: The values are for example only, check out the parameter details below.
 
 ***Parameter details:***
 
