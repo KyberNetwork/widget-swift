@@ -618,6 +618,7 @@
 				TargetAttributes = {
 					25CF3A6F2133A0760072F3C1 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 					25CF3A782133A0760072F3C1 = {
 						CreatedOnToolsVersion = 9.4.1;
@@ -997,7 +998,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = manhlx.kyber.network.KyberWidget;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1026,7 +1027,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = manhlx.kyber.network.KyberWidget;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

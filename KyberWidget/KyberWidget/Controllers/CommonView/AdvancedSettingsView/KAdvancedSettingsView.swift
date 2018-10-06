@@ -56,13 +56,13 @@ class KAdvancedSettingsViewModel: NSObject {
       let string = fee.string(units: .ether, minFractionDigits: 0, maxFractionDigits: 9)
       return " (~\(string.prefix(12)) ETH)"
     }()
-    let gasPriceAttributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.foregroundColor: UIColor.Kyber.black,
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16, weight: .medium),
+    let gasPriceAttributes: [NSAttributedString.Key: Any] = [
+      NSAttributedString.Key.foregroundColor: UIColor.Kyber.black,
+      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .medium),
     ]
-    let feeAttributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.foregroundColor: UIColor.Kyber.segment,
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12, weight: .medium),
+    let feeAttributes: [NSAttributedString.Key: Any] = [
+      NSAttributedString.Key.foregroundColor: UIColor.Kyber.segment,
+      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .medium),
     ]
     let attributedString = NSMutableAttributedString()
     attributedString.append(NSAttributedString(string: gasPriceString, attributes: gasPriceAttributes))

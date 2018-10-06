@@ -65,7 +65,7 @@ final public class KWNumberUtil {
     let integerString = self.integerString(from: integerPart)
     let fractionalString = self.fractionalString(from: BigInt(sign: .plus, magnitude: remainder.magnitude), decimals: decimals)
     if fractionalString.isEmpty { return integerString }
-    return "\(integerString).\(fractionalString)"
+    return "\(integerString)\(self.decimalSeparator)\(fractionalString)"
   }
 
   fileprivate func integerString(from: BigInt) -> String {

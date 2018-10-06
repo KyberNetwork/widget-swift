@@ -58,14 +58,14 @@ public class KWPaymentMethodViewModel: NSObject {
   /*
    Amount, Address & Product Name have same attributed text format
    */
-  fileprivate let dataNameAttributes: [NSAttributedStringKey: Any] = [
-    NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium),
-    NSAttributedStringKey.foregroundColor: UIColor.Kyber.segment,
+  fileprivate let dataNameAttributes: [NSAttributedString.Key: Any] = [
+    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .medium),
+    NSAttributedString.Key.foregroundColor: UIColor.Kyber.segment,
   ]
 
-  fileprivate let dataValueAttributes: [NSAttributedStringKey: Any] = [
-    NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium),
-    NSAttributedStringKey.foregroundColor: UIColor(red: 102, green: 102, blue: 102),
+  fileprivate let dataValueAttributes: [NSAttributedString.Key: Any] = [
+    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .medium),
+    NSAttributedString.Key.foregroundColor: UIColor(red: 102, green: 102, blue: 102),
   ]
 
   public init(
@@ -316,13 +316,13 @@ extension KWPaymentMethodViewModel {
 
   var estimateDestAmountAttributedString: NSAttributedString {
     let attributedString = NSMutableAttributedString()
-    let addressTextAttributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium),
-      NSAttributedStringKey.foregroundColor: UIColor.Kyber.segment,
+    let addressTextAttributes: [NSAttributedString.Key: Any] = [
+      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .medium),
+      NSAttributedString.Key.foregroundColor: UIColor.Kyber.segment,
     ]
-    let addressValueAttributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium),
-      NSAttributedStringKey.foregroundColor: UIColor.Kyber.action,
+    let addressValueAttributes: [NSAttributedString.Key: Any] = [
+      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .medium),
+      NSAttributedString.Key.foregroundColor: UIColor.Kyber.action,
     ]
     attributedString.append(NSAttributedString(string: "\(KWStringConfig.current.estimateDestAmount): ", attributes: addressTextAttributes))
     attributedString.append(NSAttributedString(string: self.estimatedReceivedAmountWithSymbolString, attributes: addressValueAttributes))
@@ -415,13 +415,13 @@ extension KWPaymentMethodViewModel {
 extension KWPaymentMethodViewModel {
   var termsAndConditionsAttributedString: NSAttributedString {
     let attributedString = NSMutableAttributedString()
-    let addressTextAttributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium),
-      NSAttributedStringKey.foregroundColor: UIColor.Kyber.segment,
+    let addressTextAttributes: [NSAttributedString.Key: Any] = [
+      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .medium),
+      NSAttributedString.Key.foregroundColor: UIColor.Kyber.segment,
       ]
-    let addressValueAttributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium),
-      NSAttributedStringKey.foregroundColor: UIColor.Kyber.action,
+    let addressValueAttributes: [NSAttributedString.Key: Any] = [
+      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .medium),
+      NSAttributedString.Key.foregroundColor: UIColor.Kyber.action,
       ]
     attributedString.append(NSAttributedString(string: "\(KWStringConfig.current.agreeTo) ", attributes: addressTextAttributes))
     attributedString.append(NSAttributedString(string: KWStringConfig.current.termsAndConditions, attributes: addressValueAttributes))
@@ -460,13 +460,13 @@ extension KWPaymentMethodViewModel {
   // MARK: Helpers
   func tokenButtonAttributedText(isSource: Bool) -> NSAttributedString {
     let attributedString = NSMutableAttributedString()
-    let symbolAttributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16, weight: .medium),
-      NSAttributedStringKey.foregroundColor: UIColor.Kyber.black,
+    let symbolAttributes: [NSAttributedString.Key: Any] = [
+      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .medium),
+      NSAttributedString.Key.foregroundColor: UIColor.Kyber.black,
     ]
-    let nameAttributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .medium),
-      NSAttributedStringKey.foregroundColor: UIColor.Kyber.segment,
+    let nameAttributes: [NSAttributedString.Key: Any] = [
+      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .medium),
+      NSAttributedString.Key.foregroundColor: UIColor.Kyber.segment,
     ]
     let symbol: String = isSource ? self.from.symbol : self.to.symbol
     let name: String = isSource ? self.from.name : self.to.name

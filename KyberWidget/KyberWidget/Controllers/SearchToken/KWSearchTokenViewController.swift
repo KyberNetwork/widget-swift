@@ -86,12 +86,12 @@ class KWSearchTokenViewController: UIViewController {
   deinit {
     NotificationCenter.default.removeObserver(
       self,
-      name: NSNotification.Name.UIKeyboardDidShow,
+      name: UIResponder.keyboardDidShowNotification,
       object: nil
     )
     NotificationCenter.default.removeObserver(
       self,
-      name: NSNotification.Name.UIKeyboardDidHide,
+      name: UIResponder.keyboardDidHideNotification,
       object: nil
     )
   }
@@ -143,13 +143,13 @@ class KWSearchTokenViewController: UIViewController {
     NotificationCenter.default.addObserver(
       self,
       selector: #selector(self.keyboardDidShow(_:)),
-      name: NSNotification.Name.UIKeyboardDidShow,
+      name: UIResponder.keyboardDidShowNotification,
       object: nil
     )
     NotificationCenter.default.addObserver(
       self,
       selector: #selector(self.keyboardDidHide(_:)),
-      name: NSNotification.Name.UIKeyboardDidHide,
+      name: UIResponder.keyboardDidHideNotification,
       object: nil
     )
   }
@@ -189,7 +189,7 @@ class KWSearchTokenViewController: UIViewController {
   }
 
   @objc func keyboardDidShow(_ sender: Notification) {
-    if let keyboardSize = (sender.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+    if let keyboardSize = (sender.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
       UIView.animate(
       withDuration: 0.25) {
         self.tableViewBottomPaddingConstraint.constant = keyboardSize.height

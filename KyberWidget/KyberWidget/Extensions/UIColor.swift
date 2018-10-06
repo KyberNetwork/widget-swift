@@ -6,6 +6,9 @@
 //  Copyright © 2018 kyber.network. All rights reserved.
 //
 
+import UIKit
+import Foundation
+
 extension UIColor {
   convenience init(hex: String) {
     let scanner = Scanner(string: hex)
