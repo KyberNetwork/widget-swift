@@ -8,7 +8,6 @@ class KWSearchTokenTableViewCell: UITableViewCell {
   @IBOutlet weak var iconImageView: UIImageView!
   @IBOutlet weak var tokenNameLabel: UILabel!
   @IBOutlet weak var tokenSymbolLabel: UILabel!
-  @IBOutlet weak var balanceLabel: UILabel!
 
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -16,16 +15,10 @@ class KWSearchTokenTableViewCell: UITableViewCell {
     self.tokenSymbolLabel.text = ""
   }
 
-  func updateCell(with token: KWTokenObject, balance: BigInt?) {
+  func updateCell(with token: KWTokenObject) {
     self.iconImageView.setTokenImage(token: token)
     self.tokenSymbolLabel.text = token.symbol
     self.tokenNameLabel.text = token.name
-    let balText: String = balance?.string(
-      decimals: token.decimals,
-      minFractionDigits: 0,
-      maxFractionDigits: 6
-      ) ?? ""
-    self.balanceLabel.text = balText
     self.layoutIfNeeded()
   }
 }

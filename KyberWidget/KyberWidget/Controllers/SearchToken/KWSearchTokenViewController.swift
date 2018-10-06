@@ -15,7 +15,7 @@ protocol KWSearchTokenViewControllerDelegate: class {
 class KWSearchTokenViewModel {
 
   var supportedTokens: [KWTokenObject] = []
-  var balances: [String: BigInt] = [:]
+  let pinnedTokens: [String]
   var searchedText: String = "" {
     didSet {
       self.updateDisplayedTokens()
@@ -23,8 +23,9 @@ class KWSearchTokenViewModel {
   }
   var displayedTokens: [KWTokenObject] = []
 
-  init(supportedTokens: [KWTokenObject]) {
+  init(supportedTokens: [KWTokenObject], pinnedTokens: [String]) {
     self.supportedTokens = supportedTokens.sorted(by: { return $0.symbol < $1.symbol })
+    self.pinnedTokens = pinnedTokens
     self.searchedText = ""
     self.displayedTokens = self.supportedTokens
   }
@@ -39,21 +40,15 @@ class KWSearchTokenViewModel {
       return self.supportedTokens.filter({ ($0.symbol + " " + $0.name).lowercased().contains(self.searchedText.lowercased()) })
     }()
     self.displayedTokens.sort { (token0, token1) -> Bool in
-      guard let balance0 = self.balances[token0.address] else { return false }
-      guard let balance1 = self.balances[token1.address] else { return true }
-      return balance0 * BigInt(10).power(18 - token0.decimals) > balance1 * BigInt(10).power(18 - token1.decimals)
+      if self.pinnedTokens.contains(token0.symbol) { return true }
+      if self.pinnedTokens.contains(token1.symbol) { return true }
+      return token0.symbol < token1.symbol
     }
   }
 
   func updateListSupportedTokens(_ tokens: [KWTokenObject]) {
     self.supportedTokens = tokens.sorted(by: { return $0.symbol < $1.symbol })
     self.updateDisplayedTokens()
-  }
-
-  func updateBalances(_ balances: [String: BigInt]) {
-    balances.forEach { (key, value) in
-      self.balances[key] = value
-    }
   }
 
   func updateSupportedTokens(_ tokens: [KWTokenObject]) {
@@ -179,11 +174,6 @@ class KWSearchTokenViewController: UIViewController {
     self.updateUIDisplayedDataDidChange()
   }
 
-  func updateBalances(_ balances: [String: BigInt]) {
-    self.viewModel.updateBalances(balances)
-    self.updateUIDisplayedDataDidChange()
-  }
-
   @IBAction func backButtonPressed(_ sender: Any) {
     self.delegate?.searchTokenViewController(self, run: .cancel)
   }
@@ -242,8 +232,7 @@ extension KWSearchTokenViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: kSearchTokenTableViewCellID, for: indexPath) as! KWSearchTokenTableViewCell
     let token = self.viewModel.displayedTokens[indexPath.row]
-    let balance = self.viewModel.balances[token.address]
-    cell.updateCell(with: token, balance: balance)
+    cell.updateCell(with: token)
     return cell
   }
 }

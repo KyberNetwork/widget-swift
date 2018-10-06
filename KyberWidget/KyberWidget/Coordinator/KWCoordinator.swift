@@ -40,6 +40,7 @@ public class KWPayCoordinator: KWCoordinator {
     receiveAddr: String,
     receiveToken: String,
     receiveAmount: Double?,
+    pinnedTokens: String = "ETH_KNC_DAI",
     network: KWEnvironment = .ropsten,
     signer: String? = nil,
     commissionId: String? = nil,
@@ -52,6 +53,7 @@ public class KWPayCoordinator: KWCoordinator {
       receiveAddr: receiveAddr,
       receiveToken: receiveToken,
       receiveAmount: receiveAmount,
+      pinnedTokens: pinnedTokens,
       type: .pay,
       network: network,
       signer: signer,
@@ -66,6 +68,7 @@ public class KWPayCoordinator: KWCoordinator {
 public class KWSwapCoordinator: KWCoordinator {
   public init(
     baseViewController: UIViewController,
+    pinnedTokens: String = "ETH_KNC_DAI",
     network: KWEnvironment = .ropsten,
     signer: String? = nil,
     commissionId: String? = nil
@@ -75,6 +78,7 @@ public class KWSwapCoordinator: KWCoordinator {
       receiveAddr: "",
       receiveToken: nil,
       receiveAmount: nil,
+      pinnedTokens: pinnedTokens,
       type: .swap,
       network: network,
       signer: signer,
@@ -91,6 +95,7 @@ public class KWBuyCoordinator: KWCoordinator {
     baseViewController: UIViewController,
     receiveToken: String,
     receiveAmount: Double?,
+    pinnedTokens: String = "ETH_KNC_DAI",
     network: KWEnvironment,
     signer: String?,
     commissionId: String?
@@ -100,6 +105,7 @@ public class KWBuyCoordinator: KWCoordinator {
       receiveAddr: "",
       receiveToken: receiveToken,
       receiveAmount: receiveAmount,
+      pinnedTokens: pinnedTokens,
       type: .buy,
       network: network,
       signer: signer,
@@ -119,6 +125,7 @@ public class KWCoordinator {
   let receiverTokenSymbol: String
   var receiverToken: KWTokenObject? = nil
   let receiverTokenAmount: Double?
+  let pinnedTokens: [String]
   let dataType: KWDataType
   let productName: String?
   let productAvatar: String?
@@ -155,6 +162,7 @@ public class KWCoordinator {
     receiveAddr: String,
     receiveToken: String?,
     receiveAmount: Double?,
+    pinnedTokens: String = "ETH_KNC_DAI",
     type: KWDataType,
     network: KWEnvironment,
     signer: String? = nil,
@@ -185,7 +193,7 @@ public class KWCoordinator {
     self.signer = signer
     self.commissionId = commissionId
     self.keystore = try KWKeystore()
-
+    self.pinnedTokens = pinnedTokens.components(separatedBy: "_")
     self.dataType = type
     self.productName = productName
     self.productAvatar = productAvatar
@@ -377,7 +385,10 @@ extension KWCoordinator: KWPaymentMethodViewControllerDelegate {
   fileprivate func openSearchTokenView(_ selectedToken: KWTokenObject, isSource: Bool) {
     self.isSelectingSource = isSource
     self.searchTokenVC = {
-      let viewModel = KWSearchTokenViewModel(supportedTokens: self.tokens)
+      let viewModel = KWSearchTokenViewModel(
+        supportedTokens: self.tokens,
+        pinnedTokens: self.pinnedTokens
+      )
       let controller = KWSearchTokenViewController(viewModel: viewModel)
       controller.loadViewIfNeeded()
       controller.delegate = self
