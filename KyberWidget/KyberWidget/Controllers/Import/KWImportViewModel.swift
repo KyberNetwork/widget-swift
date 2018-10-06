@@ -99,13 +99,13 @@ public class KWImportViewModel: NSObject {
       decimals: self.transaction.from.decimals,
       maxFractionDigits: min(6, self.transaction.from.decimals)
       ) ?? "0"
-    let balanceAttributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.foregroundColor: UIColor.Kyber.background,
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 32, weight: .medium),
+    let balanceAttributes: [NSAttributedString.Key: Any] = [
+      NSAttributedString.Key.foregroundColor: UIColor.Kyber.background,
+      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 32, weight: .medium),
     ]
-    let symbolAttributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.foregroundColor: UIColor(red: 90, green: 94, blue: 103),
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16, weight: .medium),
+    let symbolAttributes: [NSAttributedString.Key: Any] = [
+      NSAttributedString.Key.foregroundColor: UIColor(red: 90, green: 94, blue: 103),
+      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .medium),
     ]
     attributedString.append(NSAttributedString(string: "\(string.prefix(12)) ", attributes: balanceAttributes))
     attributedString.append(NSAttributedString(string: self.transaction.from.symbol, attributes: symbolAttributes))

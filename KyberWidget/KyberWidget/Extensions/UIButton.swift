@@ -10,7 +10,7 @@ import UIKit
 
 extension UIButton {
 
-  func setBackgroundColor(_ color: UIColor, forState: UIControlState) {
+  func setBackgroundColor(_ color: UIColor, forState: UIControl.State) {
     UIGraphicsBeginImageContext(CGSize(width: 1, height: 1))
     UIGraphicsGetCurrentContext()!.setFillColor(color.cgColor)
     UIGraphicsGetCurrentContext()!.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
@@ -24,7 +24,7 @@ extension UIButton {
     with url: URL,
     placeHolder: UIImage?,
     size: CGSize? = nil,
-    state: UIControlState = .normal
+    state: UIControl.State = .normal
     ) {
     self.setImage(placeHolder?.resizeImage(to: size), for: state)
     URLSession.shared.dataTask(with: url) { (data, _, error) in
@@ -40,7 +40,7 @@ extension UIButton {
     with string: String,
     placeHolder: UIImage?,
     size: CGSize? = nil,
-    state: UIControlState = .normal
+    state: UIControl.State = .normal
     ) {
     self.setImage(placeHolder?.resizeImage(to: size), for: state)
     guard let url = URL(string: string) else { return }
@@ -86,7 +86,7 @@ extension UIButton {
   func setTokenImage(
     token: KWTokenObject,
     size: CGSize? = nil,
-    state: UIControlState = .normal
+    state: UIControl.State = .normal
     ) {
     if let image = UIImage(named: token.icon.lowercased(), in: Bundle.framework, compatibleWith: nil) {
       self.setImage(image.resizeImage(to: size), for: .normal)

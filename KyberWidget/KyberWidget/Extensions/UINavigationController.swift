@@ -24,7 +24,7 @@ extension UINavigationController {
   }
 
   func applyStyle(color: UIColor = UIColor.Kyber.background, tintColor: UIColor = .white) {
-    navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+    navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     navigationBar.isTranslucent = false
     navigationBar.shadowImage = UIImage()
     navigationBar.barTintColor = color

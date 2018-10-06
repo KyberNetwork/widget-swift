@@ -7,24 +7,24 @@ struct KWMinAcceptableRatePopupViewModel {
   let minRate: String
   let symbol: String
 
-  var titleAttributes: [NSAttributedStringKey: Any] {
+  var titleAttributes: [NSAttributedString.Key: Any] {
     return [
-      NSAttributedStringKey.foregroundColor: KWThemeConfig.current.minRateDescTextColor,
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16),
+      NSAttributedString.Key.foregroundColor: KWThemeConfig.current.minRateDescTextColor,
+      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),
     ]
   }
 
-  var descAttributes: [NSAttributedStringKey: Any] {
+  var descAttributes: [NSAttributedString.Key: Any] {
     return [
-      NSAttributedStringKey.foregroundColor: KWThemeConfig.current.minRateDescTextColor,
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14),
+      NSAttributedString.Key.foregroundColor: KWThemeConfig.current.minRateDescTextColor,
+      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14),
     ]
   }
 
-  var highlightedAttributes: [NSAttributedStringKey: Any] {
+  var highlightedAttributes: [NSAttributedString.Key: Any] {
     return [
-      NSAttributedStringKey.foregroundColor: KWThemeConfig.current.minRateDescTextColor,
-      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: .bold),
+      NSAttributedString.Key.foregroundColor: KWThemeConfig.current.minRateDescTextColor,
+      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .bold),
     ]
   }
 
