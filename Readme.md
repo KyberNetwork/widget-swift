@@ -81,6 +81,7 @@ do {
     receiveAddr: "0x2262d4f6312805851e3b27c40db2c7282e6e4a49",
     receiveToken: "ETH",
     receiveAmount: 0.001604,
+    pinnedTokens: String = "ETH_KNC_DAI",
     network: KWEnvironment.ropsten, // ETH network, default ropsten
     signer: nil,
     commissionId: nil,
@@ -97,6 +98,7 @@ To use the widget for _swap_ use case:
 do {
   self.coordinator = try KWSwapCoordinator(
     baseViewController: self,
+    pinnedTokens: String = "ETH_KNC_DAI",
     network: KWEnvironment.ropsten, // ETH network, default ropsten
     signer: nil,
     commissionId: nil
@@ -112,6 +114,7 @@ do {
     baseViewController: self,
     receiveToken: "ETH",
     receiveAmount: 0.001604,
+    pinnedTokens: String = "ETH_KNC_DAI",
     network: KWEnvironment.ropsten, // ETH network, default ropsten
     signer: nil,
     commissionId: nil
@@ -130,6 +133,8 @@ NOTE: The values are for example only, check out the parameter details below.
 - ***receiveToken*** (String) - **required** for _payment_, it is the token that you (vendor) want to receive, for _swap_ or _buy_, it is the token that you want to receive/buy. It can be one of supported tokens (such as ETH, DAI, KNC...).
 
 - ***receiveAmount*** (Double) - the amount of `receiveToken` you (vendor) want your user to pay (for _pay_ widget) or amount you want to buy (for _buy_ widget), not support for _swap_ widget. If you leave it blank or missing, the users can specify it in the widget interface. It could be useful for undetermined payment or pay-as-you-go payment like a charity, ICO or anything else. This param is ignored if you do not specify `receiveToken`.
+
+-***pinnedTokens*** (String) - default: "ETH_KNC_DAI". This param help to show priority tokens in list select token.
 
 - ***network*** (KWEnvironment - default `ropsten`) - Ethereum network that the widget will run. Possible value: `mainnet, production, staging, ropsten, kovan`.
 
