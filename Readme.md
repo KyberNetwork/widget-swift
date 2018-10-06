@@ -298,3 +298,12 @@ KyberWidget is available under MIT License, see [LICENSE](https://github.com/Kyb
 ## Bugs/Features report
 
 Please feel free to submit bugs report or any features you want to have in our KyberWidget by opening a Github issue. 
+
+## Swift 4.2, Xcode 10
+
+Please upgrade your pod by using commands:
+
+```swift
+pod repo update
+pod install
+```
