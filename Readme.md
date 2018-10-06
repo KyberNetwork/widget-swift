@@ -34,6 +34,25 @@ Add these dependency frameworks below into your project via ([Cocoapods](https:/
   pod 'JavaScriptKit', '~> 1.0'
 ```
 
+NOTE: It is important to put the following codes into pod file as well:
+
+```swift
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if ['JSONRPCKit'].include? target.name
+      target.build_configurations.each do |config|
+        config.build_settings['SWIFT_VERSION'] = '3.0'
+      end
+    end
+    if ['TrustKeystore'].include? target.name
+      target.build_configurations.each do |config|
+        config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Owholemodule'
+      end
+    end
+  end
+end
+```
+
 ## Usage
 
 #### Import KyberWidget
