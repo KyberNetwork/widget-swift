@@ -40,6 +40,8 @@ public class KWStringConfig: NSObject {
   public var privateKey: String = "Private Key"
   public var seeds: String = "Seeds"
   public var importYourJSONFile: String = "Import JSON File"
+  public var receive: String = "Receive"
+  public var copy: String = "Copy"
 
   public var enterPasswordDescrypt: String = "Enter Password Descrypt"
   public var enterPrivateKey: String = "Enter private key"
@@ -64,6 +66,7 @@ public class KWThemeConfig: NSObject {
   public var importTextFieldColor: UIColor = UIColor.Kyber.black
   public var importButtonColor: UIColor = UIColor.Kyber.background
   public var importButtonTitleColor: UIColor = UIColor.white
+  public var importReceiveFundsButtonColor: UIColor = UIColor.Kyber.shamrock
 
   public var payTextFieldColor: UIColor = UIColor.Kyber.background
   public var payReceiveAmountColor: UIColor = UIColor.Kyber.grey
@@ -87,6 +90,9 @@ public class KWThemeConfig: NSObject {
   public var confirmSwapToAmountColor: UIColor = UIColor.Kyber.black
   public var confirmSwapExpectedRateColor: UIColor = UIColor.Kyber.black
   public var confirmToTextColor: UIColor = UIColor.Kyber.shamrock
+
+  public var receiveNavColor: UIColor = UIColor.Kyber.background
+  public var receiveCopyButtonColor: UIColor = UIColor.Kyber.background
 
   public var confirmAddressToPayTextColor: UIColor = UIColor.Kyber.segment
   public var confirmAddressTextColor: UIColor = UIColor(red: 102, green: 102, blue: 102)
