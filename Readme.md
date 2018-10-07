@@ -134,7 +134,7 @@ NOTE: The values are for example only, check out the parameter details below.
 
 - ***receiveAmount*** (Double) - the amount of `receiveToken` you (vendor) want your user to pay (for _pay_ widget) or amount you want to buy (for _buy_ widget), not support for _swap_ widget. If you leave it blank or missing, the users can specify it in the widget interface. It could be useful for undetermined payment or pay-as-you-go payment like a charity, ICO or anything else. This param is ignored if you do not specify `receiveToken`.
 
--***pinnedTokens*** (String) - default: "ETH_KNC_DAI". This param help to show priority tokens in list select token.
+- ***pinnedTokens*** (String) - default: "ETH_KNC_DAI". This param help to show priority tokens in list select token.
 
 - ***network*** (KWEnvironment - default `ropsten`) - Ethereum network that the widget will run. Possible value: `mainnet, production, staging, ropsten, kovan`.
 
