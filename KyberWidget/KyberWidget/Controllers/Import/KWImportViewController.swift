@@ -39,6 +39,7 @@ public class KWImportViewController: UIViewController {
   @IBOutlet weak var accountBalanceLabel: UILabel!
   @IBOutlet weak var accountAddressLabel: UILabel!
   @IBOutlet weak var changeWalletButton: UIButton!
+  @IBOutlet weak var receiveTokenButton: UIButton!
 
   weak var delegate: KWImportViewControllerDelegate?
 
@@ -199,6 +200,8 @@ public class KWImportViewController: UIViewController {
     self.accountAddressLabel.text = self.viewModel.displaySrcAddress
 
     self.accountBalanceLabel.isHidden = self.viewModel.balance == nil
+    self.receiveTokenButton.setTitle("\(KWStringConfig.current.receive) \(self.viewModel.transaction.from.symbol)", for: .normal)
+    self.receiveTokenButton.setTitleColor(KWThemeConfig.current.importReceiveFundsButtonColor, for: .normal)
 
     self.updateActionButton()
   }
@@ -340,6 +343,11 @@ public class KWImportViewController: UIViewController {
       }
       self.importWallet(type: .mnemonic(words: words, password: ""))
     }
+  }
+
+  @IBAction func receiveTokenButtonPressed(_ sender: Any) {
+    guard let address = self.viewModel.account?.address.description else { return }
+    self.navigationController?.pushViewController(KWReceiveTokenViewController(wallet: address), animated: true)
   }
 
   fileprivate func updateActionButton() {

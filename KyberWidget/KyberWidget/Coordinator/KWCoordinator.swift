@@ -17,6 +17,7 @@ public enum KWError {
   case invalidAddress(errorMessage: String)
   case invalidToken(errorMessage: String)
   case invalidAmount(errorMessage: String)
+  case invalidDefaultPair(errorMessage: String)
   case failedToLoadSupportedToken(errorMessage: String)
   case failedToSendTransaction(errorMessage: String)
 }
@@ -69,6 +70,7 @@ public class KWSwapCoordinator: KWCoordinator {
   public init(
     baseViewController: UIViewController,
     pinnedTokens: String = "ETH_KNC_DAI",
+    defaultPair: String = "ETH_KNC",
     network: KWEnvironment = .ropsten,
     signer: String? = nil,
     commissionId: String? = nil
@@ -79,6 +81,7 @@ public class KWSwapCoordinator: KWCoordinator {
       receiveToken: nil,
       receiveAmount: nil,
       pinnedTokens: pinnedTokens,
+      defaultPair: defaultPair,
       type: .swap,
       network: network,
       signer: signer,
@@ -126,6 +129,7 @@ public class KWCoordinator {
   var receiverToken: KWTokenObject? = nil
   let receiverTokenAmount: Double?
   let pinnedTokens: [String]
+  let defaultPair: [String]
   let dataType: KWDataType
   let productName: String?
   let productAvatar: String?
@@ -163,6 +167,7 @@ public class KWCoordinator {
     receiveToken: String?,
     receiveAmount: Double?,
     pinnedTokens: String = "ETH_KNC_DAI",
+    defaultPair: String = "ETH_KNC",
     type: KWDataType,
     network: KWEnvironment,
     signer: String? = nil,
@@ -193,7 +198,8 @@ public class KWCoordinator {
     self.signer = signer
     self.commissionId = commissionId
     self.keystore = try KWKeystore()
-    self.pinnedTokens = pinnedTokens.components(separatedBy: "_")
+    self.pinnedTokens = pinnedTokens.isEmpty ? [] : pinnedTokens.components(separatedBy: "_")
+    self.defaultPair = defaultPair.isEmpty ? [] : defaultPair.components(separatedBy: "_")
     self.dataType = type
     self.productName = productName
     self.productAvatar = productAvatar
@@ -226,6 +232,18 @@ public class KWCoordinator {
         self.receiverToken = tokens.first(where: { $0.symbol == self.receiverTokenSymbol })
         let error: KWError? = {
           // token is empty, it must be kyberswap (already checked above)
+          if self.dataType == .swap && !self.defaultPair.isEmpty {
+            if self.defaultPair.count != 2 {
+              return KWError.invalidDefaultPair(errorMessage: "defaultPair should contain exactly 2 token symbols")
+            }
+            if self.defaultPair[0] == self.defaultPair[1] {
+              return KWError.invalidDefaultPair(errorMessage: "Can not swap the same token")
+            }
+            let symbols = tokens.map({ return $0.symbol })
+            if !symbols.contains(self.defaultPair[0]) || !symbols.contains(self.defaultPair[1]) {
+              return KWError.invalidDefaultPair(errorMessage: "defaultPair contains unsupported token symbol")
+            }
+          }
           if self.receiverTokenSymbol.isEmpty { return nil }
           guard self.receiverToken != nil else {
             return .unsupportedToken
@@ -273,6 +291,9 @@ public class KWCoordinator {
       self.navigationController.viewControllers = [self.paymentMethodVC]
       self.baseViewController.present(self.navigationController, animated: true, completion: completion)
       self.paymentMethodVC.coordinatorUpdateSupportedTokens(self.tokens)
+      if self.defaultPair.count == 2 {
+        self.paymentMethodVC.coordinatorUpdateDefaultPair(from: self.defaultPair[0], to: self.defaultPair[1])
+      }
       self.loadTrackerRates()
       self.rateTimer?.invalidate()
       self.rateTimer = Timer.scheduledTimer(

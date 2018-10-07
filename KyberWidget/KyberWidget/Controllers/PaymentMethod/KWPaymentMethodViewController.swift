@@ -431,6 +431,19 @@ extension KWPaymentMethodViewController {
     self.view.layoutIfNeeded()
   }
 
+  func coordinatorUpdateDefaultPair(from: String, to: String) {
+    guard let from = self.viewModel.tokens.first(where: { $0.symbol == from}),
+      let to = self.viewModel.tokens.first(where: { $0.symbol == to }) else {
+        return
+    }
+    self.viewModel.updateDefaultPairTokens(from: from, to: to)
+    self.updateSelectedToken()
+    self.reloadDataFromNode()
+    self.updateEstimatedRate()
+    self.updateViewAmountDidChange()
+    self.view.layoutIfNeeded()
+  }
+
   func coordinatorUpdatePayToken(_ token: KWTokenObject, isSource: Bool) {
     if self.viewModel.updateSelectedToken(token, isSource: isSource) {
       self.updateSelectedToken()
@@ -479,7 +492,7 @@ extension KWPaymentMethodViewController: KAdvancedSettingsViewDelegate {
     case .infoPressed:
       let minRateDescVC: KWMinAcceptableRatePopupViewController = {
         let viewModel = KWMinAcceptableRatePopupViewModel(
-          minRate: self.viewModel.minRateText ?? "0.0",
+          minRate: self.viewModel.slippageRateText ?? "0.0",
           symbol: self.viewModel.to.symbol
         )
         return KWMinAcceptableRatePopupViewController(viewModel: viewModel)

@@ -39,9 +39,7 @@ public class KWExternalProvider: NSObject {
     self.minTxCount = 0
     self.web3Swift = KWWeb3Swift(url: URL(string: network.customRPC?.endpoint ?? "")!)
     super.init()
-    DispatchQueue.main.async {
-      self.web3Swift.start()
-    }
+    self.web3Swift.start()
   }
 
   // MARK: Balance

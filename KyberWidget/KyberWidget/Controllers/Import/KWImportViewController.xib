@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,6 +29,7 @@
                 <outlet property="importJSONButton" destination="P9q-kj-N4s" id="MYC-kQ-Q6R"/>
                 <outlet property="jsonButton" destination="vrR-Fk-U4J" id="nzl-qh-d6v"/>
                 <outlet property="privateKeyButton" destination="Psh-51-uzn" id="J3c-R0-Jc0"/>
+                <outlet property="receiveTokenButton" destination="2IN-uW-b1f" id="dIO-NN-TkT"/>
                 <outlet property="seedsButton" destination="ePH-w0-K56" id="gly-Dg-X1U"/>
                 <outlet property="stepView" destination="6SF-9D-6tj" id="7DU-LW-BXN"/>
                 <outlet property="textField" destination="VMc-AA-BhX" id="OuO-Jm-hlz"/>
@@ -58,7 +58,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Psh-51-uzn">
-                    <rect key="frame" x="135" y="136" width="106.5" height="106.5"/>
+                    <rect key="frame" x="134.5" y="136" width="106" height="106.5"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="14"/>
                     <state key="normal" title="Private Key" image="private_key_import_icon">
@@ -70,7 +70,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePH-w0-K56">
-                    <rect key="frame" x="253" y="137" width="106" height="106"/>
+                    <rect key="frame" x="252.5" y="136" width="106.5" height="106.5"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="14"/>
                     <state key="normal" title="Seeds" image="seeds_import_icon">
@@ -134,10 +134,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fmk-TG-eUe">
-                    <rect key="frame" x="0.0" y="243" width="375" height="326"/>
+                    <rect key="frame" x="0.0" y="242.5" width="375" height="326.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="124,049.312 KNC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCR-q5-2mn">
-                            <rect key="frame" x="16" y="95.5" width="343" height="39.5"/>
+                            <rect key="frame" x="16" y="95" width="343" height="39.5"/>
                             <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="32"/>
                             <color key="textColor" red="0.058823529409999999" green="0.66666666669999997" blue="0.63529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -159,13 +159,23 @@
                             </connections>
                         </button>
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Kzx-TB-k36">
-                            <rect key="frame" x="171.5" y="99" width="32" height="32"/>
+                            <rect key="frame" x="171.5" y="98.5" width="32" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="oDO-nD-hRL"/>
                                 <constraint firstAttribute="width" constant="32" id="zrM-bg-bHH"/>
                             </constraints>
                             <color key="color" red="0.058823529409999999" green="0.66666666669999997" blue="0.63529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </activityIndicatorView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2IN-uW-b1f">
+                            <rect key="frame" x="137.5" y="224" width="100" height="30"/>
+                            <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="14"/>
+                            <state key="normal" title="Receive funds">
+                                <color key="titleColor" red="0.19215686269999999" green="0.79607843140000001" blue="0.61960784310000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="receiveTokenButtonPressed:" destination="-1" eventType="touchUpInside" id="FuZ-dQ-P6u"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -175,9 +185,11 @@
                         <constraint firstItem="Wnv-At-RwS" firstAttribute="leading" secondItem="Fmk-TG-eUe" secondAttribute="leading" constant="16" id="BN5-yl-IYZ"/>
                         <constraint firstItem="Kzx-TB-k36" firstAttribute="centerX" secondItem="UCR-q5-2mn" secondAttribute="centerX" id="GFP-T2-tmN"/>
                         <constraint firstItem="Wnv-At-RwS" firstAttribute="centerY" secondItem="Fmk-TG-eUe" secondAttribute="centerY" id="TJn-wQ-lkH"/>
+                        <constraint firstItem="2IN-uW-b1f" firstAttribute="centerX" secondItem="Ziv-na-jfK" secondAttribute="centerX" id="UrS-wU-Udv"/>
                         <constraint firstItem="UCR-q5-2mn" firstAttribute="leading" secondItem="Fmk-TG-eUe" secondAttribute="leading" constant="16" id="aeY-hl-NnA"/>
                         <constraint firstItem="Kzx-TB-k36" firstAttribute="centerY" secondItem="UCR-q5-2mn" secondAttribute="centerY" id="dwR-zA-Zux"/>
                         <constraint firstItem="Ziv-na-jfK" firstAttribute="top" secondItem="Wnv-At-RwS" secondAttribute="bottom" constant="20" id="f40-c1-8uD"/>
+                        <constraint firstItem="2IN-uW-b1f" firstAttribute="top" secondItem="Ziv-na-jfK" secondAttribute="bottom" constant="2" id="obh-9t-UWg"/>
                         <constraint firstAttribute="trailing" secondItem="Wnv-At-RwS" secondAttribute="trailing" constant="16" id="pR2-wU-sQU"/>
                         <constraint firstItem="UCR-q5-2mn" firstAttribute="centerX" secondItem="Fmk-TG-eUe" secondAttribute="centerX" id="uVw-ef-0Mt"/>
                     </constraints>

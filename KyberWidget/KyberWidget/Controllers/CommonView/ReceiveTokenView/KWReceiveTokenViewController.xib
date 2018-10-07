@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-Medium.ttf">
+            <string>Montserrat-Medium</string>
+        </array>
+        <array key="Montserrat-SemiBold.ttf">
+            <string>Montserrat-SemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KWReceiveTokenViewController" customModule="KyberWidget" customModuleProvider="target">
+            <connections>
+                <outlet property="copyButton" destination="OJ5-LM-acO" id="W0A-FP-8fg"/>
+                <outlet property="imageView" destination="8Im-as-QTN" id="wvj-hA-zS0"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="walletLabel" destination="TNz-eX-qm6" id="hqt-qN-6jJ"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Im-as-QTN">
+                    <rect key="frame" x="40" y="60" width="295" height="295"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.25409881159999997" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="8Im-as-QTN" secondAttribute="height" multiplier="1:1" id="JSP-MW-toH"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Ethereum wallet address" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TNz-eX-qm6">
+                    <rect key="frame" x="24" y="375" width="327" height="17.5"/>
+                    <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="14"/>
+                    <color key="textColor" red="0.61960784310000006" green="0.63137254899999995" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJ5-LM-acO">
+                    <rect key="frame" x="24" y="593" width="327" height="42"/>
+                    <color key="backgroundColor" red="0.058823529409999999" green="0.66666666669999997" blue="0.63529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="42" id="FBV-I2-kE4"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="16"/>
+                    <state key="normal" title="Copy">
+                        <color key="titleColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="copyButtonPressed:" destination="-1" eventType="touchUpInside" id="gUX-BS-VAD"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="TNz-eX-qm6" firstAttribute="centerX" secondItem="8Im-as-QTN" secondAttribute="centerX" id="5mK-RZ-YzY"/>
+                <constraint firstItem="TNz-eX-qm6" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="6eK-kO-rsb"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="OJ5-LM-acO" secondAttribute="bottom" constant="32" id="78z-J5-3Yu"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="8Im-as-QTN" secondAttribute="trailing" constant="40" id="RFS-Bt-KA1"/>
+                <constraint firstItem="8Im-as-QTN" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="40" id="VVq-Ri-WXi"/>
+                <constraint firstItem="OJ5-LM-acO" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="aEn-2d-qa3"/>
+                <constraint firstItem="OJ5-LM-acO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="cgY-Ei-tJj"/>
+                <constraint firstItem="TNz-eX-qm6" firstAttribute="top" secondItem="8Im-as-QTN" secondAttribute="bottom" constant="20" id="jHs-Iz-9FM"/>
+                <constraint firstItem="8Im-as-QTN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="uuh-BJ-bPj"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="TNz-eX-qm6" secondAttribute="trailing" constant="24" id="vgB-oT-pIe"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="OJ5-LM-acO" secondAttribute="trailing" constant="24" id="xyf-fh-xKb"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+        </view>
+    </objects>
+</document>
