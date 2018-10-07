@@ -394,6 +394,10 @@ extension KWPaymentMethodViewModel {
     return self.slippageRate
   }
 
+  var slippageRateText: String? {
+    return self.slippageRate?.string(decimals: self.to.decimals, minFractionDigits: 0, maxFractionDigits: 9)
+  }
+
   var minRateText: String? {
     return self.minRate?.string(decimals: self.to.decimals, minFractionDigits: 0, maxFractionDigits: 9)
   }
@@ -517,6 +521,11 @@ extension KWPaymentMethodViewModel {
       return KWGasConfiguration.transferTokenGasLimitDefault
     }()
     return true
+  }
+
+  func updateDefaultPairTokens(from: KWTokenObject, to: KWTokenObject) {
+    self.updateSelectedToken(from, isSource: true)
+    self.updateSelectedToken(to, isSource: false)
   }
 
   func updateFromAmount(_ amount: String) { self.amountFrom = amount }

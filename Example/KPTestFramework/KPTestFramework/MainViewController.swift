@@ -76,6 +76,7 @@ class MainViewController: UIViewController {
         // Swap
         self.coordinator = try KWSwapCoordinator(
           baseViewController: self,
+          defaultPair: "KNC_ETH",
           network: network,
           signer: signer,
           commissionId: commissionID
@@ -193,6 +194,8 @@ extension MainViewController: KWCoordinatorDelegate {
         case .failedToLoadSupportedToken(let errorMessage):
           return errorMessage
         case .failedToSendTransaction(let errorMessage):
+          return errorMessage
+        case .invalidDefaultPair(let errorMessage):
           return errorMessage
         }
       }()

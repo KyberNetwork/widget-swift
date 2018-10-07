@@ -29,9 +29,7 @@ public class KWGeneralProvider: NSObject {
     self.web3Swift = KWWeb3Swift(url: URL(string: network.customRPC?.endpoint ?? "")!)
     self.networkAddress = Address(string: network.customRPC?.networkAddress ?? "")!
     super.init()
-    DispatchQueue.main.async {
-      self.web3Swift.start()
-    }
+    self.web3Swift.start()
   }
 
   // MARK: Balance
@@ -149,17 +147,13 @@ public class KWGeneralProvider: NSObject {
           batch: BatchFactory().create(callRequest),
           endpoint: self.network.endpoint
         )
-        DispatchQueue.global(qos: .background).async {
-          Session.send(getRateRequest) { [weak self] getRateResult in
-            DispatchQueue.main.async {
-              guard let `self` = self else { return }
-              switch getRateResult {
-              case .success(let rateData):
-                self.getExpectedRateDecodeData(rateData: rateData, completion: completion)
-              case .failure(let error):
-                completion(.failure(AnyError(error)))
-              }
-            }
+        Session.send(getRateRequest) { [weak self] getRateResult in
+          guard let `self` = self else { return }
+          switch getRateResult {
+          case .success(let rateData):
+            self.getExpectedRateDecodeData(rateData: rateData, completion: completion)
+          case .failure(let error):
+            completion(.failure(AnyError(error)))
           }
         }
       case .failure(let error):
