@@ -269,9 +269,10 @@ extension KWKeystore {
   }
 
   private func values(transaction: KWDraftTransaction, signature: Data) -> (r: BigInt, s: BigInt, v: BigInt) {
-    let r = BigInt(sign: .plus, magnitude: BigUInt(signature[..<32]))
-    let s = BigInt(sign: .plus, magnitude: BigUInt(signature[32..<64]))
-    let v = BigInt(sign: .plus, magnitude: BigUInt(signature[64] + 27))
+    // FIX: Crash on iOS 10
+    let r = BigInt(sign: .plus, magnitude: BigUInt(Data(signature[..<32])))
+    let s = BigInt(sign: .plus, magnitude: BigUInt(Data(signature[32..<64])))
+    let v = BigInt(sign: .plus, magnitude: BigUInt(Data(bytes: [signature[64] + 27])))
 
     let newV: BigInt
     let chainID: BigInt = BigInt(transaction.chainID)
