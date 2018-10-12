@@ -64,7 +64,7 @@ public struct KWTokenObject {
 
   var iconURL: String {
     // Token icons from Kyber public repo
-    let url = "https://files.kyber.network/DesignAssets/tokens/iOS/\(self.symbol.lowercased()).png"
+    let url = "https://raw.githubusercontent.com/KyberNetwork/KyberNetwork.github.io/master/DesignAssets/tokens/iOS/\(self.symbol.lowercased()).png"
     return url
   }
 
