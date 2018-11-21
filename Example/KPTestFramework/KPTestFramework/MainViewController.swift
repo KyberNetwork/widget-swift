@@ -46,7 +46,7 @@ class MainViewController: UIViewController {
     //    let config = KWThemeConfig.current
     let network: KWEnvironment = {
       if envID == 0 { return .ropsten }
-      if envID == 1 { return .staging }
+      if envID == 1 { return .rinkeby }
       return .production
     }()
     let signer: String? = {

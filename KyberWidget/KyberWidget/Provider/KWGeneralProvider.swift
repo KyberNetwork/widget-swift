@@ -19,6 +19,7 @@ import JavaScriptKit
 public class KWGeneralProvider: NSObject {
 
   var networkAddress: Address!
+  var payAddress: Address!
   var web3Swift: KWWeb3Swift!
   var network: KWEnvironment
 
@@ -28,6 +29,7 @@ public class KWGeneralProvider: NSObject {
     self.network = network
     self.web3Swift = KWWeb3Swift(url: URL(string: network.customRPC?.endpoint ?? "")!)
     self.networkAddress = Address(string: network.customRPC?.networkAddress ?? "")!
+    self.payAddress = Address(string: network.customRPC?.payAddress ?? "")!
     super.init()
     self.web3Swift.start()
   }

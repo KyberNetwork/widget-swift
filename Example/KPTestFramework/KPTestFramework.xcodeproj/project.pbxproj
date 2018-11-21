@@ -12,9 +12,8 @@
 		251CCF4B2118308900F12B01 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 251CCF492118308900F12B01 /* LaunchScreen.storyboard */; };
 		251CCF562118308900F12B01 /* KPTestFrameworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251CCF552118308900F12B01 /* KPTestFrameworkTests.swift */; };
 		251CCF612118308900F12B01 /* KPTestFrameworkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251CCF602118308900F12B01 /* KPTestFrameworkUITests.swift */; };
-		2567B3AA216A173B0006D963 /* KyberWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2567B3A9216A173B0006D963 /* KyberWidget.framework */; };
-		2567B3AB216A17420006D963 /* KyberWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2567B3A9216A173B0006D963 /* KyberWidget.framework */; };
-		2567B3AC216A17420006D963 /* KyberWidget.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2567B3A9216A173B0006D963 /* KyberWidget.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		254DA67021A5820200672EE7 /* KyberWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 254DA66C21A581E800672EE7 /* KyberWidget.framework */; };
+		254DA67121A5820200672EE7 /* KyberWidget.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 254DA66C21A581E800672EE7 /* KyberWidget.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		259E1E822127DCEE005BDC58 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E1E802127DCEE005BDC58 /* MainViewController.swift */; };
 		259E1E832127DCEE005BDC58 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 259E1E812127DCEE005BDC58 /* MainViewController.xib */; };
 		25E133082129CAC200AC4669 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25E133072129CAC200AC4669 /* Assets.xcassets */; };
@@ -53,13 +52,13 @@
 			name = "Embed PlugIns";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2567B3A8216A148F0006D963 /* Embed Frameworks */ = {
+		254DA67221A5820200672EE7 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2567B3AC216A17420006D963 /* KyberWidget.framework in Embed Frameworks */,
+				254DA67121A5820200672EE7 /* KyberWidget.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,7 +79,7 @@
 		251CCF5C2118308900F12B01 /* KPTestFrameworkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KPTestFrameworkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		251CCF602118308900F12B01 /* KPTestFrameworkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPTestFrameworkUITests.swift; sourceTree = "<group>"; };
 		251CCF622118308900F12B01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2567B3A9216A173B0006D963 /* KyberWidget.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KyberWidget.framework; sourceTree = "<group>"; };
+		254DA66C21A581E800672EE7 /* KyberWidget.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KyberWidget.framework; sourceTree = "<group>"; };
 		259E1E802127DCEE005BDC58 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		259E1E812127DCEE005BDC58 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		25E133072129CAC200AC4669 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -100,9 +99,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2567B3AA216A173B0006D963 /* KyberWidget.framework in Frameworks */,
+				254DA67021A5820200672EE7 /* KyberWidget.framework in Frameworks */,
 				36777F2922B9B25C81F7C00D /* Pods_KPTestFramework.framework in Frameworks */,
-				2567B3AB216A17420006D963 /* KyberWidget.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,7 +158,7 @@
 		251CCF3F2118308600F12B01 /* KPTestFramework */ = {
 			isa = PBXGroup;
 			children = (
-				2567B3A9216A173B0006D963 /* KyberWidget.framework */,
+				254DA66C21A581E800672EE7 /* KyberWidget.framework */,
 				25EE480B2126AF0F002657DF /* Extensions */,
 				251CCF402118308600F12B01 /* AppDelegate.swift */,
 				251CCF442118308600F12B01 /* Main.storyboard */,
@@ -226,7 +224,7 @@
 				251CCF3B2118308600F12B01 /* Resources */,
 				7631900DA2605D6D4B2B98E6 /* [CP] Embed Pods Frameworks */,
 				251023A0212ABF090020D22D /* Embed PlugIns */,
-				2567B3A8216A148F0006D963 /* Embed Frameworks */,
+				254DA67221A5820200672EE7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

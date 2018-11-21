@@ -120,7 +120,7 @@ public class KWPaymentMethodViewModel: NSObject {
     self.gasLimit = {
       if self.from == self.to {
         // normal transfer
-        if self.from.symbol == "ETH" { return KWGasConfiguration.transferETHGasLimitDefault }
+        if self.from.isETH { return KWGasConfiguration.transferETHGasLimitDefault }
         return KWGasConfiguration.transferTokenGasLimitDefault
       }
       return KWGasConfiguration.exchangeTokensGasLimitDefault
@@ -484,6 +484,7 @@ extension KWPaymentMethodViewModel {
 extension KWPaymentMethodViewModel {
   @discardableResult
   func updateSelectedToken(_ token: KWTokenObject, isSource: Bool) -> Bool {
+    if self.receiverToken != nil && !isSource { return false } // not allow to update receiver token
     if self.from == token && isSource { return false }
     if self.to == token && !isSource { return false }
 
@@ -524,8 +525,11 @@ extension KWPaymentMethodViewModel {
   }
 
   func updateDefaultPairTokens(from: KWTokenObject, to: KWTokenObject) {
+    if self.receiverToken == nil {
+      // Only update if receiver token is nil
+      self.updateSelectedToken(to, isSource: false)
+    }
     self.updateSelectedToken(from, isSource: true)
-    self.updateSelectedToken(to, isSource: false)
   }
 
   func updateFromAmount(_ amount: String) { self.amountFrom = amount }
@@ -615,6 +619,27 @@ extension KWPaymentMethodViewModel {
   }
 
   func getEstimatedGasLimit(completion: @escaping () -> Void) {
+    if self.dataType == .pay {
+      print("Estimated gas for pay transaction")
+      let transaction = self.transaction
+      self.provider.getPayEstimateGasLimit(for: transaction) { result in
+        if case .success(let gasLimit) = result {
+          self.updateEstimateGasLimit(
+            for: transaction.from,
+            to: transaction.to,
+            amount: transaction.amountFrom,
+            gasLimit: gasLimit
+          )
+          print("Success loading est gas limit")
+        } else if case .failure(let error) = result {
+          print("Error loading est gas limit with error: \(error.description)")
+        } else {
+          print("Unknown result est gas limit")
+        }
+        completion()
+      }
+      return
+    }
     if self.from == self.to {
       print("Estimated gas for transfer token")
       let transaction = self.transaction

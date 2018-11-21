@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		254DA65F21A56A8700672EE7 /* config_env_rinkeby.json in Resources */ = {isa = PBXBuildFile; fileRef = 254DA65E21A56A8700672EE7 /* config_env_rinkeby.json */; };
+		254DA66121A56D5700672EE7 /* KWPayRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254DA66021A56D5700672EE7 /* KWPayRequest.swift */; };
 		255846EA2137A3A300330717 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255846E92137A3A300330717 /* Bundle.swift */; };
 		255846EC2138EEB500330717 /* KWRateCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255846EB2138EEB500330717 /* KWRateCoordinator.swift */; };
 		2567B398216A05BF0006D963 /* KWReceiveTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2567B396216A05BF0006D963 /* KWReceiveTokenViewController.swift */; };
@@ -40,9 +42,7 @@
 		25CF3ACF2133AAD10072F3C1 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ABD2133AAD10072F3C1 /* index.html */; };
 		25CF3AD02133AAD10072F3C1 /* config_env_production.json in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3ABF2133AAD10072F3C1 /* config_env_production.json */; };
 		25CF3AD12133AAD10072F3C1 /* config_env_ropsten.json in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC02133AAD10072F3C1 /* config_env_ropsten.json */; };
-		25CF3AD22133AAD10072F3C1 /* config_env_mainnet_test.json in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC12133AAD10072F3C1 /* config_env_mainnet_test.json */; };
 		25CF3AD32133AAD10072F3C1 /* config_env_staging.json in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC22133AAD10072F3C1 /* config_env_staging.json */; };
-		25CF3AD42133AAD10072F3C1 /* config_env_kovan.json in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC32133AAD10072F3C1 /* config_env_kovan.json */; };
 		25CF3AD52133AAD10072F3C1 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC62133AAD10072F3C1 /* Montserrat-Medium.ttf */; };
 		25CF3AD62133AAD10072F3C1 /* Montserrat-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC72133AAD10072F3C1 /* Montserrat-BoldItalic.ttf */; };
 		25CF3AD72133AAD10072F3C1 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25CF3AC82133AAD10072F3C1 /* Montserrat-Bold.ttf */; };
@@ -108,6 +108,8 @@
 
 /* Begin PBXFileReference section */
 		1B6800345CC5B213915C0981 /* Pods-KyberWidgetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KyberWidgetTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-KyberWidgetTests/Pods-KyberWidgetTests.release.xcconfig"; sourceTree = "<group>"; };
+		254DA65E21A56A8700672EE7 /* config_env_rinkeby.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = config_env_rinkeby.json; sourceTree = "<group>"; };
+		254DA66021A56D5700672EE7 /* KWPayRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KWPayRequest.swift; sourceTree = "<group>"; };
 		255846E92137A3A300330717 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		255846EB2138EEB500330717 /* KWRateCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KWRateCoordinator.swift; sourceTree = "<group>"; };
 		2567B396216A05BF0006D963 /* KWReceiveTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KWReceiveTokenViewController.swift; sourceTree = "<group>"; };
@@ -144,9 +146,7 @@
 		25CF3ABD2133AAD10072F3C1 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		25CF3ABF2133AAD10072F3C1 /* config_env_production.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_env_production.json; sourceTree = "<group>"; };
 		25CF3AC02133AAD10072F3C1 /* config_env_ropsten.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_env_ropsten.json; sourceTree = "<group>"; };
-		25CF3AC12133AAD10072F3C1 /* config_env_mainnet_test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_env_mainnet_test.json; sourceTree = "<group>"; };
 		25CF3AC22133AAD10072F3C1 /* config_env_staging.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_env_staging.json; sourceTree = "<group>"; };
-		25CF3AC32133AAD10072F3C1 /* config_env_kovan.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_env_kovan.json; sourceTree = "<group>"; };
 		25CF3AC62133AAD10072F3C1 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		25CF3AC72133AAD10072F3C1 /* Montserrat-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-BoldItalic.ttf"; sourceTree = "<group>"; };
 		25CF3AC82133AAD10072F3C1 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
@@ -348,9 +348,8 @@
 			children = (
 				25CF3ABF2133AAD10072F3C1 /* config_env_production.json */,
 				25CF3AC02133AAD10072F3C1 /* config_env_ropsten.json */,
-				25CF3AC12133AAD10072F3C1 /* config_env_mainnet_test.json */,
 				25CF3AC22133AAD10072F3C1 /* config_env_staging.json */,
-				25CF3AC32133AAD10072F3C1 /* config_env_kovan.json */,
+				254DA65E21A56A8700672EE7 /* config_env_rinkeby.json */,
 			);
 			path = Configs;
 			sourceTree = "<group>";
@@ -412,6 +411,7 @@
 				25CF3AEE2133AB3A0072F3C1 /* KWExchangeRequest.swift */,
 				25CF3AEF2133AB3A0072F3C1 /* KWSendApproveToken.swift */,
 				25CF3AF02133AB3A0072F3C1 /* KWTokenTransfer.swift */,
+				254DA66021A56D5700672EE7 /* KWPayRequest.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -682,10 +682,9 @@
 				25CF3AD32133AAD10072F3C1 /* config_env_staging.json in Resources */,
 				25CF3B6D2133B1680072F3C1 /* KWSearchTokenTableViewCell.xib in Resources */,
 				25CF3ADA2133AAD10072F3C1 /* OFL.txt in Resources */,
-				25CF3AD42133AAD10072F3C1 /* config_env_kovan.json in Resources */,
-				25CF3AD22133AAD10072F3C1 /* config_env_mainnet_test.json in Resources */,
 				25CF3B732133B1680072F3C1 /* KWMinAcceptableRatePopupViewController.xib in Resources */,
 				25CF3AD52133AAD10072F3C1 /* Montserrat-Medium.ttf in Resources */,
+				254DA65F21A56A8700672EE7 /* config_env_rinkeby.json in Resources */,
 				25CF3AD12133AAD10072F3C1 /* config_env_ropsten.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -799,6 +798,7 @@
 				25CF3AA62133A64D0072F3C1 /* KWTokenObject.swift in Sources */,
 				25CF3B742133B1680072F3C1 /* KWCoordinator.swift in Sources */,
 				25CF3B6A2133B1680072F3C1 /* KWConfirmPaymentViewController.swift in Sources */,
+				254DA66121A56D5700672EE7 /* KWPayRequest.swift in Sources */,
 				25CF3A9F2133A5840072F3C1 /* UINavigationController.swift in Sources */,
 				255846EA2137A3A300330717 /* Bundle.swift in Sources */,
 				25CF3AA82133A64D0072F3C1 /* KWEthereumUnit.swift in Sources */,
