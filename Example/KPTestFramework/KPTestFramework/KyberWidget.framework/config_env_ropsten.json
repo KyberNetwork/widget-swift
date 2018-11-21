@@ -224,6 +224,7 @@
   "ethScanUrl": "https://ropsten.etherscan.io/",
   "reserve": "0x0fc1cf3e7dd049f7b42e6823164a64f76fc06be0",
   "network": "0x818E6FECD516Ecc3849DAf6845e3EC868087B755",
+  "payWrapper": "0xd1946aeffc2d053b76fab96117b6f2c7bf395e32",
   "authorize_contract": "0xd07896e99e88261f88091b39d5a438527ec70ff4",
   "token_ieo": "0x8bbd103627985663477de0d72e23aa1e28e594ac",
   "wrapper": "0x665d34f192f4940da4e859ff7768c0a80ed3ae10",

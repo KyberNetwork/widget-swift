@@ -24,7 +24,6 @@ struct KWExchangeRequestEncode: KWWeb3Request {
       guard let minRate = exchange.minRate else { return BigInt(0) }
       return minRate * BigInt(10).power(18 - exchange.to.decimals)
     }()
-    // TODO: Set default commission ID here
     let walletID = self.exchange.commissionID ?? "0x0000000000000000000000000000000000000000"
     let amountTo: String = (exchange.amountTo ?? BigInt(2).power(255)).description
     let command = "web3.eth.abi.encodeFunctionCall(\(KWExchangeRequestEncode.abi), [\"\(exchange.from.address.description)\", \"\(exchange.amountFrom.description)\", \"\(exchange.to.address.description)\", \"\(address)\", \"\(amountTo)\", \"\(minRate.description)\", \"\(walletID)\"])"

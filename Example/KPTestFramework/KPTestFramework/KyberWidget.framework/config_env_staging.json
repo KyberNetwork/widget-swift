@@ -311,6 +311,7 @@
   "ethScanUrl": "https://etherscan.io/",
   "reserve": "0x2c5a182d280eeb5824377b98cd74871f78d6b8bc",
   "network": "0xc14f34233071543e979f6a79aa272b0ab1b4947d",
+  "payWrapper": "0xd1946aeffc2d053b76fab96117b6f2c7bf395e32",
   "authorize_contract": "0xd07896e99e88261f88091b39d5a438527ec70ff4",
   "token_ieo": "0x8bbd103627985663477de0d72e23aa1e28e594ac",
   "wrapper": "0x6172AFC8c00c46E0D07ce3AF203828198194620a",

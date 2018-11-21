@@ -21,6 +21,7 @@ public class KWExternalProvider: NSObject {
   let web3Swift: KWWeb3Swift
   let knCustomRPC: KWCustomRPC!
   let networkAddress: Address!
+  let payAddress: Address!
   let reserveAddress: Address!
   let generalProvider: KWGeneralProvider
   let network: KWEnvironment
@@ -33,6 +34,7 @@ public class KWExternalProvider: NSObject {
     let customRPC: KWCustomRPC = network.customRPC!
     self.knCustomRPC = customRPC
     self.networkAddress = Address(string: customRPC.networkAddress)!
+    self.payAddress = Address(string: customRPC.payAddress)!
     self.reserveAddress = Address(string: customRPC.reserveAddress)!
     self.generalProvider = KWGeneralProvider(network: network)
     self.network = network
@@ -89,7 +91,7 @@ public class KWExternalProvider: NSObject {
           switch dataResult {
           case .success(let data):
             print("Transfer: Success getting data for transfer")
-            self.signTransactionData(from: transaction, nonce: self.minTxCount, data: data, completion: { signResult in
+            self.signTransactionData(from: transaction, isPay: false, nonce: self.minTxCount, data: data, completion: { signResult in
               switch signResult {
               case .success(let signData):
                 print("Transfer: Success signed transaction")
@@ -132,7 +134,7 @@ public class KWExternalProvider: NSObject {
           switch dataResult {
           case .success(let data):
             print("Swap: Success getting data for swapping")
-            self.signTransactionData(from: exchange, nonce: self.minTxCount, data: data, completion: { signResult in
+            self.signTransactionData(from: exchange, isPay: false, nonce: self.minTxCount, data: data, completion: { signResult in
               switch signResult {
               case .success(let signData):
                 print("Swap: Success signed transaction")
@@ -163,25 +165,68 @@ public class KWExternalProvider: NSObject {
     }
   }
 
+  public func pay(transaction: KWTransaction, completion: @escaping (Result<String, AnyError>) -> Void) {
+    print("Pay: getting transaction count")
+    self.getTransactionCount(for: transaction.account?.address.description ?? "") { [weak self] txCountResult in
+      guard let `self` = self else { return }
+      switch txCountResult {
+      case .success:
+        print("Pay: Success getting transaction count")
+        self.requestDataForPay(transaction, completion: { [weak self] dataResult in
+          guard let `self` = self else { return }
+          switch dataResult {
+          case .success(let data):
+            print("Pay: Success getting data for paying")
+            self.signTransactionData(from: transaction, isPay: true, nonce: self.minTxCount, data: data, completion: { signResult in
+              switch signResult {
+              case .success(let signData):
+                print("Pay: Success signed transaction")
+                DispatchQueue.global(qos: .background).async {
+                  self.generalProvider.sendSignedTransactionData(signData, completion: { [weak self] result in
+                    DispatchQueue.main.async {
+                      guard let `self` = self else { return }
+                      print("Swap: Done sending pay transaction")
+                      if case .success = result { self.minTxCount += 1 }
+                      completion(result)
+                    }
+                  })
+                }
+              case .failure(let error):
+                print("Pay: Failed signed transaction")
+                completion(.failure(error))
+              }
+            })
+          case .failure(let error):
+            print("Pay: Failed getting data for paying")
+            completion(.failure(AnyError(error)))
+          }
+        })
+      case .failure(let error):
+        print("Pay: Failed getting transaction count")
+        completion(.failure(AnyError(error)))
+      }
+    }
+  }
+
   // If the value returned > 0 consider as allowed
   // should check with the current send amount, however the limit is likely set as very big
-  public func getAllowance(token: KWTokenObject, address: Address, completion: @escaping (Result<Bool, AnyError>) -> Void) {
+  public func getAllowance(token: KWTokenObject, address: Address, isPay: Bool, completion: @escaping (Result<Bool, AnyError>) -> Void) {
     self.generalProvider.getAllowance(
       for: token,
       address: address,
-      networkAddress: self.networkAddress,
+      networkAddress: isPay ? self.payAddress : self.networkAddress,
       completion: completion
     )
   }
 
   // Encode function, get transaction count, sign transaction, send signed data
-  public func sendApproveERC20Token(exchangeTransaction: KWTransaction, completion: @escaping (Result<Bool, AnyError>) -> Void) {
+  public func sendApproveERC20Token(exchangeTransaction: KWTransaction, isPay: Bool, completion: @escaping (Result<Bool, AnyError>) -> Void) {
     DispatchQueue.global(qos: .background).async {
       self.generalProvider.approve(
         token: exchangeTransaction.from,
         account: exchangeTransaction.account!,
         keystore: self.keystore,
-        networkAddress: self.networkAddress,
+        networkAddress: isPay ? self.payAddress : self.networkAddress,
         networkID: self.network.chainID
       ) { [weak self] result in
         DispatchQueue.main.async {
@@ -273,6 +318,30 @@ public class KWExternalProvider: NSObject {
     }
   }
 
+  public func getPayEstimateGasLimit(for transaction: KWTransaction, completion: @escaping (Result<BigInt, AnyError>) -> Void) {
+    let value: BigInt = transaction.from.isETH ? transaction.amountFrom : BigInt(0)
+    let defaultGasLimit: BigInt = {
+      return KWGasConfiguration.exchangeTokensGasLimitDefault
+    }()
+    self.requestDataForPay(transaction) { [weak self] dataResult in
+      guard let `self` = self else { return }
+      switch dataResult {
+      case .success(let data):
+        self.estimateGasLimit(
+          from: transaction.account?.address.description ?? transaction.destWallet,
+          to: self.payAddress.description,
+          gasPrice: transaction.gasPrice ?? KWGasConfiguration.gasPriceFast,
+          value: value,
+          data: data,
+          defaultGasLimit: defaultGasLimit,
+          completion: completion
+        )
+      case .failure(let error):
+        completion(.failure(error))
+      }
+    }
+  }
+
   public func estimateGasLimit(from: String, to: String?, gasPrice: BigInt, value: BigInt, data: Data, defaultGasLimit: BigInt, completion: @escaping (Result<BigInt, AnyError>) -> Void) {
     let request = KWEstimateGasLimitRequest(
       from: from,
@@ -309,8 +378,9 @@ public class KWExternalProvider: NSObject {
   }
 
   // MARK: Sign transaction
-  private func signTransactionData(from transaction: KWTransaction, nonce: Int, data: Data, completion: @escaping (Result<Data, AnyError>) -> Void) {
+  private func signTransactionData(from transaction: KWTransaction, isPay: Bool, nonce: Int, data: Data, completion: @escaping (Result<Data, AnyError>) -> Void) {
     let to: Address? = {
+      if isPay { return self.payAddress } // pay transaction
       if transaction.from != transaction.to {
         // swap
         return self.networkAddress
@@ -385,6 +455,20 @@ public class KWExternalProvider: NSObject {
       exchange: exchange,
       address: address
     )
+    self.web3Swift.request(request: encodeRequest) { result in
+      switch result {
+      case .success(let res):
+        let data = Data(hex: res.drop0x)
+        completion(.success(data))
+      case .failure(let error):
+        completion(.failure(AnyError(error)))
+      }
+    }
+  }
+
+  public func requestDataForPay(_ pay: KWTransaction, completion: @escaping (Result<Data, AnyError>) -> Void) {
+    let networkProxy = self.networkAddress.description
+    let encodeRequest = KWPayRequestEncode(pay: pay, kyberNetworkProxy: networkProxy)
     self.web3Swift.request(request: encodeRequest) { result in
       switch result {
       case .success(let res):

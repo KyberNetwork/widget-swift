@@ -456,6 +456,10 @@ extension KWCoordinator: KWConfirmPaymentViewControllerDelegate {
   }
 
   func sendTransactionRequest(transaction: KWTransaction, completion: @escaping (Bool, String?) -> Void) {
+    if self.dataType == .pay {
+      self.sendPayTransactionRequest(transaction: transaction, completion: completion)
+      return
+    }
     if transaction.from == transaction.to {
       print("Send transaction transfer request")
       self.provider.transfer(transaction: transaction) { result in
@@ -490,6 +494,27 @@ extension KWCoordinator: KWConfirmPaymentViewControllerDelegate {
     }
   }
 
+  fileprivate func sendPayTransactionRequest(transaction: KWTransaction, completion: @escaping (Bool, String?) -> Void) {
+    print("Send transaction pay request")
+    self.sendApprovedRequestIfNeeded(transaction: transaction) { (isSuccess, string) in
+      if isSuccess {
+        self.provider.pay(transaction: transaction, completion: { result in
+          switch result {
+          case .success(let hash):
+            print("Success sending transaction request with hash: \(hash)")
+            completion(true, hash)
+          case .failure(let error):
+            print("Failed sending transaction request with error: \(error.description)")
+            completion(false, error.description)
+          }
+        })
+      } else {
+        print("Failed sending transaction request with error: \(string)")
+        completion(false, string)
+      }
+    }
+  }
+
   fileprivate func sendApprovedRequestIfNeeded(transaction: KWTransaction, completion: @escaping (Bool, String) -> Void) {
     guard let account = transaction.account else {
       completion(false, "Account not found")
@@ -500,14 +525,14 @@ extension KWCoordinator: KWConfirmPaymentViewControllerDelegate {
       completion(true, "")
       return
     }
-    self.provider.getAllowance(token: transaction.from, address: account.address) { result in
+    self.provider.getAllowance(token: transaction.from, address: account.address, isPay: self.dataType == .pay) { result in
       switch result {
       case .success(let isApproved):
         if isApproved {
           print("No need send approved")
           completion(true, "")
         } else {
-          self.provider.sendApproveERC20Token(exchangeTransaction: transaction, completion: { apprResult in
+          self.provider.sendApproveERC20Token(exchangeTransaction: transaction, isPay: self.dataType == .pay, completion: { apprResult in
             switch apprResult {
             case .success:
               print("Send approved success")

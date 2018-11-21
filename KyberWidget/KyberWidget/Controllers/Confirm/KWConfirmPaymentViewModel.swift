@@ -172,6 +172,22 @@ public class KWConfirmPaymentViewModel: NSObject {
 
   // MARK: Now we have all valid data to get the best estimated gas limit
   func getEstimatedGasLimit(completion: @escaping () -> Void) {
+    if self.dataType == .pay {
+      print("Estimated gas for pay transaction")
+      let transaction = self.transaction
+      self.provider.getPayEstimateGasLimit(for: transaction) { result in
+        if case .success(let gasLimit) = result {
+          self.gasLimit = gasLimit
+          print("Success loading est gas limit")
+        } else if case .failure(let error) = result {
+          print("Error loading est gas limit with error: \(error.description)")
+        } else {
+          print("Unknown result est gas limit")
+        }
+        completion()
+      }
+      return
+    }
     if self.transaction.from == self.transaction.to {
       print("Estimated gas for transfer token")
       self.provider.getTransferEstimateGasLimit(for: self.transaction) { result in

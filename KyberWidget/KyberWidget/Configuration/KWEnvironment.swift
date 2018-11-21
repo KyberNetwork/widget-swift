@@ -12,26 +12,26 @@ public enum KWEnvironment: Int {
 
   case mainnet = 0
   case production = 1
-  case staging = 2
+  case test = 2
   case ropsten = 3
-  case kovan = 4
+  case rinkeby = 4
 
   var displayName: String {
     switch self {
     case .mainnet: return "Mainnet"
     case .production: return "Production"
-    case .staging: return "Staging"
+    case .test: return "Test"
     case .ropsten: return "Ropsten"
-    case .kovan: return "Kovan"
+    case .rinkeby: return "Rinkeby"
     }
   }
 
   static let allEnvs: [KWEnvironment] = [
     KWEnvironment.mainnet,
     KWEnvironment.production,
-    KWEnvironment.staging,
+    KWEnvironment.test,
     KWEnvironment.ropsten,
-    KWEnvironment.kovan,
+    KWEnvironment.rinkeby,
   ]
 
   var chainID: Int {
@@ -53,11 +53,11 @@ public enum KWEnvironment: Int {
 
   var configFileName: String {
     switch self {
-    case .mainnet: return "config_env_mainnet_test"
+    case .mainnet: return "config_env_production"
     case .production: return "config_env_production"
-    case .staging: return "config_env_staging"
+    case .test: return "config_env_ropsten"
     case .ropsten: return "config_env_ropsten"
-    case .kovan: return "config_env_kovan"
+    case .rinkeby: return "config_env_rinkeby"
     }
   }
 
@@ -65,9 +65,9 @@ public enum KWEnvironment: Int {
     switch self {
     case .mainnet: return "http://api.etherscan.io/"
     case .production: return "http://api.etherscan.io/"
-    case .staging: return "http://api-kovan.etherscan.io/"
+    case .test: return "http://api-ropsten.etherscan.io/"
     case .ropsten: return "http://api-ropsten.etherscan.io/"
-    case .kovan: return "http://api-kovan.etherscan.io/"
+    case .rinkeby: return "https://api-rinkeby.etherscan.io/"
     }
   }
 }
@@ -78,6 +78,7 @@ public struct KWCustomRPC {
   let endpoint: String
 
   let networkAddress: String
+  let payAddress: String
   let authorizedAddress: String
   let tokenIEOAddress: String
   let reserveAddress: String
@@ -99,6 +100,7 @@ public struct KWCustomRPC {
       return endpoint
     }()
     self.networkAddress = dictionary["network"] as? String ?? ""
+    self.payAddress = dictionary["payWrapper"] as? String ?? ""
     self.authorizedAddress = dictionary["authorize_contract"] as? String ?? ""
     self.tokenIEOAddress = dictionary["token_ieo"] as? String ?? ""
     self.reserveAddress = dictionary["reserve"] as? String ?? ""
