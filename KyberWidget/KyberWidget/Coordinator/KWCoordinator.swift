@@ -236,6 +236,9 @@ public class KWCoordinator {
         self.receiverToken = tokens.first(where: { $0.symbol == self.receiverTokenSymbol })
         let error: KWError? = {
           // token is empty, it must be kyberswap (already checked above)
+          if self.pinnedTokens.count > 3 {
+            return .invalidPinnedToken(errorMessage: "pinnedTokens can contain at most 3 token symbols")
+          }
           let symbols = tokens.map({ return $0.symbol })
           if self.pinnedTokens.first(where: { !symbols.contains($0) }) != nil {
             return .invalidPinnedToken(errorMessage: "pinnedTokens contains unsupported token symbol")
