@@ -40,8 +40,11 @@ class KWSearchTokenViewModel {
       return self.supportedTokens.filter({ ($0.symbol + " " + $0.name).lowercased().contains(self.searchedText.lowercased()) })
     }()
     self.displayedTokens.sort { (token0, token1) -> Bool in
+      if let id0 = self.pinnedTokens.index(of: token0.symbol), let id1 = self.pinnedTokens.index(of: token1.symbol) {
+        return id0 < id1
+      }
       if self.pinnedTokens.contains(token0.symbol) { return true }
-      if self.pinnedTokens.contains(token1.symbol) { return true }
+      if self.pinnedTokens.contains(token1.symbol) { return false }
       return token0.symbol < token1.symbol
     }
   }
