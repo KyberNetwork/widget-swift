@@ -236,6 +236,10 @@ public class KWCoordinator {
         self.receiverToken = tokens.first(where: { $0.symbol == self.receiverTokenSymbol })
         let error: KWError? = {
           // token is empty, it must be kyberswap (already checked above)
+          let symbols = tokens.map({ return $0.symbol })
+          if self.pinnedTokens.first(where: { !symbols.contains($0) }) != nil {
+            return .invalidPinnedToken(errorMessage: "pinnedTokens contains unsupported token symbol")
+          }
           if self.dataType == .swap && !self.defaultPair.isEmpty {
             if self.defaultPair.count != 2 {
               return KWError.invalidDefaultPair(errorMessage: "defaultPair should contain exactly 2 token symbols")
@@ -243,23 +247,19 @@ public class KWCoordinator {
             if self.defaultPair[0] == self.defaultPair[1] {
               return KWError.invalidDefaultPair(errorMessage: "Can not swap the same token")
             }
-            let symbols = tokens.map({ return $0.symbol })
             if !symbols.contains(self.defaultPair[0]) || !symbols.contains(self.defaultPair[1]) {
               return KWError.invalidDefaultPair(errorMessage: "defaultPair contains unsupported token symbol")
             }
-            if self.pinnedTokens.first(where: { !symbols.contains($0) }) != nil {
-              return .invalidPinnedToken(errorMessage: "pinnedTokens contains unsupported token symbol")
-            }
-            let signers: [String] = (self.signer ?? "").isEmpty ? [] : (self.signer ?? "").components(separatedBy: "_")
-            if signers.first(where: { Address(string: $0) == nil }) != nil {
-              return .invalidSignerAddress(errorMessage: "Invalid address in signer param")
-            }
-            if let commissionID = self.commissionId, Address(string: commissionID) == nil {
-              return .invalidCommisionAddress(errrorMessage: "Invalid address in commisionId param")
-            }
-            if let productAvt = self.productAvatar, URL(string: productAvt) == nil {
-              return .invalidProductAvatarURL(errorMessage: "Invalid product avatar URL in productAvatar param")
-            }
+          }
+          let signers: [String] = (self.signer ?? "").isEmpty ? [] : (self.signer ?? "").components(separatedBy: "_")
+          if signers.first(where: { Address(string: $0) == nil }) != nil {
+            return .invalidSignerAddress(errorMessage: "Invalid address in signer param")
+          }
+          if let commissionID = self.commissionId, Address(string: commissionID) == nil {
+            return .invalidCommisionAddress(errrorMessage: "Invalid address in commisionId param")
+          }
+          if let productAvt = self.productAvatar, URL(string: productAvt) == nil {
+            return .invalidProductAvatarURL(errorMessage: "Invalid product avatar URL in productAvatar param")
           }
           if self.receiverTokenSymbol.isEmpty { return nil }
           guard self.receiverToken != nil else {
