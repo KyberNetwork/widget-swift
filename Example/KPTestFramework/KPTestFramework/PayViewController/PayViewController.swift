@@ -73,7 +73,7 @@ class PayViewController: UIViewController {
         receiveAddr: address,
         receiveToken: token,
         receiveAmount: amount,
-        pinnedTokens: pinnedToken,
+        pinnedTokens: pinnedToken.isEmpty ? "ETH_KNC_DAI" : pinnedToken,
         network: network,
         signer: signer.isEmpty ? nil : signer,
         commissionId: commissionID,
@@ -101,12 +101,14 @@ extension PayViewController: QRCodeReaderDelegate {
   }
 
   func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
-    switch self.scanDataType {
-    case 0: self.addressTextField.text = result
-    case 1: self.signerTextField.text = result
-    case 2: self.commisionIDTextField.text = result
-    case 3: self.productAvatarTextField.text = result
-    default: break
+    reader.dismiss(animated: true) {
+      switch self.scanDataType {
+      case 0: self.addressTextField.text = result
+      case 1: self.signerTextField.text = result
+      case 2: self.commisionIDTextField.text = result
+      case 3: self.productAvatarTextField.text = result
+      default: break
+      }
     }
   }
 }

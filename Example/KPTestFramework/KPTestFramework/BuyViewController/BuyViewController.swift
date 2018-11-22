@@ -56,7 +56,7 @@ class BuyViewController: UIViewController {
         baseViewController: self,
         receiveToken: token,
         receiveAmount: amount,
-        pinnedTokens: pinnedToken,
+        pinnedTokens: pinnedToken.isEmpty ? "ETH_KNC_DAI" : pinnedToken,
         network: network,
         signer: signer.isEmpty ? nil : signer,
         commissionId: commissionID
@@ -81,10 +81,12 @@ extension BuyViewController: QRCodeReaderDelegate {
   }
 
   func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
-    switch self.scanDataType {
-    case 0: self.signerTextField.text = result
-    case 1: self.commisionIDTextField.text = result
-    default: break
+    reader.dismiss(animated: true) {
+      switch self.scanDataType {
+      case 0: self.signerTextField.text = result
+      case 1: self.commisionIDTextField.text = result
+      default: break
+      }
     }
   }
 }
