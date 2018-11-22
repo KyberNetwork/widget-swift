@@ -120,6 +120,7 @@ public class KWPaymentMethodViewModel: NSObject {
     self.gasLimit = {
       if self.from == self.to {
         // normal transfer
+        if self.dataType == .pay { return KWGasConfiguration.payTransferTokenGasLimitDefault }
         if self.from.isETH { return KWGasConfiguration.transferETHGasLimitDefault }
         return KWGasConfiguration.transferTokenGasLimitDefault
       }
@@ -524,7 +525,8 @@ extension KWPaymentMethodViewModel {
         if self.to.isETH || self.from.isETH { return KWGasConfiguration.exchangeETHTokenGasLimitDefault }
         return KWGasConfiguration.exchangeTokensGasLimitDefault
       }
-      if self.from.symbol == "ETH" { return KWGasConfiguration.transferETHGasLimitDefault }
+      if self.dataType == .pay { return KWGasConfiguration.payTransferTokenGasLimitDefault }
+      if self.from.isETH { return KWGasConfiguration.transferETHGasLimitDefault }
       return KWGasConfiguration.transferTokenGasLimitDefault
     }()
     return true
