@@ -52,8 +52,8 @@ class SwapViewController: UIViewController {
     do {
       self.coordinator = try KWSwapCoordinator(
         baseViewController: self,
-        pinnedTokens: pinnedToken,
-        defaultPair: defaultPair,
+        pinnedTokens: pinnedToken.isEmpty ? "ETH_KNC_DAI" : pinnedToken,
+        defaultPair: defaultPair.isEmpty ? "ETH_KNC" : defaultPair,
         network: network,
         signer: signer.isEmpty ? nil : signer,
         commissionId: commissionID
@@ -78,10 +78,12 @@ extension SwapViewController: QRCodeReaderDelegate {
   }
 
   func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
-    switch self.scanDataType {
-    case 0: self.signerTextField.text = result
-    case 1: self.commisionIDTextField.text = result
-    default: break
+    reader.dismiss(animated: true) {
+      switch self.scanDataType {
+      case 0: self.signerTextField.text = result
+      case 1: self.commisionIDTextField.text = result
+      default: break
+      }
     }
   }
 }
