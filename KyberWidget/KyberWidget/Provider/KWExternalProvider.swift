@@ -210,7 +210,7 @@ public class KWExternalProvider: NSObject {
 
   // If the value returned > 0 consider as allowed
   // should check with the current send amount, however the limit is likely set as very big
-  public func getAllowance(token: KWTokenObject, address: Address, isPay: Bool, completion: @escaping (Result<Bool, AnyError>) -> Void) {
+  public func getAllowance(token: KWTokenObject, address: Address, isPay: Bool, completion: @escaping (Result<BigInt, AnyError>) -> Void) {
     self.generalProvider.getAllowance(
       for: token,
       address: address,
@@ -296,6 +296,8 @@ public class KWExternalProvider: NSObject {
     let value: BigInt = transaction.from.isETH ? transaction.amountFrom : BigInt(0)
 
     let defaultGasLimit: BigInt = {
+      if transaction.from.isDGX || transaction.to.isDGX { return KWGasConfiguration.digixGasLimitDefault }
+      if transaction.to.isETH || transaction.from.isETH { return KWGasConfiguration.exchangeETHTokenGasLimitDefault }
       return KWGasConfiguration.exchangeTokensGasLimitDefault
     }()
 
@@ -321,6 +323,8 @@ public class KWExternalProvider: NSObject {
   public func getPayEstimateGasLimit(for transaction: KWTransaction, completion: @escaping (Result<BigInt, AnyError>) -> Void) {
     let value: BigInt = transaction.from.isETH ? transaction.amountFrom : BigInt(0)
     let defaultGasLimit: BigInt = {
+      if transaction.from.isDGX || transaction.to.isDGX { return KWGasConfiguration.digixGasLimitDefault }
+      if transaction.to.isETH || transaction.from.isETH { return KWGasConfiguration.exchangeETHTokenGasLimitDefault }
       return KWGasConfiguration.exchangeTokensGasLimitDefault
     }()
     self.requestDataForPay(transaction) { [weak self] dataResult in
@@ -387,6 +391,12 @@ public class KWExternalProvider: NSObject {
       }
       return Address(string: transaction.from.isETH ? transaction.destWallet : transaction.to.address)
     }()
+    let gasLimit: BigInt = {
+      if let gasLimit = transaction.gasLimit { return gasLimit }
+      if transaction.to.isDGX || transaction.from.isDGX { return KWGasConfiguration.digixGasLimitDefault }
+      if transaction.to.isETH || transaction.from.isETH { return KWGasConfiguration.exchangeETHTokenGasLimitDefault }
+      return KWGasConfiguration.exchangeTokensGasLimitDefault
+    }()
     let signTransaction: KWDraftTransaction = KWDraftTransaction(
       value: transaction.from.isETH ? transaction.amountFrom : BigInt(0),
       account: transaction.account!,
@@ -394,7 +404,7 @@ public class KWExternalProvider: NSObject {
       nonce: nonce,
       data: data,
       gasPrice: transaction.gasPrice ?? KWGasConfiguration.gasPriceFast,
-      gasLimit: transaction.gasLimit ?? KWGasConfiguration.exchangeTokensGasLimitDefault,
+      gasLimit: gasLimit,
       chainID: transaction.chainID
     )
     self.signTransactionData(from: signTransaction, completion: completion)

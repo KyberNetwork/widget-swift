@@ -16,8 +16,12 @@ public enum KWError {
   case unsupportedToken
   case invalidAddress(errorMessage: String)
   case invalidToken(errorMessage: String)
+  case invalidPinnedToken(errorMessage: String)
   case invalidAmount(errorMessage: String)
   case invalidDefaultPair(errorMessage: String)
+  case invalidSignerAddress(errorMessage: String)
+  case invalidCommisionAddress(errrorMessage: String)
+  case invalidProductAvatarURL(errorMessage: String)
   case failedToLoadSupportedToken(errorMessage: String)
   case failedToSendTransaction(errorMessage: String)
 }
@@ -243,6 +247,19 @@ public class KWCoordinator {
             if !symbols.contains(self.defaultPair[0]) || !symbols.contains(self.defaultPair[1]) {
               return KWError.invalidDefaultPair(errorMessage: "defaultPair contains unsupported token symbol")
             }
+            if self.pinnedTokens.first(where: { !symbols.contains($0) }) != nil {
+              return .invalidPinnedToken(errorMessage: "pinnedTokens contains unsupported token symbol")
+            }
+            let signers: [String] = (self.signer ?? "").isEmpty ? [] : (self.signer ?? "").components(separatedBy: "_")
+            if signers.first(where: { Address(string: $0) == nil }) != nil {
+              return .invalidSignerAddress(errorMessage: "Invalid address in signer param")
+            }
+            if let commissionID = self.commissionId, Address(string: commissionID) == nil {
+              return .invalidCommisionAddress(errrorMessage: "Invalid address in commisionId param")
+            }
+            if let productAvt = self.productAvatar, URL(string: productAvt) == nil {
+              return .invalidProductAvatarURL(errorMessage: "Invalid product avatar URL in productAvatar param")
+            }
           }
           if self.receiverTokenSymbol.isEmpty { return nil }
           guard self.receiverToken != nil else {
@@ -276,6 +293,8 @@ public class KWCoordinator {
           receiverToken: self.receiverToken,
           toAmount: self.receiverTokenAmount,
           network: self.network,
+          signer: self.signer,
+          commissionID: self.commissionId,
           productName: self.productName,
           productAvatar: self.productAvatar,
           productAvatarImage: self.productAvatarImage,
@@ -527,8 +546,8 @@ extension KWCoordinator: KWConfirmPaymentViewControllerDelegate {
     }
     self.provider.getAllowance(token: transaction.from, address: account.address, isPay: self.dataType == .pay) { result in
       switch result {
-      case .success(let isApproved):
-        if isApproved {
+      case .success(let allowance):
+        if allowance >= transaction.amountFrom {
           print("No need send approved")
           completion(true, "")
         } else {

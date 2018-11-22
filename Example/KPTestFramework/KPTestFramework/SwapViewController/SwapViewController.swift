@@ -48,7 +48,7 @@ class SwapViewController: UIViewController {
     let pinnedToken = self.pinnedTokenTextField.text ?? "ETH_KNC_DAI"
     let defaultPair = self.defaultPairTextField.text ?? "ETH_KNC"
     let signer = self.signerTextField.text ?? ""
-    let commissionID = self.commisionIDTextField.text
+    let commissionID = self.commisionIDTextField.text ?? ""
     do {
       self.coordinator = try KWSwapCoordinator(
         baseViewController: self,
@@ -56,7 +56,7 @@ class SwapViewController: UIViewController {
         defaultPair: defaultPair.isEmpty ? "ETH_KNC" : defaultPair,
         network: network,
         signer: signer.isEmpty ? nil : signer,
-        commissionId: commissionID
+        commissionId: commissionID.isEmpty ? nil : commissionID
       )
       self.coordinator?.delegate = self
       self.coordinator?.start()
@@ -110,6 +110,14 @@ extension SwapViewController: KWCoordinatorDelegate {
         case .failedToSendTransaction(let errorMessage):
           return errorMessage
         case .invalidDefaultPair(let errorMessage):
+          return errorMessage
+        case .invalidPinnedToken(let errorMessage):
+          return errorMessage
+        case .invalidSignerAddress(let errorMessage):
+          return errorMessage
+        case .invalidCommisionAddress(let errorMessage):
+          return errorMessage
+        case .invalidProductAvatarURL(let errorMessage):
           return errorMessage
         }
       }()

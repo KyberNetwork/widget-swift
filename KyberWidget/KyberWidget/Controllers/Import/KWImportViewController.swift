@@ -398,10 +398,17 @@ public class KWImportViewController: UIViewController {
       self.updateUIs()
       return
     }
-    if !self.viewModel.isBalanceEnough {
+    if !self.viewModel.isBalanceEnoughWithRealAmountFrom {
       self.openAlertViewChangeWallet(
         title: "Insufficient balance",
         message: "Your balance is not enough to make the transaction."
+      )
+      return
+    }
+    if !self.viewModel.isBalanceEnoughWithMinRateAmountFrom {
+      self.openAlertViewChangeWallet(
+        title: "Insufficient balance",
+        message: "Your balance is not enough. Try to increase the min acceptable rate."
       )
       return
     }

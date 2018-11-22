@@ -123,6 +123,8 @@ public class KWPaymentMethodViewModel: NSObject {
         if self.from.isETH { return KWGasConfiguration.transferETHGasLimitDefault }
         return KWGasConfiguration.transferTokenGasLimitDefault
       }
+      if self.from.isDGX || self.to.isDGX { return KWGasConfiguration.digixGasLimitDefault }
+      if self.from.isETH || self.to.isETH { return KWGasConfiguration.exchangeETHTokenGasLimitDefault }
       return KWGasConfiguration.exchangeTokensGasLimitDefault
     }()
   }
@@ -517,7 +519,11 @@ extension KWPaymentMethodViewModel {
     self.slippageRate = nil
 
     self.gasLimit = {
-      if self.to != self.from { return KWGasConfiguration.exchangeTokensGasLimitDefault }
+      if self.to != self.from {
+        if self.from.isDGX || self.to.isDGX { return KWGasConfiguration.digixGasLimitDefault }
+        if self.to.isETH || self.from.isETH { return KWGasConfiguration.exchangeETHTokenGasLimitDefault }
+        return KWGasConfiguration.exchangeTokensGasLimitDefault
+      }
       if self.from.symbol == "ETH" { return KWGasConfiguration.transferETHGasLimitDefault }
       return KWGasConfiguration.transferTokenGasLimitDefault
     }()
