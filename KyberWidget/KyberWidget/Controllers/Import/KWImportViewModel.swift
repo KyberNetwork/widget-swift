@@ -117,7 +117,13 @@ public class KWImportViewModel: NSObject {
     return "\(address.prefix(24))...\(address.suffix(6))"
   }
 
-  var isBalanceEnough: Bool {
+  var isBalanceEnoughWithMinRateAmountFrom: Bool {
+    guard let balance = self.balance else { return false }
+    let amountFrom: BigInt = self.transaction.amountFrom
+    return amountFrom <= balance
+  }
+
+  var isBalanceEnoughWithRealAmountFrom: Bool {
     guard let balance = self.balance else { return false }
     let amountFrom: BigInt = self.transaction.expectedFromAmount(dataType: self.dataType)
     return amountFrom <= balance

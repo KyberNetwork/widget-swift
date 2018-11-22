@@ -29,8 +29,8 @@ struct KWPayRequestEncode: KWWeb3Request {
       return minRate * BigInt(10).power(18 - pay.to.decimals)
     }()
     let walletID = self.pay.commissionID ?? "0x0000000000000000000000000000000000000000"
-    let paymentData: String = "0x0000000000000000000000000000000000000000"
-    let hint: String = "0x0000000000000000000000000000000000000000"
+    let paymentData: String = "0x"
+    let hint: String = "0x"
     let maxDestAmount: String = (pay.amountTo ?? BigInt(2).power(255)).description
     let command = "web3.eth.abi.encodeFunctionCall(\(KWPayRequestEncode.abi), [\"\(src)\", \"\(srcAmount)\", \"\(dest)\", \"\(destAddress)\", \"\(maxDestAmount)\", \"\(minConversionRate.description)\", \"\(walletID)\", \"\(paymentData)\", \"\(hint)\", \"\(kyberNetworkProxy)\"])"
     return command

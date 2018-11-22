@@ -102,10 +102,10 @@ public class KWGeneralProvider: NSObject {
     }
   }
 
-  public func getAllowance(for token: KWTokenObject, address: Address, networkAddress: Address, completion: @escaping (Result<Bool, AnyError>) -> Void) {
+  public func getAllowance(for token: KWTokenObject, address: Address, networkAddress: Address, completion: @escaping (Result<BigInt, AnyError>) -> Void) {
     if token.isETH {
       // ETH no need to request for approval
-      completion(.success(true))
+      completion(.success(BigInt(2).power(255)))
       return
     }
     let tokenAddress: Address = Address(string: token.address)!
@@ -282,7 +282,7 @@ extension KWGeneralProvider {
       nonce: nonce,
       data: data,
       gasPrice: KWGasConfiguration.gasPriceFast,
-      gasLimit: KWGasConfiguration.exchangeTokensGasLimitDefault,
+      gasLimit: KWGasConfiguration.approveTokenGasLimitDefault,
       chainID: networkID
     )
     let signResult = keystore.signTransaction(transaction: signTransaction)
@@ -399,10 +399,10 @@ extension KWGeneralProvider {
     }
   }
 
-  fileprivate func getTokenAllowanceDecodeData(_ data: String, completion: @escaping (Result<Bool, AnyError>) -> Void) {
+  fileprivate func getTokenAllowanceDecodeData(_ data: String, completion: @escaping (Result<BigInt, AnyError>) -> Void) {
     if data == "0x" {
       // Fix: Can not decode 0x to uint
-      completion(.success(false))
+      completion(.success(BigInt(0)))
       return
     }
     let decodeRequest = KWGetTokenAllowanceDecode(data: data)
@@ -410,7 +410,7 @@ extension KWGeneralProvider {
       switch decodeResult {
       case .success(let value):
         let remain: BigInt = BigInt(value) ?? BigInt(0)
-        completion(.success(!remain.isZero))
+        completion(.success(remain))
       case .failure(let error):
         completion(.failure(AnyError(error)))
       }

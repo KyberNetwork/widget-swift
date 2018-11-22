@@ -70,6 +70,7 @@ public struct KWTokenObject {
 
   var isETH: Bool { return symbol == "ETH" }
   var isKNC: Bool { return symbol == "KNC" }
+  var isDGX: Bool { return symbol == "DGX" }
 
   static public func ==(left: KWTokenObject, right: KWTokenObject) -> Bool {
     return left.address == right.address

@@ -64,7 +64,7 @@ class PayViewController: UIViewController {
       return .production
     }()
     let pinnedToken = self.pinnedTokenTextField.text ?? "ETH_KNC_DAI"
-    let commissionID = self.commisionIDTextField.text
+    let commissionID = self.commisionIDTextField.text ?? ""
     let productName = self.productNameTextField.text ?? ""
     let productAvt = self.productAvatarTextField.text
     do {
@@ -76,7 +76,7 @@ class PayViewController: UIViewController {
         pinnedTokens: pinnedToken.isEmpty ? "ETH_KNC_DAI" : pinnedToken,
         network: network,
         signer: signer.isEmpty ? nil : signer,
-        commissionId: commissionID,
+        commissionId: commissionID.isEmpty ? nil : commissionID,
         productName: productName,
         productAvatar: productAvt,
         productAvatarImage: nil
@@ -135,6 +135,14 @@ extension PayViewController: KWCoordinatorDelegate {
         case .failedToSendTransaction(let errorMessage):
           return errorMessage
         case .invalidDefaultPair(let errorMessage):
+          return errorMessage
+        case .invalidPinnedToken(let errorMessage):
+          return errorMessage
+        case .invalidSignerAddress(let errorMessage):
+          return errorMessage
+        case .invalidCommisionAddress(let errorMessage):
+          return errorMessage
+        case .invalidProductAvatarURL(let errorMessage):
           return errorMessage
         }
       }()
