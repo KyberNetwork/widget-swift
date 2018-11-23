@@ -53,6 +53,10 @@ post_install do |installer|
 end
 ```
 
+NOTE:
+- Please select version Swift 4 for APIKit framework.
+- Please enable iCloud in your Capabilities as the framework is using document picker (for importing JSON file).
+
 ## Usage
 
 #### Import KyberWidget
@@ -135,7 +139,7 @@ NOTE: The values are for example only, check out the parameter details below.
 
 - ***receiveAmount*** (Double) - the amount of `receiveToken` you (vendor) want your user to pay (for _pay_ widget) or amount you want to buy (for _buy_ widget), not support for _swap_ widget. If you leave it blank or missing, the users can specify it in the widget interface. It could be useful for undetermined payment or pay-as-you-go payment like a charity, ICO or anything else. This param is ignored if you do not specify `receiveToken`.
 
-- ***pinnedTokens*** (String) - default: "ETH_KNC_DAI". This param help to show priority tokens in list select token.
+- ***pinnedTokens*** (String) - default: "ETH_KNC_DAI". This param help to show priority tokens in list select token (at most 3 pinned tokens).
 
 - ***defaultPair*** (string) - default: "ETH_KNC". This param only take effect for *Swap*, it indicates default token pair will show in swap layout.
 
@@ -150,6 +154,8 @@ NOTE: The values are for example only, check out the parameter details below.
 - ***productAvatar*** - (String?) - url string to your product avatar (only for _pay_ widget).
 
 - ***productAvatarImage*** - (UIImage?) - image for your product avatar (only for _pay_ widget). You should either provide `productAvatar` or `productAvatarImage` (prefer `productAvatarImage` for faster displaying). If you provide both, `productAvatar` will be ignored.
+
+An error will be throw via delegation if parameters are invalid.
 
 Check our **_Valid use cases_** for more details.
 
@@ -334,3 +340,4 @@ Please upgrade your pod by using commands:
 pod repo update
 pod install
 ```
+Please note that some frameworks are compiling in Swift 4 or lower.
