@@ -85,6 +85,7 @@
 		251CCF5C2118308900F12B01 /* KPTestFrameworkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KPTestFrameworkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		251CCF602118308900F12B01 /* KPTestFrameworkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPTestFrameworkUITests.swift; sourceTree = "<group>"; };
 		251CCF622118308900F12B01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		252A207521A7F3A700DBD6B0 /* KPTestFramework.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KPTestFramework.entitlements; sourceTree = "<group>"; };
 		254DA66C21A581E800672EE7 /* KyberWidget.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KyberWidget.framework; sourceTree = "<group>"; };
 		254DA67321A6551600672EE7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		254DA67421A6551600672EE7 /* ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
@@ -170,6 +171,7 @@
 		251CCF3F2118308600F12B01 /* KPTestFramework */ = {
 			isa = PBXGroup;
 			children = (
+				252A207521A7F3A700DBD6B0 /* KPTestFramework.entitlements */,
 				254DA68121A6629500672EE7 /* BuyViewController */,
 				254DA67C21A65FC100672EE7 /* SwapViewController */,
 				254DA67721A6568B00672EE7 /* PayViewController */,
@@ -337,7 +339,7 @@
 								enabled = 0;
 							};
 							com.apple.iCloud = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -693,6 +695,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 62EC1470A4027AC1446C0561 /* Pods-KPTestFramework.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = KPTestFramework/KPTestFramework.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HMT2AL7Q6Y;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -718,6 +721,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ABA1B1FC69981A7C7E43C88A /* Pods-KPTestFramework.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = KPTestFramework/KPTestFramework.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HMT2AL7Q6Y;
 				FRAMEWORK_SEARCH_PATHS = (
