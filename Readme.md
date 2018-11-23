@@ -190,7 +190,13 @@ func coordinatorDidFailed(with error: KWError) {
 This function is called when something went wrong, some possible errors (please check our *Valid Use cases* below for more details) 
 - `unsupportedToken`: the token you set is not supported by Kyber, or you are performing _payment_ but not set the `receiveToken` value.
 - `invalidAddress(errorMessage: String)`: the receive address is not set as `self` or a valid ETH address, check `errorMessage` for more details.
+- `invalidToken(errorMessage: String)`: the receive token symbol is not set for *Pay* or *Buy*.
+- `invalidPinnedToken(errorMessage: String)`: One of pinned token symbol is invalid (not supported by Kyber Network).
 - `invalidAmount(errorMessage: String)`: the receive amount is not valid (negative, zero, ...), or if you are performing _swap_, the receive amount must be empty.
+- `invalidDefaultPair(errorMessage: String)`: defaultPair param for *Swap* is not set correctly. It should contain exactly 2 supported token symbols by Kyber Network with format A_B in uppercased. E.g: ETH_KNC
+- `invalidSignerAddress(errorMessage: String)`: Invalid signer address.
+- `invalidCommisionAddress(errrorMessage: String)`: Invalid commission ID address.
+- `invalidProductAvatarURL(errorMessage: String)`: Invalid product avatar (for *Pay* use case).
 - `failedToLoadSupportedToken(errorMessage: String)`: something went wrong and we could not load supported tokens by Kyber.
 - `failedToSendTransaction(errorMessage: String)`: Could not send the transaction request.
 
