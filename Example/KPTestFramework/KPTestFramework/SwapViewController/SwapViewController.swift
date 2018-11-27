@@ -45,14 +45,14 @@ class SwapViewController: UIViewController {
       if networkSegment.selectedSegmentIndex == 1 { return .rinkeby }
       return .production
     }()
-    let pinnedToken = self.pinnedTokenTextField.text ?? "ETH_KNC_DAI"
+    let pinnedToken = self.pinnedTokenTextField.text ?? ""
     let defaultPair = self.defaultPairTextField.text ?? "ETH_KNC"
     let signer = self.signerTextField.text ?? ""
     let commissionID = self.commisionIDTextField.text ?? ""
     do {
       self.coordinator = try KWSwapCoordinator(
         baseViewController: self,
-        pinnedTokens: pinnedToken.isEmpty ? "ETH_KNC_DAI" : pinnedToken,
+        pinnedTokens: pinnedToken,
         defaultPair: defaultPair.isEmpty ? "ETH_KNC" : defaultPair,
         network: network,
         signer: signer.isEmpty ? nil : signer,

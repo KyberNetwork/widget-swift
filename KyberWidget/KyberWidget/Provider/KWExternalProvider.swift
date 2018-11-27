@@ -22,7 +22,6 @@ public class KWExternalProvider: NSObject {
   let knCustomRPC: KWCustomRPC!
   let networkAddress: Address!
   let payAddress: Address!
-  let reserveAddress: Address!
   let generalProvider: KWGeneralProvider
   let network: KWEnvironment
 
@@ -35,7 +34,6 @@ public class KWExternalProvider: NSObject {
     self.knCustomRPC = customRPC
     self.networkAddress = Address(string: customRPC.networkAddress)!
     self.payAddress = Address(string: customRPC.payAddress)!
-    self.reserveAddress = Address(string: customRPC.reserveAddress)!
     self.generalProvider = KWGeneralProvider(network: network)
     self.network = network
     self.minTxCount = 0

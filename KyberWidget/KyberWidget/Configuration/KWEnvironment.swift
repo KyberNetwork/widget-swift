@@ -81,7 +81,6 @@ public struct KWCustomRPC {
   let payAddress: String
   let authorizedAddress: String
   let tokenIEOAddress: String
-  let reserveAddress: String
   let etherScanEndpoint: String
   let tradeTopic: String
 
@@ -103,7 +102,6 @@ public struct KWCustomRPC {
     self.payAddress = dictionary["payWrapper"] as? String ?? ""
     self.authorizedAddress = dictionary["authorize_contract"] as? String ?? ""
     self.tokenIEOAddress = dictionary["token_ieo"] as? String ?? ""
-    self.reserveAddress = dictionary["reserve"] as? String ?? ""
     self.etherScanEndpoint = dictionary["ethScanUrl"] as? String ?? ""
     self.tradeTopic = dictionary["trade_topic"] as? String ?? ""
   }

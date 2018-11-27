@@ -48,7 +48,7 @@ class BuyViewController: UIViewController {
       if networkSegment.selectedSegmentIndex == 1 { return .rinkeby }
       return .production
     }()
-    let pinnedToken = self.pinnedTokenTextField.text ?? "ETH_KNC_DAI"
+    let pinnedToken = self.pinnedTokenTextField.text ?? ""
     let signer = self.signerTextField.text ?? ""
     let commissionID = self.commisionIDTextField.text ?? ""
     do {
@@ -56,7 +56,7 @@ class BuyViewController: UIViewController {
         baseViewController: self,
         receiveToken: token,
         receiveAmount: amount,
-        pinnedTokens: pinnedToken.isEmpty ? "ETH_KNC_DAI" : pinnedToken,
+        pinnedTokens: pinnedToken,
         network: network,
         signer: signer.isEmpty ? nil : signer,
         commissionId: commissionID.isEmpty ? nil : commissionID
