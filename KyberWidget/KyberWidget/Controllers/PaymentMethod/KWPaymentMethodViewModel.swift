@@ -443,7 +443,6 @@ extension KWPaymentMethodViewModel {
 
   // Validate amount (not use for checking amount for now)
   var isAmountTooSmall: Bool {
-    if self.toAmount != nil { return false }
     if self.amountFromBigInt <= BigInt(0) { return true }
     if self.from.symbol == "ETH" {
       return self.amountFromBigInt < BigInt(0.001 * Double(KWEthereumUnit.ether.rawValue))
