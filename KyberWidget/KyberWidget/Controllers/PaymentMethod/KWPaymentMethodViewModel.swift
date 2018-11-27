@@ -450,10 +450,13 @@ extension KWPaymentMethodViewModel {
     if self.to.symbol == "ETH" {
       return self.estimatedReceivedAmountBigInt ?? BigInt(0) < BigInt(0.001 * Double(KWEthereumUnit.ether.rawValue))
     }
-    guard let rateETH = KWRateCoordinator.shared.rates.first(where: { $0.symbol == self.from.symbol }) else { return false }
+    guard let rateETH = KWRateCoordinator.shared.rates.first(where: { $0.from == self.from.symbol && $0.to == "ETH" }) else { return false }
+    print("Rate in ETH for \(self.from.symbol): \(rateETH.rate)")
     let rateBig: BigInt = BigInt(rateETH.rate * pow(10.0, 18.0))
-    let valueInETH = rateBig * self.amountFromBigInt / BigInt(10).power(self.from.decimals)
-    return valueInETH <= BigInt(0.001 * Double(KWEthereumUnit.ether.rawValue))
+    let valueInETH = rateBig * self.amountFromBigInt
+    print("Value in ETH: \(valueInETH.string(decimals: 18, maxFractionDigits: 6))")
+    let valueMinETH = BigInt(0.001 * Double(KWEthereumUnit.ether.rawValue)) * BigInt(10).power(self.from.decimals)
+    return valueInETH < valueMinETH
   }
 
   // Validate Rate

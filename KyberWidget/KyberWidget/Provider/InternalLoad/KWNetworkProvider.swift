@@ -23,8 +23,12 @@ extension KWNetworkProvider: TargetType {
     case .getSupportedTokens:
       let string = "https://tracker.kyber.network/api/tokens/supported"
       return URL(string: string)!
-    case .getRates:
-      let string = "https://tracker.kyber.network/api/change24h"
+    case .getRates(let env):
+      let string: String = {
+        if env == .mainnet || env == .production { return "https://production-cache.kyber.network/getRate" }
+        if env == .test || env == .ropsten { return "https://ropsten-cache.knstats.com/rate" }
+        return "https://rinkeby-cache.knstats.com/rate"
+      }()
       return URL(string: string)!
     case .getMaxGasPrice, .getGasPrice:
       let string = "https://production-cache.kyber.network"

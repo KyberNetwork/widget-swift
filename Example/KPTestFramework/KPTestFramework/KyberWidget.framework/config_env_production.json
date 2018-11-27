@@ -1,26 +1,33 @@
 {
   "connections": {
     "http": [
-             {
-             "endPoint" : "https://production-cache.kyber.network",
-             "type": "cached"
-             },
-             {
-             "endPoint" : "https://mainnet.infura.io",
-             "type": "prune"
-             },
-             {
-             "endPoint" : "https://api.mycryptoapi.com/eth",
-             "type": "none_prune"
-             },
-             {
-             "endPoint" : "https://semi-node.kyber.network",
-             "type": "prune"
-             }
-             ],
+      {
+        "endPoint" : "https://production-cache.kyber.network",
+        "type": "cached"
+      },
+      {
+        "endPoint" : "https://mainnet.infura.io",
+        "type": "prune"
+      },
+      {
+        "endPoint" : "https://api.mycryptoapi.com/eth",
+        "type": "none_prune"
+      },
+      {
+        "endPoint" : "https://semi-node.kyber.network",
+        "type": "prune"
+      }
+    ],
     "ws": "wss://mainnet.infura.io/ws"
   },
   "api_usd":"https://api.coinmarketcap.com",
+  "api_url": "https://dev-api.knstats.com",
+  "api_tokens": "https://api.kyber.network/currencies",
+  "tokens_gas": {
+    "ETH": 0,
+    "DAI": 450000,
+    "DGX": 750000
+  },
   "tokens": {
     "ETH": {
       "name": "Ethereum",
@@ -28,7 +35,18 @@
       "icon": "eth",
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "decimal": 18,
-      "usd_id":"ethereum"
+      "usd_id":"ethereum",
+      "gasLimit": "0"
+    },
+    "WETH": {
+      "name": "Wrapped Ether",
+      "decimal": 18,
+      "symbol" : "WETH",
+      "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "icon": "weth",
+      "isNew": true,
+      "expireDate":"2018/09/30",
+      "exclude": true
     },
     "KNC": {
       "name": "KyberNetwork",
@@ -66,7 +84,7 @@
       "name":"Aelf",
       "address": "0xbf2179859fc6d5bee9bf9158632dc51678a4100e",
       "symbol": "ELF",
-      "icon": "aelf",
+      "icon": "elf",
       "decimal": 18,
       "usd_id":"aelf"
     },
@@ -74,7 +92,7 @@
       "name":"Power Ledger",
       "address": "0x595832f8fc6bf59c85c527fec3740a1b7a361269",
       "symbol": "POWR",
-      "icon": "pwr",
+      "icon": "powr",
       "decimal": 6,
       "usd_id":"power-ledger"
     },
@@ -106,7 +124,7 @@
       "name":"Gifto",
       "address": "0xc5bbae50781be1669306b9e001eff57a2957b09d",
       "symbol": "GTO",
-      "icon": "gifto",
+      "icon": "gto",
       "decimal": 5,
       "usd_id":"gifto"
     },
@@ -220,7 +238,8 @@
       "symbol":"DGX",
       "decimal": 9,
       "icon": "dgx",
-      "usd_id":"dgx"
+      "usd_id":"dgx",
+      "gasLimit": "750000"
     },
     "ABT": {
       "name": "ArcBlock",
@@ -260,11 +279,11 @@
       "icon": "blz"
     },
     "PAL": {
-      "name": "PolicyPal Network",
+      "name": "PAL Network",
       "decimal": 18,
       "symbol":"PAL",
       "address": "0xfedae5642668f8636a11987ff386bfd215f942ee",
-      "icon": "pal"
+      "icon": "pal.png"
     },
     "ELEC": {
       "name": "ElectrifyAsia",
@@ -307,21 +326,154 @@
       "address": "0x41e5560054824ea6b0732e656e3ad64e20e94e45",
       "symbol":"CVC",
       "icon": "cvc"
+    },
+    "WAX": {
+      "name": "Wax",
+      "decimal": 8,
+      "address": "0x39bb259f66e1c59d5abef88375979b4d20d98022",
+      "symbol":"WAX",
+      "icon": "wax"
+    },
+    "SUB": {
+      "name": "Substratum",
+      "decimal": 2,
+      "address": "0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a",
+      "symbol":"SUB",
+      "icon": "sub"
+    },
+    "POE": {
+      "name": "Po.et",
+      "decimal": 8,
+      "address": "0x0e0989b1f9b8a38983c2ba8053269ca62ec9b195",
+      "symbol":"POE",
+      "icon": "poe"
+    },
+    "PAY": {
+      "name": "TenX",
+      "decimal": 18,
+      "address": "0xb97048628db6b661d4c2aa833e95dbe1a905b280",
+      "symbol":"PAY",
+      "icon": "pay"
+    },
+    "DTA": {
+      "name": "Data",
+      "decimal": 18,
+      "address": "0x69b148395ce0015c13e36bffbad63f49ef874e03",
+      "symbol":"DTA",
+      "icon": "dta"
+    },
+    "BNT": {
+      "name": "Bancor",
+      "decimal": 18,
+      "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
+      "symbol":"BNT",
+      "icon": "bnt"
+    },
+    "TUSD": {
+      "name": "TrueUSD",
+      "decimal": 18,
+      "address": "0x8dd5fbce2f6a956c3022ba3663759011dd51e73e",
+      "symbol":"TUSD",
+      "icon": "tusd"
+    },
+    "TOMO": {
+      "name": "Tomocoin",
+      "decimal": 18,
+      "address": "0x8b353021189375591723e7384262f45709a3c3dc",
+      "symbol":"TOMO",
+      "icon": "tomo"
+    },
+    "MDS": {
+      "name": "MediShares",
+      "decimal": 18,
+      "address": "0x66186008c1050627f979d464eabb258860563dbe",
+      "symbol":"MDS",
+      "icon": "mds"
+    },
+    "LEND": {
+      "name": "EthLend",
+      "decimal": 18,
+      "address": "0x80fb784b7ed66730e8b1dbd9820afd29931aab03",
+      "symbol":"LEND",
+      "icon": "lend"
+    },
+    "WINGS": {
+      "name": "WINGS",
+      "decimal": 18,
+      "address": "0x667088b212ce3d06a1b553a7221e1fd19000d9af",
+      "symbol":"WINGS",
+      "icon": "wings"
+    },
+    "MTL": {
+      "name": "Metal",
+      "decimal": 8,
+      "address": "0xf433089366899d83a9f26a773d59ec7ecf30355e",
+      "symbol":"MTL",
+      "icon": "mtl"
+    },
+    "WABI": {
+      "name": "WaBi",
+      "decimal": 18,
+      "address": "0x286bda1413a2df81731d4930ce2f862a35a609fe",
+      "symbol":"WABI",
+      "icon": "wabi"
+    },
+    "COFI":{
+      "name": "CoinFi",
+      "decimal": 18,
+      "address": "0x3136ef851592acf49ca4c825131e364170fa32b3",
+      "symbol":"COFI",
+      "icon": "cofi"
+    },
+    "MOC": {
+      "name": "Moss Land",
+      "decimal": 18,
+      "symbol" : "MOC",
+      "address": "0x865ec58b06bf6305b886793aa20a2da31d034e68",
+      "icon": "moc"
+    },
+    "BNB":{
+      "name": "Binance Coin",
+      "decimal": 18,
+      "symbol" : "BNB",
+      "address": "0xb8c77482e45f1f44de1745f52c74426c631bdd52",
+      "icon": "bnb"
+    },
+    "REP":{
+      "name": "Augur",
+      "decimal": 18,
+      "symbol" : "REP",
+      "address": "0x1985365e9f78359a9b6ad760e32412f4a445e862",
+      "icon": "rep"
+    },
+    "ZRX":{
+      "name": "0x Protocol",
+      "decimal": 18,
+      "symbol" : "ZRX",
+      "address": "0xe41d2489571d322189246dafa5ebde1f4699f498",
+      "icon": "zrx"
+    },
+    "MAS":{
+      "name": "MidasProtocol",
+      "decimal": 18,
+      "symbol" : "MAS",
+      "address": "0x23ccc43365d9dd3882eab88f43d515208f832430",
+      "icon": "mas"
     }
   },
   "ethScanUrl": "https://etherscan.io/",
   "bank": "0x0",
   "reserve": "0x63825c174ab367968ec60f061753d3bbd36a0d8f",
-  "network": "0x818E6FECD516Ecc3849DAf6845e3EC868087B755",
-  "payWrapper": "0xFa71B63935cF9878E009ba6595Da08f6d75C4Aa1,
-  "authorize_contract": "0x10584d6910579eA485856B429561c0f03F8205D2",
-  "token_ieo": "0x8bbd103627985663477de0d72e23aa1e28e594ac",
+  "network": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
   "wrapper": "0x6172afc8c00c46e0d07ce3af203828198194620a",
+  "payWrapper": "0xd1946aeffc2d053b76fab96117b6f2c7bf395e32",
   "trade_topic":"0x1849bd6a030a1bca28b83437fd3de96f3d27a5d172fa7e9c78e7b61468928a39",
   "endpoint": "wss://mainnet.infura.io/ws",
   "averageBlockTime": 15000,
   "networkId": 1,
   "chainName": "Mainnet",
   "gasstation_endpoint": "https://ethgasstation.info/json/ethgasAPI.json",
-  "tracker":"https://tracker.kyber.network"
+  "tracker":"https://tracker.kyber.network",
+  "networkName": "production",
+  "statEndPoint": "https://mainnet-data.kyber.network"
   }

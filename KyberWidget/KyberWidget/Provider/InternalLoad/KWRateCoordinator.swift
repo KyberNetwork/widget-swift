@@ -10,22 +10,28 @@ import UIKit
 import Moya
 import Result
 
-public struct KWETHRate {
-  let symbol: String // symbol
+public struct KWRate {
+  let from: String
+  let to: String
   let rate: Double
 
   init(dict: JSONDictionary) {
-    self.symbol = dict["token_symbol"] as? String ?? ""
-    self.rate = dict["rate_eth_now"] as? Double ?? 0.0
+    self.from = dict["source"] as? String ?? ""
+    self.to = dict["dest"] as? String ?? ""
+    self.rate = {
+      let rateString = dict["rate"] as? String ?? ""
+      let rateDouble = Double(rateString) ?? 0.0
+      return rateDouble / pow(10.0, 18.0)
+    }()
   }
 }
 
 public class KWRateCoordinator: NSObject {
 
   static public let shared = KWRateCoordinator()
-  public var rates: [KWETHRate] = []
+  public var rates: [KWRate] = []
 
-  public func fetchTrackerRates(env: KWEnvironment, completion: @escaping (Result<[KWETHRate], AnyError>) -> Void) {
+  public func fetchTrackerRates(env: KWEnvironment, completion: @escaping (Result<[KWRate], AnyError>) -> Void) {
     let provider = MoyaProvider<KWNetworkProvider>()
     provider.request(.getRates(env: env)) { [weak self] result in
       guard let `self` = self else { return }
@@ -34,7 +40,7 @@ public class KWRateCoordinator: NSObject {
         do {
           _ = try data.filterSuccessfulStatusCodes()
           let json = try data.mapJSON(failsOnEmptyData: false) as? JSONDictionary ?? [:]
-          let rates = json.values.map({ return KWETHRate(dict: $0 as? JSONDictionary ?? [:]) })
+          let rates = json.values.map({ return KWRate(dict: $0 as? JSONDictionary ?? [:]) })
           self.rates = rates
           completion(.success(rates))
         } catch let error {

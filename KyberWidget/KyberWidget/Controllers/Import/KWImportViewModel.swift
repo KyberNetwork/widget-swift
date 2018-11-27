@@ -131,7 +131,7 @@ public class KWImportViewModel: NSObject {
 
   var isAmountValidWithCap: Bool {
     guard let cap = self.userCap else { return true }// if can not load, consider as ok
-    guard let rateETH = KWRateCoordinator.shared.rates.first(where: { $0.symbol == self.transaction.from.symbol }) else { return true }
+    guard let rateETH = KWRateCoordinator.shared.rates.first(where: { $0.from == self.transaction.from.symbol && $0.to == self.transaction.to.symbol }) else { return true }
     let rateBig: BigInt = BigInt(rateETH.rate * pow(10.0, 18.0))
     let valueInETH = rateBig * self.transaction.amountFrom / BigInt(10).power(self.transaction.from.decimals)
     return valueInETH <= cap
