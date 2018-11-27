@@ -109,16 +109,16 @@ public class KWGeneralProvider: NSObject {
       return
     }
     let tokenAddress: Address = Address(string: token.address)!
-    self.getTokenAllowanceEncodeData(for: address, networkAddress: networkAddress) { [weak self] dataResult in
-      guard let `self` = self else { return }
-      switch dataResult {
-      case .success(let data):
-        let callRequest = KWCallRequest(to: tokenAddress.description, data: data)
-        let getAllowanceRequest = KWEtherServiceRequest(
-          batch: BatchFactory().create(callRequest),
-          endpoint: self.network.endpoint
-        )
-        DispatchQueue.global(qos: .background).async {
+    DispatchQueue.global(qos: .background).async {
+      self.getTokenAllowanceEncodeData(for: address, networkAddress: networkAddress) { [weak self] dataResult in
+        guard let `self` = self else { return }
+        switch dataResult {
+        case .success(let data):
+          let callRequest = KWCallRequest(to: tokenAddress.description, data: data)
+          let getAllowanceRequest = KWEtherServiceRequest(
+            batch: BatchFactory().create(callRequest),
+            endpoint: self.network.endpoint
+          )
           Session.send(getAllowanceRequest) { [weak self] getAllowanceResult in
             DispatchQueue.main.async {
               guard let `self` = self else { return }
@@ -130,9 +130,11 @@ public class KWGeneralProvider: NSObject {
               }
             }
           }
+        case .failure(let error):
+          DispatchQueue.main.async {
+            completion(.failure(error))
+          }
         }
-      case .failure(let error):
-        completion(.failure(error))
       }
     }
   }

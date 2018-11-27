@@ -54,6 +54,12 @@ public class KWPaymentMethodViewModel: NSObject {
   fileprivate(set) var gasLimit: BigInt = KWGasConfiguration.exchangeTokensGasLimitDefault
   var hasAgreed: Bool = false
 
+  var displayGasLimit: BigInt {
+    if self.from.isETH { return self.gasLimit }
+    // assume need to send approve
+    return self.gasLimit + KWGasConfiguration.approveTokenGasLimitDefault
+  }
+
   fileprivate(set) var userCap: BigInt = BigInt(0)
   /*
    Amount, Address & Product Name have same attributed text format
@@ -437,7 +443,6 @@ extension KWPaymentMethodViewModel {
 
   // Validate amount (not use for checking amount for now)
   var isAmountTooSmall: Bool {
-    if self.toAmount != nil { return false }
     if self.amountFromBigInt <= BigInt(0) { return true }
     if self.from.symbol == "ETH" {
       return self.amountFromBigInt < BigInt(0.001 * Double(KWEthereumUnit.ether.rawValue))
@@ -460,7 +465,7 @@ extension KWPaymentMethodViewModel {
   }
 
   var isMinRateValidForTransaction: Bool {
-    guard let minRate = self.minRate, !minRate.isZero else { return false }
+    guard self.minRate != nil else { return false }
     return true
   }
 
@@ -568,6 +573,7 @@ extension KWPaymentMethodViewModel {
       } else {
         var percent = Double(slippageRate * BigInt(100) / rate)
         if percent == 0 { percent = 97.0 }
+        percent = max(percent, 10.0)
         self.slippageRate = rate * BigInt(Int(floor(percent))) / BigInt(100)
       }
     }
@@ -623,69 +629,6 @@ extension KWPaymentMethodViewModel {
         print("Error loading expected rate with error: \(error.description)")
       }
       completion()
-    }
-  }
-
-  func getEstimatedGasLimit(completion: @escaping () -> Void) {
-    if self.dataType == .pay {
-      print("Estimated gas for pay transaction")
-      let transaction = self.transaction
-      self.provider.getPayEstimateGasLimit(for: transaction) { result in
-        if case .success(let gasLimit) = result {
-          self.updateEstimateGasLimit(
-            for: transaction.from,
-            to: transaction.to,
-            amount: transaction.amountFrom,
-            gasLimit: gasLimit
-          )
-          print("Success loading est gas limit")
-        } else if case .failure(let error) = result {
-          print("Error loading est gas limit with error: \(error.description)")
-        } else {
-          print("Unknown result est gas limit")
-        }
-        completion()
-      }
-      return
-    }
-    if self.from == self.to {
-      print("Estimated gas for transfer token")
-      let transaction = self.transaction
-      self.provider.getTransferEstimateGasLimit(for: transaction) { result in
-        if case .success(let gasLimit) = result {
-          self.updateEstimateGasLimit(
-            for: transaction.from,
-            to: transaction.to,
-            amount: transaction.amountFrom,
-            gasLimit: gasLimit
-          )
-          print("Success loading est gas limit")
-        } else if case .failure(let error) = result {
-          print("Error loading est gas limit with error: \(error.description)")
-        } else {
-          print("Unknown result est gas limit")
-        }
-        completion()
-      }
-    } else {
-      print("Estimated gas for exchange token")
-      let transaction = self.transaction
-      self.provider.getSwapEstimateGasLimit(for: transaction) { result in
-        if case .success(let gasLimit) = result {
-          self.updateEstimateGasLimit(
-            for: transaction.from,
-            to: transaction.to,
-            amount: transaction.amountFrom,
-            gasLimit: gasLimit
-          )
-          print("Success loading est gas limit")
-        } else if case .failure(let error) = result {
-          print("Error loading est gas limit with error: \(error.description)")
-        } else {
-          print("Unknown result est gas limit")
-        }
-        completion()
-      }
     }
   }
 

@@ -137,9 +137,9 @@ NOTE: The values are for example only, check out the parameter details below.
 
 - ***receiveToken*** (String) - **required** for _payment_, it is the token that you (vendor) want to receive, for _swap_ or _buy_, it is the token that you want to receive/buy. It can be one of supported tokens (such as ETH, DAI, KNC...).
 
-- ***receiveAmount*** (Double) - the amount of `receiveToken` you (vendor) want your user to pay (for _pay_ widget) or amount you want to buy (for _buy_ widget), not support for _swap_ widget. If you leave it blank or missing, the users can specify it in the widget interface. It could be useful for undetermined payment or pay-as-you-go payment like a charity, ICO or anything else. This param is ignored if you do not specify `receiveToken`.
+- ***receiveAmount*** (Double) - the amount of `receiveToken` you (vendor) want your user to pay (for _pay_ widget) or amount you want to buy (for _buy_ widget), not support for _swap_ widget. If you leave it blank or missing, the users can specify it in the widget interface. It could be useful for undetermined payment or pay-as-you-go payment like a charity, ICO or anything else. This param is ignored if you do not specify `receiveToken`. To make a transaction, amount must *NOT* be less than (equivalent) 0.001ETH.
 
-- ***pinnedTokens*** (String) - default: "ETH_KNC_DAI". This param help to show priority tokens in list select token (at most 3 pinned tokens).
+- ***pinnedTokens*** (String) - default: "ETH_KNC_DAI". This param help to show priority tokens in list select tokens.
 
 - ***defaultPair*** (string) - default: "ETH_KNC". This param only take effect for *Swap*, it indicates default token pair will show in swap layout.
 

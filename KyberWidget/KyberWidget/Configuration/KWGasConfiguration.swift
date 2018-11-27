@@ -13,7 +13,7 @@ public struct KWGasConfiguration {
   static let exchangeTokensGasLimitDefault = BigInt(700_000)
   static let exchangeETHTokenGasLimitDefault = BigInt(350_000)
   static let payTransferTokenGasLimitDefault = BigInt(100_000)
-  static let approveTokenGasLimitDefault = BigInt(200_000)
+  static let approveTokenGasLimitDefault = BigInt(100_000)
   static let transferTokenGasLimitDefault = BigInt(60_000)
   static let transferETHGasLimitDefault = BigInt(21_000)
 

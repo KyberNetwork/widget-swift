@@ -56,9 +56,9 @@ public class KWPayCoordinator: KWCoordinator {
     try super.init(
       baseViewController: baseViewController,
       receiveAddr: receiveAddr,
-      receiveToken: receiveToken,
+      receiveToken: receiveToken.uppercased(),
       receiveAmount: receiveAmount,
-      pinnedTokens: pinnedTokens,
+      pinnedTokens: pinnedTokens.uppercased(),
       type: .pay,
       network: network,
       signer: signer,
@@ -84,8 +84,8 @@ public class KWSwapCoordinator: KWCoordinator {
       receiveAddr: "",
       receiveToken: nil,
       receiveAmount: nil,
-      pinnedTokens: pinnedTokens,
-      defaultPair: defaultPair,
+      pinnedTokens: pinnedTokens.uppercased(),
+      defaultPair: defaultPair.uppercased(),
       type: .swap,
       network: network,
       signer: signer,
@@ -110,9 +110,9 @@ public class KWBuyCoordinator: KWCoordinator {
     try super.init(
       baseViewController: baseViewController,
       receiveAddr: "",
-      receiveToken: receiveToken,
+      receiveToken: receiveToken.uppercased(),
       receiveAmount: receiveAmount,
-      pinnedTokens: pinnedTokens,
+      pinnedTokens: pinnedTokens.uppercased(),
       type: .buy,
       network: network,
       signer: signer,
@@ -212,17 +212,17 @@ public class KWCoordinator {
 
   public func start(completion: (() -> Void)? = nil) {
     if self.receiverAddress != "" && Address(string: self.receiverAddress) == nil {
-      let errorMessage: String = "Pass empty string if you want to swap or buy, otherwise receiver address must be a valid ETH addres"
+      let errorMessage: String = "Invalid receiving address: Pass empty string if you want to swap or buy, otherwise receiver address must be a valid ETH addres"
       self.startSession(error: .invalidAddress(errorMessage: errorMessage), completion: completion)
       return
     }
     if self.dataType == .pay && self.receiverTokenSymbol.isEmpty {
-      let errorMessage: String = "Needs to pass token symbol for payment transaction"
+      let errorMessage: String = "Invalid receiving token symbol: Needs to pass token symbol for payment transaction"
       self.startSession(error: .invalidToken(errorMessage: errorMessage), completion: completion)
       return
     }
     if self.dataType == .buy && self.receiverTokenSymbol.isEmpty {
-      let errorMessage: String = "Buy must have receive token"
+      let errorMessage: String = "Invalid receiving token symbol: Buy must have receive token"
       self.startSession(error: .invalidToken(errorMessage: errorMessage), completion: completion)
       return
     }
@@ -235,41 +235,40 @@ public class KWCoordinator {
         self.tokens = tokens
         self.receiverToken = tokens.first(where: { $0.symbol == self.receiverTokenSymbol })
         let error: KWError? = {
-          // token is empty, it must be kyberswap (already checked above)
-          if self.pinnedTokens.count > 3 {
-            return .invalidPinnedToken(errorMessage: "pinnedTokens can contain at most 3 token symbols")
-          }
           let symbols = tokens.map({ return $0.symbol })
+          if !self.receiverTokenSymbol.isEmpty && !symbols.contains(self.receiverTokenSymbol) {
+            return .invalidToken(errorMessage: "Invalid receiving token symbol: Receive token is not supported by Kyber")
+          }
           if self.pinnedTokens.first(where: { !symbols.contains($0) }) != nil {
-            return .invalidPinnedToken(errorMessage: "pinnedTokens contains unsupported token symbol")
+            return .invalidPinnedToken(errorMessage: "Invalid pinnedTokens: pinnedTokens must be in TOKEN_TOKEN_TOKEN format.")
           }
           if self.dataType == .swap && !self.defaultPair.isEmpty {
             if self.defaultPair.count != 2 {
-              return KWError.invalidDefaultPair(errorMessage: "defaultPair should contain exactly 2 token symbols")
+              return KWError.invalidDefaultPair(errorMessage: "Invalid defaultPair: defaultPair should contain exactly 2 token symbols. defaultPair must be in TOKEN_TOKEN format.")
             }
             if self.defaultPair[0] == self.defaultPair[1] {
-              return KWError.invalidDefaultPair(errorMessage: "Can not swap the same token")
+              return KWError.invalidDefaultPair(errorMessage: "Invalid defaultPair: Can not swap the same token.")
             }
             if !symbols.contains(self.defaultPair[0]) || !symbols.contains(self.defaultPair[1]) {
-              return KWError.invalidDefaultPair(errorMessage: "defaultPair contains unsupported token symbol")
+              return KWError.invalidDefaultPair(errorMessage: "Invalid defaultPair: defaultPair must be in TOKEN_TOKEN format.")
             }
           }
           let signers: [String] = (self.signer ?? "").isEmpty ? [] : (self.signer ?? "").components(separatedBy: "_")
           if signers.first(where: { Address(string: $0) == nil }) != nil {
-            return .invalidSignerAddress(errorMessage: "Invalid address in signer param")
+            return .invalidSignerAddress(errorMessage: "Invalid signers: Signer address must be a valid Ethereum address and in Address_..._Address format.")
           }
           if let commissionID = self.commissionId, Address(string: commissionID) == nil {
-            return .invalidCommisionAddress(errrorMessage: "Invalid address in commisionId param")
+            return .invalidCommisionAddress(errrorMessage: "Invalid commissionId: Commision-receiving Address must be a valid Ethereum address.")
           }
           if let productAvt = self.productAvatar, URL(string: productAvt) == nil {
-            return .invalidProductAvatarURL(errorMessage: "Invalid product avatar URL in productAvatar param")
+            return .invalidProductAvatarURL(errorMessage: "Invalid productAvatar: Not a valid URL format in productAvatar param")
           }
           if self.receiverTokenSymbol.isEmpty { return nil }
           guard self.receiverToken != nil else {
             return .unsupportedToken
           }
           if let amount = self.receiverTokenAmount, amount <= 0.0 {
-            return .invalidAmount(errorMessage: "Amount can not be zero or negative.")
+            return .invalidAmount(errorMessage: "Invalid receiving amount: Amount can not be zero or negative.")
           }
           return nil
         }()
@@ -538,6 +537,10 @@ extension KWCoordinator: KWConfirmPaymentViewControllerDelegate {
   }
 
   fileprivate func sendApprovedRequestIfNeeded(transaction: KWTransaction, completion: @escaping (Bool, String) -> Void) {
+    if self.confirmVC?.viewModel.isNeedsToSendApprove == false {
+      completion(true, "No need send approved")
+      return
+    }
     guard let account = transaction.account else {
       completion(false, "Account not found")
       return
@@ -552,8 +555,10 @@ extension KWCoordinator: KWConfirmPaymentViewControllerDelegate {
       case .success(let allowance):
         if allowance >= transaction.amountFrom {
           print("No need send approved")
+          self.confirmVC?.updateNeedToSendTokenApprove(false)
           completion(true, "")
         } else {
+          self.confirmVC?.updateNeedToSendTokenApprove(true)
           self.provider.sendApproveERC20Token(exchangeTransaction: transaction, isPay: self.dataType == .pay, completion: { apprResult in
             switch apprResult {
             case .success:

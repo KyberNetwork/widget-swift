@@ -308,7 +308,7 @@ public class KWPaymentMethodViewController: UIViewController {
       fast: KWGasCoordinator.shared.fastGas,
       medium: KWGasCoordinator.shared.mediumGas,
       slow: KWGasCoordinator.shared.slowGas,
-      gasLimit: self.viewModel.gasLimit
+      gasLimit: self.viewModel.displayGasLimit
     )
     if self.advancedSettingsView.updateHasMinRate(self.viewModel.from != self.viewModel.to) {
       self.advancedSettingsHeightConstraint.constant = self.advancedSettingsView.height
@@ -383,9 +383,6 @@ public class KWPaymentMethodViewController: UIViewController {
     KWGasCoordinator.shared.getKNCachedGasPrice {
       self.viewModel.updateEstimatedGasPrices()
       self.updateAdvancedSettingsView()
-    }
-    self.viewModel.getEstimatedGasLimit {
-      self.coordinatorUpdateEstGasLimit()
     }
   }
 }
