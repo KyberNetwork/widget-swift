@@ -154,9 +154,9 @@ class KAdvancedSettingsView: KWXibLoaderView {
     self.displayViewButton.setImage(image, for: .normal)
 
     self.leadingConstraintForMinRatePercentLabel.constant = 0.0
-    self.minRateValueLabel.text = "0"
-    self.minRatePercentLabel.text = "0 %"
-    self.minRateSlider.value = 0.0
+    self.minRateValueLabel.text = "10"
+    self.minRatePercentLabel.text = "10 %"
+    self.minRateSlider.value = 10.0
 
     self.minRateSlider.addTarget(self, action: #selector(self.minRateSliderDidChange(_:)), for: .valueChanged)
   }
@@ -215,11 +215,11 @@ class KAdvancedSettingsView: KWXibLoaderView {
     self.heightConstraintMinRateContainerView.constant = self.viewModel.minRateViewHeight
 
     if self.minRateContainerView.isHidden { return }
-    self.minRateSlider.value = Float(self.viewModel.minRatePercent ?? 0.0)
-    self.minRatePercentLabel.text = "\(Float(self.viewModel.minRatePercent ?? 0.0)) %"
-    self.minRateValueLabel.text = self.viewModel.minRateString ?? "0.0"
+    self.minRateSlider.value = Float(self.viewModel.minRatePercent ?? 10.0)
+    self.minRatePercentLabel.text = "\(Float(self.viewModel.minRatePercent ?? 10.0)) %"
+    self.minRateValueLabel.text = self.viewModel.minRateString
 
-    self.leadingConstraintForMinRatePercentLabel.constant = (self.minRateSlider.frame.width - 40.0) * (self.viewModel.minRatePercent ?? 0.0) / 100.0
+    self.leadingConstraintForMinRatePercentLabel.constant = (self.minRateSlider.frame.width - 40.0) * ((self.viewModel.minRatePercent ?? 10.0) - 10.0) / 90.0
     self.layoutIfNeeded()
   }
 

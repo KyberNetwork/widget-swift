@@ -273,21 +273,25 @@ public class KWExternalProvider: NSObject {
       }
       return KWGasConfiguration.transferTokenGasLimitDefault
     }()
-    self.requestDataForTokenTransfer(transaction) { [weak self] result in
-      guard let `self` = self else { return }
-      switch result {
-      case .success(let data):
-        self.estimateGasLimit(
-          from: transaction.account?.address.description ?? transaction.destWallet,
-          to: transaction.from.isETH ? transaction.destWallet : transaction.to.address,
-          gasPrice: transaction.gasPrice ?? KWGasConfiguration.gasPriceFast,
-          value: transaction.from.isETH ? transaction.amountFrom : BigInt(0),
-          data: data,
-          defaultGasLimit: defaultGasLimit,
-          completion: completion
-        )
-      case .failure(let error):
-        completion(.failure(error))
+    DispatchQueue.global(qos: .background).async {
+      self.requestDataForTokenTransfer(transaction) { [weak self] result in
+        guard let `self` = self else { return }
+        DispatchQueue.main.async {
+          switch result {
+          case .success(let data):
+            self.estimateGasLimit(
+              from: transaction.account?.address.description ?? transaction.destWallet,
+              to: transaction.from.isETH ? transaction.destWallet : transaction.to.address,
+              gasPrice: transaction.gasPrice ?? KWGasConfiguration.gasPriceFast,
+              value: transaction.from.isETH ? transaction.amountFrom : BigInt(0),
+              data: data,
+              defaultGasLimit: defaultGasLimit,
+              completion: completion
+            )
+          case .failure(let error):
+            completion(.failure(error))
+          }
+        }
       }
     }
   }
@@ -301,21 +305,25 @@ public class KWExternalProvider: NSObject {
       return KWGasConfiguration.exchangeTokensGasLimitDefault
     }()
 
-    self.requestDataForTokenExchange(transaction) { [weak self] dataResult in
-      guard let `self` = self else { return }
-      switch dataResult {
-      case .success(let data):
-        self.estimateGasLimit(
-          from: transaction.account?.address.description ?? transaction.destWallet,
-          to: self.networkAddress.description,
-          gasPrice: transaction.gasPrice ?? KWGasConfiguration.gasPriceFast,
-          value: value,
-          data: data,
-          defaultGasLimit: defaultGasLimit,
-          completion: completion
-        )
-      case .failure(let error):
-        completion(.failure(error))
+    DispatchQueue.global(qos: .background).async {
+      self.requestDataForTokenExchange(transaction) { [weak self] dataResult in
+        guard let `self` = self else { return }
+        DispatchQueue.main.async {
+          switch dataResult {
+          case .success(let data):
+            self.estimateGasLimit(
+              from: transaction.account?.address.description ?? transaction.destWallet,
+              to: self.networkAddress.description,
+              gasPrice: transaction.gasPrice ?? KWGasConfiguration.gasPriceFast,
+              value: value,
+              data: data,
+              defaultGasLimit: defaultGasLimit,
+              completion: completion
+            )
+          case .failure(let error):
+            completion(.failure(error))
+          }
+        }
       }
     }
   }
@@ -327,21 +335,25 @@ public class KWExternalProvider: NSObject {
       if transaction.to.isETH || transaction.from.isETH { return KWGasConfiguration.exchangeETHTokenGasLimitDefault }
       return KWGasConfiguration.exchangeTokensGasLimitDefault
     }()
-    self.requestDataForPay(transaction) { [weak self] dataResult in
-      guard let `self` = self else { return }
-      switch dataResult {
-      case .success(let data):
-        self.estimateGasLimit(
-          from: transaction.account?.address.description ?? transaction.destWallet,
-          to: self.payAddress.description,
-          gasPrice: transaction.gasPrice ?? KWGasConfiguration.gasPriceFast,
-          value: value,
-          data: data,
-          defaultGasLimit: defaultGasLimit,
-          completion: completion
-        )
-      case .failure(let error):
-        completion(.failure(error))
+    DispatchQueue.global(qos: .background).async {
+      self.requestDataForPay(transaction) { [weak self] dataResult in
+        guard let `self` = self else { return }
+        DispatchQueue.main.async {
+          switch dataResult {
+          case .success(let data):
+            self.estimateGasLimit(
+              from: transaction.account?.address.description ?? transaction.destWallet,
+              to: self.payAddress.description,
+              gasPrice: transaction.gasPrice ?? KWGasConfiguration.gasPriceFast,
+              value: value,
+              data: data,
+              defaultGasLimit: defaultGasLimit,
+              completion: completion
+            )
+          case .failure(let error):
+            completion(.failure(error))
+          }
+        }
       }
     }
   }

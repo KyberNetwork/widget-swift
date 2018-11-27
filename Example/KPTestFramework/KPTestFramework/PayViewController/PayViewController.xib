@@ -238,7 +238,7 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                         </textField>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter at most 3 pinned tokens, e.g: ETH_KNC_DAI" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1kK-Gq-NKO">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter pinned tokens, e.g: ETH_KNC_DAI" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1kK-Gq-NKO">
                             <rect key="frame" x="24" y="293" width="327" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="jtr-07-Gbh"/>

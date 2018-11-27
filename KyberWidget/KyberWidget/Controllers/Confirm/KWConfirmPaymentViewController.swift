@@ -48,7 +48,7 @@ public class KWConfirmPaymentViewController: UIViewController {
   @IBOutlet var separatorViews: [UIView]!
 
   fileprivate var loadTimer: Timer?
-  fileprivate var viewModel: KWConfirmPaymentViewModel
+  fileprivate(set) var viewModel: KWConfirmPaymentViewModel
   weak var delegate: KWConfirmPaymentViewControllerDelegate?
 
   public init(viewModel: KWConfirmPaymentViewModel) {
@@ -74,6 +74,9 @@ public class KWConfirmPaymentViewController: UIViewController {
   override public func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.navigationItem.title = KWStringConfig.current.confirm
+    self.viewModel.checkNeedToSendApproveToken {
+      self.transactionFeeLabel.text = self.viewModel.displayTransactionFeeETH
+    }
     self.loadTimer?.invalidate()
     self.reloadDataFromNode()
     self.loadTimer = Timer.scheduledTimer(
@@ -82,6 +85,11 @@ public class KWConfirmPaymentViewController: UIViewController {
       block: { [weak self] _ in
         self?.reloadDataFromNode()
     })
+  }
+
+  func updateNeedToSendTokenApprove(_ needApprove: Bool) {
+    self.viewModel.isNeedsToSendApprove = needApprove
+    self.transactionFeeLabel.text = self.viewModel.displayTransactionFeeETH
   }
 
   override public func viewDidLayoutSubviews() {

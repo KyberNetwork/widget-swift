@@ -18,6 +18,7 @@ public class KWConfirmPaymentViewModel: NSObject {
   var gasLimit: BigInt?
   let provider: KWExternalProvider
   let keystore: KWKeystore
+  var isNeedsToSendApprove: Bool = true
 
   init(
     dataType: KWDataType,
@@ -30,6 +31,7 @@ public class KWConfirmPaymentViewModel: NSObject {
     self.gasLimit = transaction.gasLimit
     self.keystore = keystore
     self.provider = KWExternalProvider(keystore: keystore, network: network)
+    if self.transaction.from.isETH { self.isNeedsToSendApprove = false }
   }
 
   var newTransaction: KWTransaction {
@@ -165,9 +167,30 @@ public class KWConfirmPaymentViewModel: NSObject {
     guard let gasPrice = self.transaction.gasPrice, let gasLimit = self.gasLimit else {
       return "~ --"
     }
-    let fee: BigInt = gasPrice * gasLimit
+    let realGasLimit: BigInt = self.isNeedsToSendApprove ? gasLimit + KWGasConfiguration.approveTokenGasLimitDefault : gasLimit
+    let fee: BigInt = gasPrice * realGasLimit
     let feeString: String = fee.string(units: .ether, maxFractionDigits: 6)
     return "~ \(feeString.prefix(12)) ETH"
+  }
+
+  func checkNeedToSendApproveToken(completion: @escaping () -> Void) {
+    guard let address = self.transaction.account?.address else {
+      self.isNeedsToSendApprove = true
+      completion()
+      return
+    }
+    self.provider.getAllowance(
+      token: self.transaction.from,
+      address: address,
+      isPay: self.dataType == .pay) { result in
+        switch result {
+        case .success(let value):
+          self.isNeedsToSendApprove = value < self.transaction.amountFrom
+        case .failure:
+          self.isNeedsToSendApprove = true
+        }
+        completion()
+    }
   }
 
   // MARK: Now we have all valid data to get the best estimated gas limit
