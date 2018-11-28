@@ -40,7 +40,8 @@ public class KWRateCoordinator: NSObject {
         do {
           _ = try data.filterSuccessfulStatusCodes()
           let json = try data.mapJSON(failsOnEmptyData: false) as? JSONDictionary ?? [:]
-          let rates = json.values.map({ return KWRate(dict: $0 as? JSONDictionary ?? [:]) })
+          let data = json["data"] as? [JSONDictionary] ?? []
+          let rates = data.map({ return KWRate(dict: $0) })
           self.rates = rates
           completion(.success(rates))
         } catch let error {
