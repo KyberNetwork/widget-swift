@@ -247,7 +247,10 @@ Return list of supported tokens by Kyber or error otherwise.
 
 Get current fast/standard/slow gas price using our server cache
 
-`func performFetchRequest(service: KWNetworkProvider, completion: @escaping (Result<JSONDictionary, AnyError>) -> Void)`
+```swift
+func performFetchRequest(service: KWNetworkProvider, completion: @escaping (Result<JSONDictionary, AnyError>) -> Void)
+```
+
 Use `_KWNetworkProvider.gasGasPrice_` as service.
 
 **Keystore**
@@ -264,7 +267,7 @@ Available functions in `KWKeystore`:
 var accounts: [Account] // list of accounts imported
 var account: Account? // return first imported account
 func removeAllAccounts(completion: @escaping () -> Void)//  remove all imported accounts
-func importWallet(type: KWImportType, completion: @escaping (Result<Account, KWKeystoreError>) -> Void) // import an account of `KWImportType` (Check this file)
+func importWallet(type: KWImportType, completion: @escaping (Result<Account, KWKeystoreError>) -> Void) // import an account of *KWImportType* (Check this file)
 func delete(account: Account, completion: @escaping (Result<Void, KWKeystoreError>) -> Void) // delete an account
 func signTransaction(transaction: KWDraftTransaction) -> Result<Data, KWKeystoreError> // sign a transaction
 ```
@@ -285,7 +288,7 @@ func transfer(transaction: KWTransaction, completion: @escaping (Result<String, 
 func exchange(exchange: KWTransaction, completion: @escaping (Result<String, AnyError>) -> Void)
 func pay(transaction: KWTransaction, completion: @escaping (Result<String, AnyError>) -> Void)
 func getAllowance(token: KWTokenObject, address: Address, isPay: Bool, completion: @escaping (Result<BigInt, AnyError>) -> Void)
-func func sendApproveERC20Token(exchangeTransaction: KWTransaction, isPay: Bool, completion: @escaping (Result<Bool, AnyError>) -> Void)
+func sendApproveERC20Token(exchangeTransaction: KWTransaction, isPay: Bool, completion: @escaping (Result<Bool, AnyError>) -> Void)
 func getExpectedRate(from: KWTokenObject, to: KWTokenObject, amount: BigInt, completion: @escaping (Result<(BigInt, BigInt), AnyError>) -> Void)
 func getTransferEstimateGasLimit(for transaction: KWTransaction, completion: @escaping (Result<BigInt, AnyError>) -> Void)
 func getSwapEstimateGasLimit(for transaction: KWTransaction, completion: @escaping (Result<BigInt, AnyError>) -> Void)
