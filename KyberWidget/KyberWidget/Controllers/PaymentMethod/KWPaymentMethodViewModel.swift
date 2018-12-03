@@ -123,17 +123,7 @@ public class KWPaymentMethodViewModel: NSObject {
 
     super.init()
 
-    self.gasLimit = {
-      if self.from == self.to {
-        // normal transfer
-        if self.dataType == .pay { return KWGasConfiguration.payTransferTokenGasLimitDefault }
-        if self.from.isETH { return KWGasConfiguration.transferETHGasLimitDefault }
-        return KWGasConfiguration.transferTokenGasLimitDefault
-      }
-      if self.from.isDGX || self.to.isDGX { return KWGasConfiguration.digixGasLimitDefault }
-      if self.from.isETH || self.to.isETH { return KWGasConfiguration.exchangeETHTokenGasLimitDefault }
-      return KWGasConfiguration.exchangeTokensGasLimitDefault
-    }()
+    self.gasLimit = KWGasConfiguration.calculateGasLimit(from: self.from, to: self.to, isPay: self.dataType == .pay)
   }
 
   var transaction: KWTransaction {
@@ -527,16 +517,7 @@ extension KWPaymentMethodViewModel {
     self.estimatedRate = nil
     self.slippageRate = nil
 
-    self.gasLimit = {
-      if self.to != self.from {
-        if self.from.isDGX || self.to.isDGX { return KWGasConfiguration.digixGasLimitDefault }
-        if self.to.isETH || self.from.isETH { return KWGasConfiguration.exchangeETHTokenGasLimitDefault }
-        return KWGasConfiguration.exchangeTokensGasLimitDefault
-      }
-      if self.dataType == .pay { return KWGasConfiguration.payTransferTokenGasLimitDefault }
-      if self.from.isETH { return KWGasConfiguration.transferETHGasLimitDefault }
-      return KWGasConfiguration.transferTokenGasLimitDefault
-    }()
+    self.gasLimit = KWGasConfiguration.calculateGasLimit(from: self.from, to: self.to, isPay: self.dataType == .pay)
     return true
   }
 
