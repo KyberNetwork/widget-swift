@@ -269,12 +269,10 @@ SWIFT_CLASS("_TtC11KyberWidget29KWPaymentMethodViewController")
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 - (void)viewDidLoad;
 - (void)viewWillAppear:(BOOL)animated;
-- (void)viewDidDisappear:(BOOL)animated;
 - (void)viewDidLayoutSubviews;
+- (void)viewDidDisappear:(BOOL)animated;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
-
-
 
 
 @interface KWPaymentMethodViewController (SWIFT_EXTENSION(KyberWidget)) <UITextFieldDelegate>

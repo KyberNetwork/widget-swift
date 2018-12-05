@@ -17,6 +17,12 @@ public class KWStringConfig: NSObject {
   public var importWallet: String = "Import Wallet"
   public var confirm: String = "Confirm"
 
+  public var orderDetails: String = "Order Details"
+
+  public var payTopString: String = "Choose your token"
+  public var swapTopString: String = "You are performing token conversion. Please choose"
+  public var buyTopString: String = "You are buying %@ token. Please select your token for the payment"
+
   public var youAreAboutToPay: String = "You are about to pay"
   public var youAreAboutToBuy: String = "You are about to buy"
   public var address: String = "Address"
@@ -67,6 +73,10 @@ public class KWThemeConfig: NSObject {
   public var importButtonColor: UIColor = UIColor.Kyber.background
   public var importButtonTitleColor: UIColor = UIColor.white
   public var importReceiveFundsButtonColor: UIColor = UIColor.Kyber.shamrock
+
+  public var payTopTextColor: UIColor = UIColor(red: 15, green: 170, blue: 162)
+  public var swapTopTextColor: UIColor = UIColor(red: 113, green: 113, blue: 113)
+  public var buyTopTextColor: UIColor = UIColor(red: 113, green: 113, blue: 113)
 
   public var payTextFieldColor: UIColor = UIColor.Kyber.background
   public var payReceiveAmountColor: UIColor = UIColor.Kyber.grey

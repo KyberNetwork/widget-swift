@@ -45,22 +45,9 @@ public class KWPaymentMethodViewModel: NSObject {
   // Rate
   fileprivate(set) var estimatedRate: BigInt?
   fileprivate(set) var slippageRate: BigInt?
-  fileprivate(set) var minRatePercent: Double?
 
-  // Gas Price
-  fileprivate(set) var gasPriceType: KWGasPriceType = .fast
-  fileprivate(set) var gasPrice: BigInt = KWGasCoordinator.shared.fastGas
-
-  fileprivate(set) var gasLimit: BigInt = KWGasConfiguration.exchangeTokensGasLimitDefault
   var hasAgreed: Bool = false
 
-  var displayGasLimit: BigInt {
-    if self.from.isETH { return self.gasLimit }
-    // assume need to send approve
-    return self.gasLimit + KWGasConfiguration.approveTokenGasLimitDefault
-  }
-
-  fileprivate(set) var userCap: BigInt = BigInt(0)
   /*
    Amount, Address & Product Name have same attributed text format
    */
@@ -122,8 +109,6 @@ public class KWPaymentMethodViewModel: NSObject {
     }
 
     super.init()
-
-    self.gasLimit = KWGasConfiguration.calculateGasLimit(from: self.from, to: self.to, isPay: self.dataType == .pay)
   }
 
   var transaction: KWTransaction {
@@ -132,32 +117,15 @@ public class KWPaymentMethodViewModel: NSObject {
       to: self.to,
       account: nil,
       destWallet: self.receiverAddress,
-      amountFrom: self.amountToSendMinRate,
+      amountFrom: self.amountFromBigInt,
       amountTo: self.receiverAmountBigInt,
-      minRate: self.minRate,
-      gasPrice: self.gasPrice,
-      gasLimit: self.gasLimit,
+      minRate: nil,
+      gasPrice: nil,
+      gasLimit: nil,
       expectedRate: self.estimatedRate,
       chainID: self.network.chainID,
       commissionID: self.commissionID
     )
-  }
-
-  // The actual amount to send is computed using min rate, however, the est amount user need to pay is still the same
-  var amountToSendMinRate: BigInt {
-    if self.from == self.to || self.dataType == .swap  || self.toAmount == nil {
-      return self.amountFromBigInt
-    }
-    if self.dataType == .buy && self.toAmount == nil {
-      return self.amountFromBigInt
-    }
-    guard let minRate = self.minRate, !minRate.isZero else { return self.amountFromBigInt }
-    let expected: BigInt = {
-      let received = self.receiverAmountBigInt ?? BigInt(0)
-      let estimatedAmount = received * BigInt(10).power(self.from.decimals) / minRate
-      return estimatedAmount
-    }()
-    return expected
   }
 
   var navigationTitle: String {
@@ -175,25 +143,30 @@ extension KWPaymentMethodViewModel {
    Depends on can choose receive token or not
    */
   var heightForTokenData: CGFloat {
-    return self.receiverToken == nil ? 124.0 : 74.0
+    return self.dataType != .pay ? 124.0 : 74.0
   }
 
   /*
    Hidden if receive token is fixed
    */
   var heightForReceiverTokenView: CGFloat {
-    return self.receiverToken == nil ? 50.0 : 0.0
+    return self.dataType != .pay ? 50.0 : 0.0
   }
 
   /*
    TO button when both from and to tokens are modifiable
   */
-  var isToButtonHidden: Bool { return self.receiverToken != nil }
+  var isToButtonHidden: Bool {
+    return self.dataType == .pay
+  }
 
   /*
    Enabled if receive amount is empty, disabled otherwise
    */
-  var isFromAmountTextFieldEnabled: Bool { return self.toAmount == nil }
+  var isFromAmountTextFieldEnabled: Bool {
+    return self.toAmount == nil
+  }
+
   var fromAmountTextFieldColor: UIColor {
     if self.isFromAmountTextFieldEnabled {
       return KWThemeConfig.current.amountTextFieldEnable
@@ -202,10 +175,22 @@ extension KWPaymentMethodViewModel {
   }
 
   /*
-   Either PAY WITH or SWAP
+   top string text for pay, swap, buy
    */
-  var transactionTypeText: String {
-    return self.dataType == .swap ? KWStringConfig.current.swapUppercased : KWStringConfig.current.payWith
+  var topStringText: String {
+    switch self.dataType {
+    case .pay: return KWStringConfig.current.payTopString
+    case .swap: return KWStringConfig.current.swapTopString
+    case .buy: return String(format: KWStringConfig.current.buyTopString, self.receiverToken?.symbol ?? "")
+    }
+  }
+
+  var topStringTextColor: UIColor {
+    switch self.dataType {
+    case .pay: return KWThemeConfig.current.payTopTextColor
+    case .swap: return KWThemeConfig.current.swapTopTextColor
+    case .buy: return KWThemeConfig.current.buyTopTextColor
+    }
   }
 
   // convert from amount to BigInt
@@ -233,60 +218,45 @@ extension KWPaymentMethodViewModel {
   }
 }
 
-// MARK: Receiver Data
+// MARK: PAY order details data view
 extension KWPaymentMethodViewModel {
-  /*
-   Hidden if swap, or buy with no amount specified, otherwise not hidden
-   */
-  var isDestDataViewHidden: Bool {
-    if self.dataType == .swap { return true }
-    if self.dataType == .buy && self.toAmount == nil { return true }
-    return false
+  var isPayOrderDetailsContainerHidden: Bool {
+    return self.dataType != .pay
   }
 
-  /*
-   Hidden, show 1 line data or 2 lines data
-  */
-  var heightForDestDataView: CGFloat {
-    if self.isDestDataViewHidden { return 0.0 }
-    if self.dataType == .buy { return 80.0 }
-    // now data type is pay
-    var height: CGFloat = 100.0 // text and address
-    if !self.isDestAmountLabelHidden { height += 24.0 }
-    if !self.isProductNameHidden { height += 24.0 }
-    height += self.heightProductAvatarImage
-    return height
+  var payOrderDetailsTextContainerViewHeight: CGFloat {
+    return self.dataType == .pay ? 50.0 : 0.0
   }
 
-  /*
-   YOU ARE ABOUT TO PAY or YOU ARE ABOUT TO BUY
-   */
-  var destDataTitleLabelString: String {
-    if self.isDestDataViewHidden { return "" }
-    if self.dataType == .pay { return KWStringConfig.current.youAreAboutToPay.uppercased() }
-    if self.dataType == .buy { return KWStringConfig.current.youAreAboutToBuy.uppercased() }
-    return ""
+  var payOrderDetailsTextString: String {
+    return KWStringConfig.current.orderDetails
   }
 
-  /*
-   Dest address label for pay widget only
-  */
-  var isDestAddressLabelHidden: Bool { return self.receiverAddress.isEmpty }
-
-  /*
-   Dest address label for pay widget only
-  */
-  var destAddressAttributedString: NSAttributedString {
-    let attributedString = NSMutableAttributedString()
-    attributedString.append(NSAttributedString(string: "\(KWStringConfig.current.address): ", attributes: self.dataNameAttributes))
-    attributedString.append(NSAttributedString(string: "\(self.receiverAddress.prefix(14))...\(self.receiverAddress.suffix(5))", attributes: self.dataValueAttributes))
-    return attributedString
+  var bottomPaddingPayDestAddressLabel: CGFloat {
+    return self.dataType == .pay ? 24.0 : 0.0
   }
 
-  /*
-   Dest amount label for pay or buy widget
-  */
-  var isDestAmountLabelHidden: Bool { return self.toAmount == nil }
+  var isProductNameHidden: Bool {
+    return self.productName == nil || self.dataType != .pay
+  }
+
+  var topPaddingProductName: CGFloat {
+    return isProductNameHidden ? 0.0 : 24.0
+  }
+
+  var isProductAvatarImageViewHidden: Bool {
+    return self.productAvatarImage == nil || self.dataType != .pay
+  }
+
+  var topPaddingProductAvatar: CGFloat {
+    return self.isProductAvatarImageViewHidden ? 0.0 : 24.0
+  }
+
+  var heightProductAvatarImage: CGFloat {
+    if self.dataType != .pay { return 0.0 }
+    guard let image = self.productAvatarImage else { return 0.0 }
+    return image.size.height
+  }
 
   /*
    nil if receive amount is not set, otherwise computed from toAmount
@@ -297,35 +267,15 @@ extension KWPaymentMethodViewModel {
   }
 
   var topPaddingForDestAmountLabel: CGFloat {
-    return self.isDestAddressLabelHidden ? 8 : 32
+    return self.dataType == .pay ? 54.0 : 0.0
   }
 
-  var destAmountAttributedString: NSAttributedString {
-    let attributedString = NSMutableAttributedString()
-    guard let amount = self.toAmount else { return attributedString }
-    attributedString.append(NSAttributedString(string: "\(KWStringConfig.current.amount): ", attributes: self.dataNameAttributes))
-    attributedString.append(NSAttributedString(string: "\(amount) \(self.to.symbol)", attributes: self.dataValueAttributes))
-    return attributedString
-  }
-
-  var isEstimateDestAmountHidden: Bool {
-    if self.receiverToken == nil { return true }
-    return self.toAmount != nil
-  }
-
-  var estimateDestAmountAttributedString: NSAttributedString {
-    let attributedString = NSMutableAttributedString()
-    let addressTextAttributes: [NSAttributedString.Key: Any] = [
-      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .medium),
-      NSAttributedString.Key.foregroundColor: UIColor.Kyber.segment,
-    ]
-    let addressValueAttributes: [NSAttributedString.Key: Any] = [
-      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .medium),
-      NSAttributedString.Key.foregroundColor: UIColor.Kyber.action,
-    ]
-    attributedString.append(NSAttributedString(string: "\(KWStringConfig.current.estimateDestAmount): ", attributes: addressTextAttributes))
-    attributedString.append(NSAttributedString(string: self.estimatedReceivedAmountWithSymbolString, attributes: addressValueAttributes))
-    return attributedString
+  var payDestAmountText: String {
+    if self.dataType != .pay { return "" }
+    if let amount = self.toAmount {
+      return "\(amount) \(self.to.symbol)"
+    }
+    return self.estimatedReceivedAmountWithSymbolString
   }
 
   /*
@@ -337,6 +287,9 @@ extension KWPaymentMethodViewModel {
   }
 
   var estimatedReceiverAmountString: String {
+    if let toAmount = self.toAmount {
+      return "\(toAmount)"
+    }
     guard let estReceived = self.estimatedReceivedAmountBigInt else { return "0" }
     let string = estReceived.string(decimals: self.to.decimals, minFractionDigits: 0, maxFractionDigits: 6)
     return "\(string.prefix(12))"
@@ -346,27 +299,29 @@ extension KWPaymentMethodViewModel {
     return "\(self.estimatedReceiverAmountString) \(self.to.symbol)"
   }
 
-  var isProductNameHidden: Bool { return self.productName == nil }
-  var productNameAttributedString: NSAttributedString {
-    let attributedString = NSMutableAttributedString()
-    guard let productName = self.productName else { return attributedString }
-    attributedString.append(NSAttributedString(string: "\(KWStringConfig.current.productName): ", attributes: self.dataNameAttributes))
-    attributedString.append(NSAttributedString(string: "\(productName)", attributes: self.dataValueAttributes))
-    return attributedString
-  }
-  var topPaddingProductNameLabel: CGFloat {
-    return self.toAmount == nil ? 8.0 : 32.0
+  /*
+   Dest amount label for pay or buy widget
+   */
+  var isDestAmountLabelHidden: Bool {
+    return self.dataType != .pay
   }
 
-  var isProductAvatarImageViewHidden: Bool { return self.productAvatarImage == nil }
-  var topPaddingProductAvatar: CGFloat {
-    if self.isDestAmountLabelHidden && self.isProductNameHidden { return 8.0 }
-    if !self.isDestAmountLabelHidden && !self.isProductNameHidden { return 64.0 }
-    return 32.0
+  /*
+   Dest address label for pay widget only
+   */
+  var payDestAddressAttributedString: NSAttributedString {
+    let attributedString = NSMutableAttributedString()
+    attributedString.append(NSAttributedString(string: "\(KWStringConfig.current.address): ", attributes: self.dataNameAttributes))
+    attributedString.append(NSAttributedString(string: "\(self.receiverAddress.prefix(14))...\(self.receiverAddress.suffix(5))", attributes: self.dataValueAttributes))
+    return attributedString
   }
-  var heightProductAvatarImage: CGFloat {
-    guard let image = self.productAvatarImage else { return 0.0 }
-    return image.size.height
+
+  var payDestAddressLabelHidden: Bool {
+    return self.dataType != .pay
+  }
+
+  var topPaddingPayDestAddressLabel: CGFloat {
+    return self.dataType == .pay ? 70.0 : 0.0
   }
 }
 
@@ -376,41 +331,15 @@ extension KWPaymentMethodViewModel {
     if self.from.symbol == self.to.symbol { return true }
     return self.estimatedRate != nil
   }
+
   var isEstimatedRateHidden: Bool {
     if self.from.symbol == self.to.symbol { return true }
     return self.estimatedRate == nil
   }
+
   var estimatedExchangeRateText: String {
     let rateString: String = self.estimatedRate?.string(decimals: self.to.decimals, minFractionDigits: 0, maxFractionDigits: 9) ?? "0"
     return "1 \(self.from.symbol) ~ \(rateString) \(self.to.symbol)"
-  }
-
-  var minRate: BigInt? {
-    if self.from == self.to { return self.estimatedRate }
-    if let double = self.minRatePercent, let estRate = self.estimatedRate {
-      return estRate * BigInt(double) / BigInt(100)
-    }
-    return self.slippageRate
-  }
-
-  var slippageRateText: String? {
-    return self.slippageRate?.string(decimals: self.to.decimals, minFractionDigits: 0, maxFractionDigits: 9)
-  }
-
-  var minRateText: String? {
-    return self.minRate?.string(decimals: self.to.decimals, minFractionDigits: 0, maxFractionDigits: 9)
-  }
-
-  var currentMinRatePercentValue: Float {
-    if self.from == self.to { return 100.0 }
-    if let double = self.minRatePercent { return Float(floor(double)) }
-    guard let estRate = self.estimatedRate, let slippageRate = self.slippageRate, !estRate.isZero else { return 100.0 }
-    return Float(floor(Double(slippageRate * BigInt(100) / estRate)))
-  }
-
-  var currentMinRatePercentText: String {
-    let value = self.currentMinRatePercentValue
-    return "\(Int(floor(value)))%"
   }
 }
 
@@ -453,12 +382,6 @@ extension KWPaymentMethodViewModel {
   var isRateValid: Bool {
     if self.from == self.to { return true }
     if self.estimatedRate == nil || self.estimatedRate!.isZero { return false }
-    if self.minRate == nil || self.minRate!.isZero { return false }
-    return true
-  }
-
-  var isMinRateValidForTransaction: Bool {
-    guard self.minRate != nil else { return false }
     return true
   }
 
@@ -516,8 +439,6 @@ extension KWPaymentMethodViewModel {
     // Reset rates
     self.estimatedRate = nil
     self.slippageRate = nil
-
-    self.gasLimit = KWGasConfiguration.calculateGasLimit(from: self.from, to: self.to, isPay: self.dataType == .pay)
     return true
   }
 
@@ -531,24 +452,6 @@ extension KWPaymentMethodViewModel {
 
   func updateFromAmount(_ amount: String) { self.amountFrom = amount }
 
-  func updateSelectedGasPriceType(_ type: KWGasPriceType) {
-    self.gasPriceType = type
-    switch type {
-    case .fast:
-      self.gasPrice = KWGasCoordinator.shared.fastGas
-    case .medium:
-      self.gasPrice = KWGasCoordinator.shared.mediumGas
-    case .slow:
-      self.gasPrice = KWGasCoordinator.shared.slowGas
-    default: break
-    }
-  }
-
-  func updateGasPrice(_ gasPrice: BigInt) {
-    self.gasPrice = gasPrice
-    self.gasPriceType = .custom
-  }
-
   func updateExchangeRate(for from: KWTokenObject, to: KWTokenObject, amount: BigInt, rate: BigInt, slippageRate: BigInt) {
     if from == self.from, to == self.to, amount == self.amountFromBigInt {
       self.estimatedRate = rate
@@ -560,25 +463,6 @@ extension KWPaymentMethodViewModel {
         percent = max(percent, 10.0)
         self.slippageRate = rate * BigInt(Int(floor(percent))) / BigInt(100)
       }
-    }
-  }
-
-  func updateExchangeMinRatePercent(_ percent: Double) {
-    self.minRatePercent = percent
-  }
-
-  func updateEstimateGasLimit(for from: KWTokenObject, to: KWTokenObject, amount: BigInt, gasLimit: BigInt) {
-    if from == self.from, to == self.to, amount == self.amountFromBigInt {
-      self.gasLimit = gasLimit
-    }
-  }
-
-  func updateEstimatedGasPrices() {
-    switch self.gasPriceType {
-    case .fast: self.gasPrice = KWGasCoordinator.shared.fastGas
-    case .medium: self.gasPrice = KWGasCoordinator.shared.mediumGas
-    case .slow: self.gasPrice = KWGasCoordinator.shared.slowGas
-    default: break
     }
   }
 

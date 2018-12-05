@@ -25,25 +25,27 @@ public class KWPaymentMethodViewController: UIViewController {
   @IBOutlet weak var stepView: KWStepView!
 
   @IBOutlet weak var scrollContainerView: UIScrollView!
-  @IBOutlet weak var youAreAboutToPayTextLabel: UILabel!
-  @IBOutlet weak var destAddressLabel: UILabel!
-  @IBOutlet weak var destAmountLabel: UILabel!
-  @IBOutlet weak var productNameLabel: UILabel!
-  @IBOutlet weak var productAvatarImageView: UIImageView!
-  @IBOutlet weak var destDataContainerView: UIView!
 
-  @IBOutlet weak var heightConstraintForDestDataView: NSLayoutConstraint!
-  @IBOutlet weak var topPaddingConstraintForDestAmountLabel: NSLayoutConstraint!
-  @IBOutlet weak var topPaddingConstraintForProductName: NSLayoutConstraint!
+  @IBOutlet weak var payDetailsContainerView: UIView!
+  @IBOutlet weak var orderDetailsLabel: UILabel!
+  @IBOutlet weak var payDestAddressLabel: UILabel!
+  @IBOutlet weak var payAmountTextLabel: UILabel!
+  @IBOutlet weak var payDestAmountLabel: UILabel!
+  @IBOutlet weak var payProductNameLabel: UILabel!
+  @IBOutlet weak var payProductAvatarImageView: UIImageView!
+  @IBOutlet weak var separatorView: UIView!
+
+  @IBOutlet weak var orderDetailsTextHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var heightConstraintForProductAvatar: NSLayoutConstraint!
-  @IBOutlet weak var topPaddingConstraintForProductAvatar: NSLayoutConstraint!
+  @IBOutlet weak var topPaddingProductNameConstraint: NSLayoutConstraint!
+  @IBOutlet weak var topPaddingProductAvatarConstraint: NSLayoutConstraint!
+  @IBOutlet weak var topPaddingAmountTextConstraint: NSLayoutConstraint!
+  @IBOutlet weak var topPaddingAddressTextConstraint: NSLayoutConstraint!
 
-  @IBOutlet weak var advancedSettingsView: KAdvancedSettingsView!
-  @IBOutlet weak var advancedSettingsHeightConstraint: NSLayoutConstraint!
-  @IBOutlet weak var advancedSettingsTopPaddingConstraint: NSLayoutConstraint!
+  @IBOutlet weak var bottomPaddingDestAddressLabel: NSLayoutConstraint!
+  @IBOutlet weak var topPaddingConstraintForTopTextLabel: NSLayoutConstraint!
+  @IBOutlet weak var topStringTextLabel: UILabel!
 
-  @IBOutlet weak var payWithTextLabel: UILabel!
-  
   @IBOutlet weak var heightConstraintForTokenContainerView: NSLayoutConstraint!
   @IBOutlet weak var tokenContainerView: UIView!
   @IBOutlet weak var tokenButton: UIButton!
@@ -56,7 +58,6 @@ public class KWPaymentMethodViewController: UIViewController {
 
   @IBOutlet weak var estimateRateLoadingView: UIActivityIndicatorView!
   @IBOutlet weak var estimateRateLabel: UILabel!
-  @IBOutlet weak var estimateDestAmountLabel: UILabel!
   @IBOutlet weak var nextButton: UIButton!
 
   @IBOutlet weak var agreeTermsAndConditionsLabel: UILabel!
@@ -93,15 +94,21 @@ public class KWPaymentMethodViewController: UIViewController {
     })
   }
 
+  override public func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    self.payDetailsContainerView.addShadow(
+      color: UIColor.black.withAlphaComponent(0.6),
+      offset: CGSize(width: 0, height: 4),
+      opacity: 0.16,
+      radius: 16
+    )
+    self.separatorView.dashLine(width: 1.0, color: UIColor.Kyber.dashLine)
+  }
+
   override public func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
     self.loadTimer?.invalidate()
     self.loadTimer = nil
-  }
-
-  override public func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-    self.advancedSettingsView.layoutSubviews()
   }
 
   fileprivate func setupUI() {
@@ -110,7 +117,6 @@ public class KWPaymentMethodViewController: UIViewController {
     self.setupDestAddressView()
     self.setupFromTokenView()
     self.setupEstimatedRate()
-    self.setupAdvancedSettingsView()
     self.setupTermsAndConditions()
     self.setupNextButton()
   }
@@ -131,42 +137,43 @@ public class KWPaymentMethodViewController: UIViewController {
   }
 
   fileprivate func setupDestAddressView() {
-    self.destDataContainerView.isHidden = self.viewModel.isDestDataViewHidden
-    self.destAddressLabel.isHidden = self.viewModel.isDestAddressLabelHidden
-    self.destAmountLabel.isHidden = self.viewModel.isDestAmountLabelHidden
-    self.productNameLabel.isHidden = self.viewModel.isProductNameHidden
-    self.productAvatarImageView.isHidden = self.viewModel.isProductAvatarImageViewHidden
+    self.payDetailsContainerView.isHidden = self.viewModel.isPayOrderDetailsContainerHidden
+    self.payProductNameLabel.text = self.viewModel.productName
+    self.payDestAmountLabel.text = self.viewModel.payDestAmountText
+    self.payProductAvatarImageView.isHidden = self.viewModel.isProductAvatarImageViewHidden
+    self.payProductAvatarImageView.image = self.viewModel.productAvatarImage
+    self.payProductAvatarImageView.rounded(radius: 5.0)
 
-    self.heightConstraintForDestDataView.constant = self.viewModel.heightForDestDataView
-    self.topPaddingConstraintForDestAmountLabel.constant = self.viewModel.topPaddingForDestAmountLabel
-    self.topPaddingConstraintForProductName.constant = self.viewModel.topPaddingProductNameLabel
+    self.orderDetailsTextHeightConstraint.constant = self.viewModel.payOrderDetailsTextContainerViewHeight
+    self.topPaddingProductNameConstraint.constant = self.viewModel.topPaddingProductName
+    self.topPaddingProductAvatarConstraint.constant = self.viewModel.topPaddingProductAvatar
+    self.topPaddingAmountTextConstraint.constant = self.viewModel.topPaddingForDestAmountLabel
+    self.topPaddingAddressTextConstraint.constant = self.viewModel.topPaddingPayDestAddressLabel
+    self.bottomPaddingDestAddressLabel.constant = self.viewModel.bottomPaddingPayDestAddressLabel
     self.heightConstraintForProductAvatar.constant = self.viewModel.heightProductAvatarImage
-    self.topPaddingConstraintForProductAvatar.constant = self.viewModel.topPaddingProductAvatar
 
-    self.youAreAboutToPayTextLabel.text = self.viewModel.destDataTitleLabelString
-    self.destAddressLabel.attributedText = self.viewModel.destAddressAttributedString
-    self.destAmountLabel.attributedText = self.viewModel.destAmountAttributedString
-    self.productNameLabel.attributedText = self.viewModel.productNameAttributedString
-    self.productAvatarImageView.image = self.viewModel.productAvatarImage
+    self.payDestAddressLabel.attributedText = self.viewModel.payDestAddressAttributedString
+    self.payDestAmountLabel.text = self.viewModel.payDestAmountText
 
     self.view.updateConstraints()
 
     self.viewModel.getProductAvatarIfNeeded { [weak self] needsUpdate in
       guard let `self` = self else { return }
       if !needsUpdate { return }
-      self.productAvatarImageView.isHidden = self.viewModel.isProductAvatarImageViewHidden
-      self.productAvatarImageView.image = self.viewModel.productAvatarImage
+      self.payProductAvatarImageView.isHidden = self.viewModel.isProductAvatarImageViewHidden
+      self.payProductAvatarImageView.image = self.viewModel.productAvatarImage
 
-      self.topPaddingConstraintForProductAvatar.constant = self.viewModel.topPaddingProductAvatar
+      self.topPaddingProductAvatarConstraint.constant = self.viewModel.topPaddingProductAvatar
       self.heightConstraintForProductAvatar.constant = self.viewModel.heightProductAvatarImage
-      self.heightConstraintForDestDataView.constant = self.viewModel.heightForDestDataView
       self.view.updateConstraints()
     }
   }
 
   fileprivate func setupFromTokenView() {
     self.tokenContainerView.rounded(radius: 4.0)
-    self.payWithTextLabel.text = self.viewModel.transactionTypeText
+    self.topPaddingConstraintForTopTextLabel.constant = self.viewModel.isPayOrderDetailsContainerHidden ? 0.0 : 24.0
+    self.topStringTextLabel.text = self.viewModel.topStringText
+    self.topStringTextLabel.textColor = self.viewModel.topStringTextColor
 
     self.tokenAmountTextField.isEnabled = self.viewModel.isFromAmountTextFieldEnabled
     self.tokenAmountTextField.textColor = self.viewModel.fromAmountTextFieldColor
@@ -190,27 +197,7 @@ public class KWPaymentMethodViewController: UIViewController {
   }
 
   fileprivate func setupEstimatedRate() {
-    self.estimateDestAmountLabel.isHidden = self.viewModel.isEstimateDestAmountHidden
     self.updateEstimatedRate()
-  }
-
-  fileprivate func setupAdvancedSettingsView() {
-    let viewModel = KAdvancedSettingsViewModel(hasMinRate: true)
-    viewModel.updateGasPrices(
-      fast: KWGasCoordinator.shared.fastGas,
-      medium: KWGasCoordinator.shared.mediumGas,
-      slow: KWGasCoordinator.shared.slowGas
-    )
-    viewModel.updateGasLimit(self.viewModel.gasLimit)
-    let minRateString: String = self.viewModel.minRateText ?? "0"
-    let percent: CGFloat = CGFloat(self.viewModel.currentMinRatePercentValue)
-    viewModel.updateMinRateValue(minRateString, percent: percent)
-    viewModel.updateViewHidden(isHidden: true)
-    self.advancedSettingsView.updateViewModel(viewModel)
-    self.advancedSettingsHeightConstraint.constant = self.advancedSettingsView.height
-    self.advancedSettingsView.delegate = self
-    self.view.setNeedsUpdateConstraints()
-    self.view.updateConstraints()
   }
 
   fileprivate func setupTermsAndConditions() {
@@ -273,7 +260,7 @@ public class KWPaymentMethodViewController: UIViewController {
       for: .normal
     )
     self.receiveAmountLabel.text = self.viewModel.estimatedReceiverAmountString
-    self.updateAdvancedSettingsView()
+    self.payDestAmountLabel.text = self.viewModel.payDestAmountText
   }
 
   fileprivate func updateEstimatedRate() {
@@ -285,41 +272,12 @@ public class KWPaymentMethodViewController: UIViewController {
     }
     self.estimateRateLabel.isHidden = self.viewModel.isEstimatedRateHidden
     self.estimateRateLabel.text = self.viewModel.estimatedExchangeRateText
-    self.estimateDestAmountLabel.attributedText = self.viewModel.estimateDestAmountAttributedString
-    let topPadding: CGFloat = {
-      if self.viewModel.isEstimatedRateHidden && self.viewModel.isEstimateDestAmountHidden {
-        return 32.0
-      }
-      if !self.viewModel.isEstimateDestAmountHidden && !self.viewModel.isEstimatedRateHidden {
-        return 81.0
-      }
-      return 56.0
-    }()
-    self.advancedSettingsTopPaddingConstraint.constant = topPadding
-    self.updateViewConstraints()
-  }
-
-  fileprivate func updateAdvancedSettingsView() {
-    let minRateString: String = self.viewModel.minRateText ?? "0"
-    let percent: CGFloat = CGFloat(self.viewModel.currentMinRatePercentValue)
-    self.advancedSettingsView.updateMinRate(minRateString, percent: percent)
-
-    self.advancedSettingsView.updateGasPrices(
-      fast: KWGasCoordinator.shared.fastGas,
-      medium: KWGasCoordinator.shared.mediumGas,
-      slow: KWGasCoordinator.shared.slowGas,
-      gasLimit: self.viewModel.displayGasLimit
-    )
-    if self.advancedSettingsView.updateHasMinRate(self.viewModel.from != self.viewModel.to) {
-      self.advancedSettingsHeightConstraint.constant = self.advancedSettingsView.height
-      self.view.updateConstraints()
-    }
+    self.payDestAmountLabel.text = self.viewModel.payDestAmountText
     self.updateViewConstraints()
   }
 
   fileprivate func updateNextButton() {
     let enabled: Bool = {
-      if !self.viewModel.isMinRateValidForTransaction { return false }
       if self.viewModel.estimatedRate == nil { return false }
       if !self.viewModel.hasAgreed { return false }
       return true
@@ -380,10 +338,6 @@ public class KWPaymentMethodViewController: UIViewController {
     self.viewModel.getExpectedRateRequest {
       self.coordinatorUpdateExpectedRate()
     }
-    KWGasCoordinator.shared.getKNCachedGasPrice {
-      self.viewModel.updateEstimatedGasPrices()
-      self.updateAdvancedSettingsView()
-    }
   }
 }
 
@@ -408,8 +362,8 @@ extension KWPaymentMethodViewController: UITextFieldDelegate {
     if self.viewModel.isFromAmountTextFieldEnabled {
       // update estimate dest amount
       self.tokenAmountTextField.text = self.viewModel.amountFrom
-      self.estimateDestAmountLabel.attributedText = self.viewModel.estimateDestAmountAttributedString
       self.receiveAmountLabel.text = self.viewModel.estimatedReceiverAmountString
+      self.payDestAmountLabel.text = self.viewModel.payDestAmountText
     } else {
       // update expected source amount
       self.tokenAmountTextField.text = self.viewModel.estimatedFromAmountDisplay
@@ -423,7 +377,6 @@ extension KWPaymentMethodViewController: UITextFieldDelegate {
 extension KWPaymentMethodViewController {
   func coordinatorUpdateExpectedRate() {
     self.updateEstimatedRate()
-    self.updateAdvancedSettingsView()
     self.updateViewAmountDidChange()
     self.view.layoutIfNeeded()
   }
@@ -450,53 +403,8 @@ extension KWPaymentMethodViewController {
       self.view.layoutIfNeeded()
     }
   }
-  
-  func coordinatorUpdateEstGasLimit() {
-    self.updateAdvancedSettingsView()
-  }
 
   func coordinatorUpdateSupportedTokens(_ tokens: [KWTokenObject]) {
     self.viewModel.updateSupportedTokens(tokens)
-  }
-}
-
-// MARK: Advanced Settings View
-extension KWPaymentMethodViewController: KAdvancedSettingsViewDelegate {
-  func kAdvancedSettingsView(_ view: KAdvancedSettingsView, run event: KAdvancedSettingsViewEvent) {
-    switch event {
-    case .displayButtonPressed:
-      UIView.animate(
-        withDuration: 0.32,
-        animations: {
-          self.advancedSettingsHeightConstraint.constant = self.advancedSettingsView.height
-          self.updateAdvancedSettingsView()
-          self.view.layoutIfNeeded()
-      }, completion: { _ in
-        if self.advancedSettingsView.isExpanded {
-          let bottomOffset = CGPoint(
-            x: 0,
-            y: self.scrollContainerView.contentSize.height - self.scrollContainerView.bounds.size.height
-          )
-          self.scrollContainerView.setContentOffset(bottomOffset, animated: true)
-        }
-      })
-    case .gasPriceChanged(let type):
-      self.viewModel.updateSelectedGasPriceType(type)
-      self.updateAdvancedSettingsView()
-    case .minRatePercentageChanged(let percent):
-      self.viewModel.updateExchangeMinRatePercent(Double(percent))
-      self.updateAdvancedSettingsView()
-    case .infoPressed:
-      let minRateDescVC: KWMinAcceptableRatePopupViewController = {
-        let viewModel = KWMinAcceptableRatePopupViewModel(
-          minRate: self.viewModel.slippageRateText ?? "0.0",
-          symbol: self.viewModel.to.symbol
-        )
-        return KWMinAcceptableRatePopupViewController(viewModel: viewModel)
-      }()
-      minRateDescVC.modalPresentationStyle = .overFullScreen
-      minRateDescVC.modalTransitionStyle = .crossDissolve
-      self.present(minRateDescVC, animated: true, completion: nil)
-    }
   }
 }
