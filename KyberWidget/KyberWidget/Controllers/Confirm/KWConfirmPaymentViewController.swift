@@ -250,13 +250,6 @@ public class KWConfirmPaymentViewController: UIViewController {
       )
       return
     }
-    if !self.viewModel.isTransactionFeeUpdated {
-      self.showAlertController(
-        title: KWStringConfig.current.error,
-        message: KWStringConfig.current.waitForUpdateTransactionFee
-      )
-      return
-    }
     self.delegate?.confirmPaymentViewController(self, run: .confirm(transaction: self.viewModel.newTransaction))
   }
 

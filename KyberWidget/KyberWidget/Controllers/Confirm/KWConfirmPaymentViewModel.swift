@@ -18,7 +18,7 @@ public class KWConfirmPaymentViewModel: NSObject {
   let productName: String?
   let productAvatarURL: String?
   var productAvatarImage: UIImage?
-  var gasLimit: BigInt?
+  var gasLimit: BigInt
   let provider: KWExternalProvider
   let keystore: KWKeystore
   var isNeedsToSendApprove: Bool = true
@@ -60,7 +60,6 @@ public class KWConfirmPaymentViewModel: NSObject {
     ) {
     self.dataType = dataType
     self.transaction = transaction
-    self.gasLimit = transaction.gasLimit
     self.keystore = keystore
     self.provider = KWExternalProvider(keystore: keystore, network: network)
     if self.transaction.from.isETH { self.isNeedsToSendApprove = false }
@@ -71,6 +70,11 @@ public class KWConfirmPaymentViewModel: NSObject {
     self.productAvatarImage = productAvatarImage
     self.balance = balance
     self.walletType = walletType
+    self.gasLimit = KWGasConfiguration.calculateGasLimit(
+      from: transaction.from,
+      to: transaction.to,
+      isPay: dataType == .pay
+    )
   }
 
   var newTransaction: KWTransaction {
@@ -98,10 +102,7 @@ public class KWConfirmPaymentViewModel: NSObject {
   }
 
   var displayTransactionFeeETH: String {
-    guard let gasLimit = self.gasLimit else {
-      return "--"
-    }
-    let realGasLimit: BigInt = self.isNeedsToSendApprove ? gasLimit + KWGasConfiguration.approveTokenGasLimitDefault : gasLimit
+    let realGasLimit: BigInt = self.isNeedsToSendApprove ? self.gasLimit + KWGasConfiguration.approveTokenGasLimitDefault : self.gasLimit
     let fee: BigInt = self.gasPrice * realGasLimit
     let feeString: String = fee.string(units: .ether, maxFractionDigits: 6)
     return "\(feeString.prefix(12)) ETH"
@@ -221,11 +222,9 @@ public class KWConfirmPaymentViewModel: NSObject {
     guard self.transaction.from.isETH else {
       return true
     }
-    let totalAmountAndFee = self.amountToSend + self.gasPrice * (self.gasLimit ?? BigInt(0))
+    let totalAmountAndFee = self.amountToSend + self.gasPrice * self.gasLimit
     return totalAmountAndFee <= self.balance
   }
-
-  var isTransactionFeeUpdated: Bool { return self.gasLimit != nil }
 
   func checkNeedToSendApproveToken(completion: @escaping () -> Void) {
     guard let address = self.transaction.account?.address else {
