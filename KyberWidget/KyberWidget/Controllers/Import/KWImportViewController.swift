@@ -10,11 +10,12 @@ import UIKit
 import TrustCore
 import TrustKeystore
 import QRCodeReaderViewController
+import BigInt
 
 public enum KWImportViewEvent {
   case back
   case failed(errorMessage: String)
-  case successImported(account: Account)
+  case successImported(account: Account, importType: String, balance: BigInt)
 }
 
 public protocol KWImportViewControllerDelegate: class {
@@ -419,7 +420,20 @@ public class KWImportViewController: UIViewController {
       )
       return
     }
-    self.delegate?.importViewController(self, run: .successImported(account: account))
+    let importType: String = {
+      switch self.viewModel.selectedType {
+      case 0: return "JSON"
+      case 1: return KWStringConfig.current.privateKey
+      case 2: return KWStringConfig.current.seeds
+      default: return ""
+      }
+    }()
+    let event = KWImportViewEvent.successImported(
+      account: account,
+      importType: importType,
+      balance: self.viewModel.balance ?? BigInt(0)
+    )
+    self.delegate?.importViewController(self, run: event)
   }
 
   fileprivate func openAlertViewChangeWallet(title: String, message: String) {

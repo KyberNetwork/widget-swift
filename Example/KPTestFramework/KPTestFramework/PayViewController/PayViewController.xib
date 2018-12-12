@@ -85,7 +85,7 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://pbs.twimg.com/media/DVgWFLTVwAAUarj.png" placeholder="Enter product avatar" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fKt-4i-80E">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://pbs.twimg.com/media/DSLsaaLVwAA2Hwk.jpg" placeholder="Enter product avatar" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fKt-4i-80E">
                             <rect key="frame" x="24" y="581" width="327" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="XQ6-r7-Ipy"/>

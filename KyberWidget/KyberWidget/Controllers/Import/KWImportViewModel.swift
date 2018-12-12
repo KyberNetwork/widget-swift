@@ -27,6 +27,8 @@ public class KWImportViewModel: NSObject {
   var selectedType: Int = 0
   var jsonData: String = ""
 
+  var importType: String = ""
+
   private(set) var account: Account?
   private(set) var balance: BigInt? = nil
 

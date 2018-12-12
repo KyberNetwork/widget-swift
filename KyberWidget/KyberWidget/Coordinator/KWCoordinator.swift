@@ -386,12 +386,16 @@ extension KWCoordinator: KWImportViewControllerDelegate {
       self.navigationController.popViewController(animated: true)
     case .failed(let errorMessage):
       self.navigationController.showAlertController(title: "Error", message: errorMessage)
-    case .successImported(let account):
-      self.checkAccountWhitelistedAndOpenConfirmView(with: account)
+    case .successImported(let account, let importType, let balance):
+      self.checkAccountWhitelistedAndOpenConfirmView(
+        with: account,
+        importType: importType,
+        balance: balance
+      )
     }
   }
 
-  fileprivate func checkAccountWhitelistedAndOpenConfirmView(with account: Account) {
+  fileprivate func checkAccountWhitelistedAndOpenConfirmView(with account: Account, importType: String, balance: BigInt) {
     // Documentation: https://github.com/KyberNetwork/KyberWidget
     let isWhitelisted: Bool = {
       guard let signer = self.signer else { return true }
@@ -401,7 +405,7 @@ extension KWCoordinator: KWImportViewControllerDelegate {
     }()
     if isWhitelisted {
       guard let newTransaction = self.transaction?.newObject(with: account) else { return }
-      self.openConfirmationView(transaction: newTransaction)
+      self.openConfirmationView(transaction: newTransaction, importType: importType, balance: balance)
       return
     }
     // Not whitelisted
@@ -416,11 +420,16 @@ extension KWCoordinator: KWImportViewControllerDelegate {
     self.navigationController.present(alertController, animated: true, completion: nil)
   }
 
-  fileprivate func openConfirmationView(transaction: KWTransaction) {
+  fileprivate func openConfirmationView(transaction: KWTransaction, importType: String, balance: BigInt) {
     self.confirmVC = {
       let viewModel = KWConfirmPaymentViewModel(
         dataType: self.dataType,
         transaction: transaction,
+        productName: self.productName,
+        productAvatarURL: self.productAvatar,
+        productAvatarImage: self.productAvatarImage,
+        balance: balance,
+        walletType: importType,
         network: self.network,
         keystore: self.keystore
       )

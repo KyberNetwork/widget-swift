@@ -66,7 +66,7 @@ class PayViewController: UIViewController {
     let pinnedToken = self.pinnedTokenTextField.text ?? ""
     let commissionID = self.commisionIDTextField.text ?? ""
     let productName = self.productNameTextField.text ?? ""
-    let productAvt = self.productAvatarTextField.text
+    let productAvt = self.productAvatarTextField.text ?? ""
     do {
       self.coordinator = try KWPayCoordinator(
         baseViewController: self,
@@ -78,7 +78,7 @@ class PayViewController: UIViewController {
         signer: signer.isEmpty ? nil : signer,
         commissionId: commissionID.isEmpty ? nil : commissionID,
         productName: productName,
-        productAvatar: productAvt,
+        productAvatar: productAvt.isEmpty ? nil : productAvt,
         productAvatarImage: nil
       )
       self.coordinator?.delegate = self

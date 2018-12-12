@@ -282,6 +282,7 @@ extension KWPaymentMethodViewModel {
    In case user has not given received amount, estimated receive amount is computed from amountFrom and rate
    */
   var estimatedReceivedAmountBigInt: BigInt? {
+    if let amountTo = self.receiverAmountBigInt { return amountTo }
     guard let rate = self.estimatedRate else { return nil }
     return rate * self.amountFromBigInt / BigInt(10).power(self.from.decimals)
   }
