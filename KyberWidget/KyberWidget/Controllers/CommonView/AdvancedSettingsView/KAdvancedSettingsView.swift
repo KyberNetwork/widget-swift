@@ -7,7 +7,7 @@ enum KAdvancedSettingsViewEvent {
   case infoPressed
   case displayButtonPressed
   case gasPriceChanged(type: KWGasPriceType)
-  case minRatePercentageChanged(percent: CGFloat)
+  case minRatePercentageChanged(percent: Double)
 }
 
 protocol KAdvancedSettingsViewDelegate: class {
@@ -16,58 +16,58 @@ protocol KAdvancedSettingsViewDelegate: class {
 
 class KAdvancedSettingsViewModel: NSObject {
 
-  private let kGasPriceContainerHeight: CGFloat = 210
-  private let kMinRateContainerHeight: CGFloat = 160
+  private let kGasPriceContainerHeight: CGFloat = 110
+  private let kMinRateContainerHeight: CGFloat = 144
 
   fileprivate(set) var fast: BigInt = KWGasCoordinator.shared.fastGas
   fileprivate(set) var medium: BigInt = KWGasCoordinator.shared.mediumGas
   fileprivate(set) var slow: BigInt = KWGasCoordinator.shared.slowGas
-  fileprivate(set) var gasLimit: BigInt = BigInt(0)
 
-  fileprivate(set) var selectedType: KWGasPriceType = .fast
+  fileprivate(set) var selectedType: KWGasPriceType = .medium
 
   fileprivate(set) var isViewHidden: Bool = true
   fileprivate(set) var hasMinRate: Bool = true
 
-  fileprivate(set) var minRateString: String?
-  fileprivate(set) var minRatePercent: CGFloat?
+  let sourceToken: String
+  let destToken: String
 
-  init(hasMinRate: Bool) {
+  var minRateString: String {
+    return "\((100.0 - minRatePercent) * currentRate)"
+  }
+  fileprivate(set) var minRatePercent: Double = 3.0
+  fileprivate(set) var currentRate: Double
+
+  fileprivate(set) var minRateType: Int = 0 // 0: 3%, 1: any, 2: custom
+
+  init(hasMinRate: Bool, sourceToken: String, destToken: String) {
     self.hasMinRate = hasMinRate
+    self.sourceToken = sourceToken
+    self.destToken = destToken
+    self.currentRate = 0
+    self.minRateType = 0
   }
 
   var isGasPriceViewHidden: Bool { return self.isViewHidden }
   var gasPriceViewHeight: CGFloat { return self.isGasPriceViewHidden ? 0 : kGasPriceContainerHeight }
 
-  var fastGasString: NSAttributedString {
-    return self.attributedString(for: self.fast)
-  }
-  var mediumGasString: NSAttributedString {
-    return self.attributedString(for: self.medium)
-  }
-  var slowGasString: NSAttributedString {
-    return self.attributedString(for: self.slow)
-  }
+  lazy var numberFormatter: NumberFormatter = {
+    let formatter = NumberFormatter()
+    formatter.maximumFractionDigits = 1
+    formatter.minimumIntegerDigits = 1
+    return formatter
+  }()
 
-  func attributedString(for gasPrice: BigInt) -> NSAttributedString {
-    let gasPriceString: String = gasPrice.string(units: .gwei, minFractionDigits: 2, maxFractionDigits: 2)
-    let feeString: String = {
-      let fee: BigInt = gasPrice * self.gasLimit
-      let string = fee.string(units: .ether, minFractionDigits: 0, maxFractionDigits: 9)
-      return " (~\(string.prefix(12)) ETH)"
-    }()
-    let gasPriceAttributes: [NSAttributedString.Key: Any] = [
-      NSAttributedString.Key.foregroundColor: UIColor.Kyber.black,
-      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .medium),
-    ]
-    let feeAttributes: [NSAttributedString.Key: Any] = [
-      NSAttributedString.Key.foregroundColor: UIColor.Kyber.segment,
-      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .medium),
-    ]
-    let attributedString = NSMutableAttributedString()
-    attributedString.append(NSAttributedString(string: gasPriceString, attributes: gasPriceAttributes))
-    attributedString.append(NSAttributedString(string: feeString, attributes: feeAttributes))
-    return attributedString
+  var fastGasString: String {
+    let double = Double(self.fast) / Double(KWEthereumUnit.gwei.rawValue)
+    return self.numberFormatter.string(from: NSNumber(value: double)) ?? "\(double)"
+  }
+  var mediumGasString: String {
+    let double = Double(self.medium) / Double(KWEthereumUnit.gwei.rawValue)
+    return self.numberFormatter.string(from: NSNumber(value: double)) ?? "\(double)"
+  }
+  var slowGasString: String {
+    let double = Double(self.slow) / Double(KWEthereumUnit.gwei.rawValue)
+    return self.numberFormatter.string(from: NSNumber(value: double)) ?? "\(double)"
   }
 
   var isMinRateViewHidden: Bool { return !self.hasMinRate || self.isViewHidden }
@@ -83,14 +83,11 @@ class KAdvancedSettingsViewModel: NSObject {
     self.selectedType = type
   }
 
-  func updateGasLimit(_ gasLimit: BigInt) {
-    self.gasLimit = gasLimit
-  }
-
   func updateViewHidden(isHidden: Bool) { self.isViewHidden = isHidden }
 
-  func updateMinRateValue(_ value: String, percent: CGFloat) {
-    self.minRateString = value
+  func updateMinRateValue(type: Int, percent: Double, currentRate: Double) {
+    self.minRateType = type
+    self.currentRate = currentRate
     self.minRatePercent = percent
   }
 
@@ -106,7 +103,6 @@ class KAdvancedSettingsViewModel: NSObject {
 
 class KAdvancedSettingsView: KWXibLoaderView {
 
-  @IBOutlet weak var topSeparatorView: UIView!
   @IBOutlet weak var displayViewButton: UIButton!
 
   @IBOutlet weak var heightConstraintGasPriceContainerView: NSLayoutConstraint!
@@ -122,13 +118,14 @@ class KAdvancedSettingsView: KWXibLoaderView {
   @IBOutlet weak var gasPriceSeparatorView: UIView!
 
   @IBOutlet weak var minRateContainerView: UIView!
+  @IBOutlet weak var stillProceedIfRateGoesDownByLabel: UILabel!
+  @IBOutlet weak var transactionRevertedDescLabel: UILabel!
   @IBOutlet weak var heightConstraintMinRateContainerView: NSLayoutConstraint!
-  @IBOutlet weak var minRateValueLabel: UILabel!
-
-  @IBOutlet weak var leadingConstraintForMinRatePercentLabel: NSLayoutConstraint!
-  @IBOutlet weak var minRatePercentLabel: UILabel!
-  @IBOutlet weak var minRateSlider: CustomSlider!
-  @IBOutlet weak var minRateSeparatorView: UIView!
+  @IBOutlet weak var minRateThreePercentButton: UIButton!
+  @IBOutlet weak var minRateAnyRateButton: UIButton!
+  @IBOutlet weak var minRateCustomButton: UIButton!
+  @IBOutlet weak var minRateCustomTextField: UITextField!
+  @IBOutlet weak var cancelButton: UIButton!
 
   fileprivate var viewModel: KAdvancedSettingsViewModel!
   weak var delegate: KAdvancedSettingsViewDelegate?
@@ -142,30 +139,19 @@ class KAdvancedSettingsView: KWXibLoaderView {
 
   override func commonInit() {
     super.commonInit()
-    self.topSeparatorView.dashLine(width: 1.0, color: UIColor.Kyber.dashLine)
     self.gasPriceSeparatorView.dashLine(width: 1.0, color: UIColor.Kyber.dashLine)
-    self.minRateSeparatorView.dashLine(width: 1.0, color: UIColor.Kyber.dashLine)
 
-    let image = UIImage(
-      named: "expand_icon",
-      in: Bundle.framework,
-      compatibleWith: nil
+    self.minRateCustomTextField.delegate = self
+
+    self.cancelButton.setImage(
+      UIImage(named: "cancel_icon", in: Bundle.framework, compatibleWith: nil),
+      for: .normal
     )
-    self.displayViewButton.setImage(image, for: .normal)
-
-    self.leadingConstraintForMinRatePercentLabel.constant = 0.0
-    self.minRateValueLabel.text = "10"
-    self.minRatePercentLabel.text = "10 %"
-    self.minRateSlider.value = 10.0
-
-    self.minRateSlider.addTarget(self, action: #selector(self.minRateSliderDidChange(_:)), for: .valueChanged)
   }
 
   override func layoutSubviews() {
     super.layoutSubviews()
-    self.topSeparatorView.dashLine(width: 1.0, color: UIColor.Kyber.dashLine)
     self.gasPriceSeparatorView.dashLine(width: 1.0, color: UIColor.Kyber.dashLine)
-    self.minRateSeparatorView.dashLine(width: 1.0, color: UIColor.Kyber.dashLine)
   }
 
   func updateViewModel(_ viewModel: KAdvancedSettingsViewModel) {
@@ -179,9 +165,9 @@ class KAdvancedSettingsView: KWXibLoaderView {
     self.gasPriceContainerView.isHidden = self.viewModel.isGasPriceViewHidden
     self.heightConstraintGasPriceContainerView.constant = self.viewModel.gasPriceViewHeight
 
-    self.fasGasValueLabel.attributedText = self.viewModel.fastGasString
-    self.mediumGasValueLabel.attributedText = self.viewModel.mediumGasString
-    self.slowGasValueLabel.attributedText = self.viewModel.slowGasString
+    self.fasGasValueLabel.text = self.viewModel.fastGasString
+    self.mediumGasValueLabel.text = self.viewModel.mediumGasString
+    self.slowGasValueLabel.text = self.viewModel.slowGasString
 
     let selectedColor = UIColor.Kyber.shamrock
     let normalColor = UIColor.Kyber.dashLine
@@ -211,22 +197,66 @@ class KAdvancedSettingsView: KWXibLoaderView {
 
   fileprivate func updateMinRateUIs() {
     if self.viewModel == nil { return }
+    self.stillProceedIfRateGoesDownByLabel.text = String(format: KWStringConfig.current.stillProceedIfRateGoesDownBy, "\(self.viewModel.sourceToken)-\(self.viewModel.destToken)")
+    self.transactionRevertedDescLabel.text = String(
+      format: KWStringConfig.current.transactionWillRevertIfRateLower,
+      arguments: ["\(self.viewModel.sourceToken)-\(self.viewModel.destToken)",
+        "\(self.viewModel.minRateString.prefix(12))", "\("\(self.viewModel.currentRate)".prefix(12))"])
+
     self.minRateContainerView.isHidden = self.viewModel.isMinRateViewHidden
-    self.heightConstraintMinRateContainerView.constant = self.viewModel.minRateViewHeight
-
     if self.minRateContainerView.isHidden { return }
-    self.minRateSlider.value = Float(self.viewModel.minRatePercent ?? 10.0)
-    self.minRatePercentLabel.text = "\(Float(self.viewModel.minRatePercent ?? 10.0)) %"
-    self.minRateValueLabel.text = self.viewModel.minRateString
 
-    self.leadingConstraintForMinRatePercentLabel.constant = (self.minRateSlider.frame.width - 40.0) * ((self.viewModel.minRatePercent ?? 10.0) - 10.0) / 90.0
+    let selectedColor = UIColor.Kyber.shamrock
+    let normalColor = UIColor.Kyber.dashLine
+
+    let selectedWidth: CGFloat = 8.0
+    let normalWidth: CGFloat = 1.0
+
+    self.minRateThreePercentButton.rounded(
+      color: self.viewModel.minRateType == 0 ? selectedColor : normalColor,
+      width: self.viewModel.minRateType == 0 ? selectedWidth : normalWidth,
+      radius: self.minRateThreePercentButton.frame.height / 2.0
+    )
+
+    self.minRateAnyRateButton.rounded(
+      color: self.viewModel.minRateType == 1 ? selectedColor : normalColor,
+      width: self.viewModel.minRateType == 1 ? selectedWidth : normalWidth,
+      radius: self.minRateAnyRateButton.frame.height / 2.0
+    )
+
+    self.minRateCustomButton.rounded(
+      color: self.viewModel.minRateType == 2 ? selectedColor : normalColor,
+      width: self.viewModel.minRateType == 2 ? selectedWidth : normalWidth,
+      radius: self.minRateCustomButton.frame.height / 2.0
+    )
+
+    self.minRateCustomTextField.isEnabled = self.viewModel.minRateType == 2
+    if self.minRateCustomTextField.isEnabled == false {
+      self.minRateCustomTextField.text = ""
+    }
+
+    switch self.viewModel.minRateType {
+    case 0:
+      self.viewModel.updateMinRateValue(type: 0, percent: 3.0, currentRate: self.viewModel.currentRate)
+    case 1:
+      self.viewModel.updateMinRateValue(type: 1, percent: 100.0, currentRate: self.viewModel.currentRate)
+    case 2:
+      let val = self.viewModel.minRatePercent
+      self.viewModel.updateMinRateValue(type: 2, percent: val, currentRate: self.viewModel.currentRate)
+    default: break
+    }
+
+    self.stillProceedIfRateGoesDownByLabel.text = String(format: KWStringConfig.current.stillProceedIfRateGoesDownBy, "\(self.viewModel.sourceToken)-\(self.viewModel.destToken)")
+    self.transactionRevertedDescLabel.text = String(
+      format: KWStringConfig.current.transactionWillRevertIfRateLower,
+      arguments: ["\(self.viewModel.sourceToken)-\(self.viewModel.destToken)", "\(self.viewModel.minRateString.prefix(12))", "\("\(self.viewModel.currentRate)".prefix(12))"])
+    self.heightConstraintMinRateContainerView.constant = self.viewModel.minRateViewHeight
     self.layoutIfNeeded()
   }
 
-  func updateGasPrices(fast: BigInt, medium: BigInt, slow: BigInt, gasLimit: BigInt) {
+  func updateGasPrices(fast: BigInt, medium: BigInt, slow: BigInt) {
     if self.viewModel == nil { return }
     self.viewModel.updateGasPrices(fast: fast, medium: medium, slow: slow)
-    self.viewModel.updateGasLimit(gasLimit)
     self.updateGasPriceUIs()
   }
 
@@ -239,9 +269,16 @@ class KAdvancedSettingsView: KWXibLoaderView {
     return true
   }
 
-  func updateMinRate(_ value: String, percent: CGFloat) {
+  func updateMinRate(percent: Double, currentRate: Double) {
     if self.viewModel == nil { return }
-    self.viewModel.updateMinRateValue(value, percent: percent)
+    if self.viewModel.minRateType == 2, self.viewModel.minRatePercent != percent {
+      self.minRateCustomTextField.text = "\(percent)"
+    }
+    self.viewModel.updateMinRateValue(
+      type: self.viewModel.minRateType,
+      percent: percent,
+      currentRate: currentRate
+    )
     self.updateMinRateUIs()
   }
 
@@ -249,47 +286,71 @@ class KAdvancedSettingsView: KWXibLoaderView {
     if self.viewModel == nil { return }
     let isHidden = !self.viewModel.isViewHidden
     self.viewModel.updateViewHidden(isHidden: isHidden)
-    let image = UIImage(
-      named: isHidden ? "expand_icon" : "collapse_icon",
-      in: Bundle.framework,
-      compatibleWith: nil
-    )
-    self.displayViewButton.setImage(image, for: .normal)
     self.updateGasPriceUIs()
     self.updateMinRateUIs()
     self.delegate?.kAdvancedSettingsView(self, run: .displayButtonPressed)
   }
 
-  @objc func minRateSliderDidChange(_ sender: CustomSlider) {
-    let percent = CGFloat(sender.value)
-    let event = KAdvancedSettingsViewEvent.minRatePercentageChanged(percent: percent)
-    self.delegate?.kAdvancedSettingsView(self, run: event)
-  }
-
-  @IBAction func infoButtonPressed(_ sender: Any) {
-    self.delegate?.kAdvancedSettingsView(self, run: .infoPressed)
-  }
-
   @IBAction func fastGasButtonPressed(_ sender: Any) {
+    if self.viewModel == nil { return }
     self.viewModel.updateSelectedType(.fast)
+    self.updateGasPriceUIs()
     self.delegate?.kAdvancedSettingsView(self, run: .gasPriceChanged(type: .fast))
   }
 
   @IBAction func mediumGasButtonPressed(_ sender: Any) {
+    if self.viewModel == nil { return }
     self.viewModel.updateSelectedType(.medium)
+    self.updateGasPriceUIs()
     self.delegate?.kAdvancedSettingsView(self, run: .gasPriceChanged(type: .medium))
   }
 
   @IBAction func slowGasButtonPressed(_ sender: Any) {
+    if self.viewModel == nil { return }
     self.viewModel.updateSelectedType(.slow)
+    self.updateGasPriceUIs()
     self.delegate?.kAdvancedSettingsView(self, run: .gasPriceChanged(type: .slow))
+  }
+
+  @IBAction func threePercentButtonPressed(_ sender: Any) {
+    if self.viewModel == nil { return }
+    self.viewModel.updateMinRateValue(type: 0, percent: 3.0, currentRate: self.viewModel.currentRate)
+    self.updateMinRateUIs()
+    self.delegate?.kAdvancedSettingsView(self, run: .minRatePercentageChanged(percent: 3.0))
+  }
+
+  @IBAction func anyRateButtonPressed(_ sender: Any) {
+    if self.viewModel == nil { return }
+    self.viewModel.updateMinRateValue(type: 1, percent: 100.0, currentRate: self.viewModel.currentRate)
+    self.updateMinRateUIs()
+    self.delegate?.kAdvancedSettingsView(self, run: .minRatePercentageChanged(percent: 100.0))
+  }
+
+  @IBAction func customeRateButtonPressed(_ sender: Any) {
+    if self.viewModel == nil { return }
+    self.minRateCustomTextField.text = "3.0"
+    self.minRateCustomTextField.isEnabled = true
+    self.viewModel.updateMinRateValue(type: 2, percent: 3.0, currentRate: self.viewModel.currentRate)
+    self.updateMinRateUIs()
+    self.delegate?.kAdvancedSettingsView(self, run: .minRatePercentageChanged(percent: 3.0))
+  }
+
+  @IBAction func cancelButtonPressed(_ sender: Any) {
+    self.displayViewButtonPressed(sender)
   }
 }
 
-class CustomSlider: UISlider {
-  override func trackRect(forBounds bounds: CGRect) -> CGRect {
-    let customBounds = CGRect(origin: bounds.origin, size: CGSize(width: bounds.size.width, height: 8.0))
-    super.trackRect(forBounds: customBounds)
-    return customBounds
+extension KAdvancedSettingsView: UITextFieldDelegate {
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    let text = ((textField.text ?? "") as NSString).replacingCharacters(in: range, with: string)
+    let number = text.removeGroupSeparator()
+    let value: Double? = number.isEmpty ? 0 : Double(number)
+    if let val = value, val >= 0, val <= 100 {
+      textField.text = text
+      self.viewModel.updateMinRateValue(type: 2, percent: val, currentRate: self.viewModel.currentRate)
+      self.updateMinRateUIs()
+      self.delegate?.kAdvancedSettingsView(self, run: .minRatePercentageChanged(percent: val))
+    }
+    return false
   }
 }

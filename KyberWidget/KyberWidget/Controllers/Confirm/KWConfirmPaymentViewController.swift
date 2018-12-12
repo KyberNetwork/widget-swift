@@ -21,27 +21,39 @@ public class KWConfirmPaymentViewController: UIViewController {
 
   @IBOutlet weak var stepView: KWStepView!
 
-  @IBOutlet weak var paymentDataView: UIView!
-  @IBOutlet weak var destTextLabel: UILabel!
-  @IBOutlet weak var destDataLabel: UILabel!
-  @IBOutlet weak var amounToPayTextLabel: UILabel!
-  @IBOutlet weak var estimateSrcAmountLabel: UILabel!
-  @IBOutlet weak var estimateDestAmountLabel: UILabel!
-
-  @IBOutlet weak var swapDataView: UIView!
-  @IBOutlet weak var fromAmountLabel: UILabel!
-  @IBOutlet weak var toAmountLabel: UILabel!
+  @IBOutlet weak var transactionDetailsContainerView: UIView!
+  @IBOutlet weak var fromTextLabel: UILabel!
+  @IBOutlet weak var fromValueLabel: UILabel!
   @IBOutlet weak var toTextLabel: UILabel!
-  @IBOutlet weak var expectedRateLabel: UILabel!
+  @IBOutlet weak var toValueLabel: UILabel!
+  @IBOutlet weak var txDetailsSeparatorView: UIView!
+  @IBOutlet weak var txDetailsTransactionFeeTextLabel: UILabel!
+  @IBOutlet weak var txDetailsTransactionFeeValueLabel: UILabel!
 
-  @IBOutlet weak var minAcceptableRateTextLabel: UILabel!
-  @IBOutlet weak var minRateLabel: UILabel!
+  @IBOutlet weak var orderDetailsDataContainerView: UIView!
+  @IBOutlet weak var orderDetailsTextLabel: UILabel!
+  @IBOutlet weak var productNameLabel: UILabel!
+  @IBOutlet weak var productAvatarImageView: UIImageView!
+  @IBOutlet weak var productAvatarImageViewHeightConstraint: NSLayoutConstraint!
 
-  @IBOutlet weak var gasPriceTopPaddingConstraint: NSLayoutConstraint!
-  @IBOutlet weak var gasPriceTextLabel: UILabel!
-  @IBOutlet weak var gasPriceLabel: UILabel!
-  @IBOutlet weak var transactionFeeLabel: UILabel!
+  @IBOutlet weak var orderAmountTextLabel: UILabel!
+  @IBOutlet weak var orderAmountLabel: UILabel!
+  @IBOutlet weak var transactionFeeTextLabel: UILabel!
+  @IBOutlet weak var transactionFeeValueLabel: UILabel!
+  @IBOutlet weak var receiverAddressLabel: UILabel!
 
+  @IBOutlet weak var transactionTypeTextLabel: UILabel!
+  @IBOutlet weak var transactionTypeTopPaddingConstraint: NSLayoutConstraint!
+  @IBOutlet weak var firstAmountLabel: UILabel!
+  @IBOutlet weak var secondAmountLabel: UILabel!
+
+  @IBOutlet weak var yourWalletTextLabel: UILabel!
+  @IBOutlet weak var yourWalletValueLabel: UILabel!
+  @IBOutlet weak var yourAddressTextLabel: UILabel!
+  @IBOutlet weak var yourAddressValueLabel: UILabel!
+  
+  @IBOutlet weak var advanceSettingsView: KAdvancedSettingsView!
+  @IBOutlet weak var advanceSettingsViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var confirmButton: UIButton!
   @IBOutlet weak var cancelButton: UIButton!
 
@@ -75,7 +87,8 @@ public class KWConfirmPaymentViewController: UIViewController {
     super.viewWillAppear(animated)
     self.navigationItem.title = KWStringConfig.current.confirm
     self.viewModel.checkNeedToSendApproveToken {
-      self.transactionFeeLabel.text = self.viewModel.displayTransactionFeeETH
+      self.txDetailsTransactionFeeValueLabel.text = self.viewModel.displayTransactionFeeETH
+      self.transactionFeeValueLabel.text = self.viewModel.displayTransactionFeeETH
     }
     self.loadTimer?.invalidate()
     self.reloadDataFromNode()
@@ -89,58 +102,36 @@ public class KWConfirmPaymentViewController: UIViewController {
 
   func updateNeedToSendTokenApprove(_ needApprove: Bool) {
     self.viewModel.isNeedsToSendApprove = needApprove
-    self.transactionFeeLabel.text = self.viewModel.displayTransactionFeeETH
+    self.txDetailsTransactionFeeValueLabel.text = self.viewModel.displayTransactionFeeETH
+    self.transactionFeeValueLabel.text = self.viewModel.displayTransactionFeeETH
   }
 
   override public func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
     self.separatorViews.forEach { view in
-      view.dashLine(width: 1.0, color: UIColor.Kyber.border)
+      view.dashLine(width: 1.0, color: UIColor.Kyber.dashLine)
     }
+    self.txDetailsSeparatorView.dashLine(width: 1.0, color: UIColor.Kyber.dashLine)
+    self.orderDetailsDataContainerView.addShadow(
+      color: UIColor.black.withAlphaComponent(0.6),
+      offset: CGSize(width: 0, height: 4),
+      opacity: 0.16,
+      radius: 16
+    )
+    self.transactionDetailsContainerView.addShadow(
+      color: UIColor.black.withAlphaComponent(0.6),
+      offset: CGSize(width: 0, height: 4),
+      opacity: 0.16,
+      radius: 16
+    )
   }
 
   fileprivate func setupUI() {
     self.setupNavigationBar()
     self.setupStepView()
-    self.setupPaymentDataView()
-    self.setupSwapDataView()
+    self.setupOrderDetailsView()
+    self.setupTransactionDetailsView()
     self.setupCommonElements()
-  }
-
-  fileprivate func setupPaymentDataView() {
-    self.paymentDataView.isHidden = self.viewModel.isPaymentDataViewHidden
-    self.destTextLabel.text = self.viewModel.paymentOrBuyDestTextString
-
-    // if pay: dest data = address to pay, if buy: dest data = amount to pay (source amount)
-    self.destDataLabel.text = self.viewModel.paymentOrBuyDestValueString
-
-    // pay: Amount to pay, buy: Amount to buy
-    self.amounToPayTextLabel.text = self.viewModel.dataType == .pay ? KWStringConfig.current.amountToPayUppercased : KWStringConfig.current.amountToBuyUppercased
-    self.amounToPayTextLabel.textColor = KWThemeConfig.current.confirmAmountToPayTextColor
-
-    // pay: source amount (amount to pay), buy: dest amount (amount to receive)
-    self.estimateSrcAmountLabel.text = self.viewModel.dataType == .pay ? self.viewModel.paymentFromAmountString : self.viewModel.buyAmountReceiveString
-
-    self.estimateSrcAmountLabel.textColor = KWThemeConfig.current.confirmPayFromAmountColor
-
-    self.estimateDestAmountLabel.text = self.viewModel.paymentEstimatedReceivedAmountString
-    self.estimateDestAmountLabel.isHidden = self.viewModel.isPaymentEstimatedReceivedAmountHidden
-    self.estimateDestAmountLabel.textColor = KWThemeConfig.current.confirmPayReceivedAmountColor
-  }
-
-  fileprivate func setupSwapDataView() {
-    self.swapDataView.isHidden = self.viewModel.isSwapDataViewHidden
-    self.fromAmountLabel.text = self.viewModel.swapFromAmountString
-    self.fromAmountLabel.textColor = KWThemeConfig.current.confirmSwapFromAmountColor
-
-    self.toAmountLabel.text = self.viewModel.swapToAmountString
-    self.toAmountLabel.textColor = KWThemeConfig.current.confirmSwapToAmountColor
-
-    self.toTextLabel.text = "\(KWStringConfig.current.to):"
-    self.toTextLabel.textColor = KWThemeConfig.current.confirmToTextColor
-
-    self.expectedRateLabel.text = self.viewModel.swapExpectedRateString
-    self.expectedRateLabel.textColor = KWThemeConfig.current.confirmSwapExpectedRateColor
   }
 
   fileprivate func setupNavigationBar() {
@@ -155,16 +146,63 @@ public class KWConfirmPaymentViewController: UIViewController {
     self.stepView.updateView(with: .confirm, dataType: self.viewModel.dataType)
   }
 
-  fileprivate func setupCommonElements() {
-    self.minAcceptableRateTextLabel.text = KWStringConfig.current.minAcceptableRate
-    self.minAcceptableRateTextLabel.isHidden = self.viewModel.isMinRateHidden
-    self.minRateLabel.isHidden = self.viewModel.isMinRateHidden
-    self.minRateLabel.text = self.viewModel.displayMinRate
+  fileprivate func setupOrderDetailsView() {
+    self.orderDetailsTextLabel.text = KWStringConfig.current.orderDetails
+    self.productNameLabel.text = self.viewModel.orderProductName
+    self.orderAmountTextLabel.text = KWStringConfig.current.amount
+    self.orderAmountLabel.text = self.viewModel.orderReceiveAmount
+    self.transactionFeeTextLabel.text = KWStringConfig.current.transactionFee
+    self.transactionFeeValueLabel.text = self.viewModel.orderTransactionFeeString
+    self.receiverAddressLabel.attributedText = self.viewModel.orderDestAddressAttributedString
+    self.orderDetailsDataContainerView.isHidden = self.viewModel.isOrderDetailsDataHidden
+  }
 
-    self.gasPriceTopPaddingConstraint.constant = self.viewModel.isMinRateHidden ? 32.0 : 64.0
-    self.gasPriceTextLabel.text = KWStringConfig.current.gasFee + " (Gwei)"
-    self.gasPriceLabel.text = self.viewModel.displayGasPrice
-    self.transactionFeeLabel.text = self.viewModel.displayTransactionFeeETH
+  fileprivate func setupTransactionDetailsView() {
+    self.transactionDetailsContainerView.isHidden = self.viewModel.isTransactionDetailsDataHidden
+    self.fromTextLabel.text = KWStringConfig.current.from
+    self.fromValueLabel.text = self.viewModel.transactionFromAmountString
+    self.toTextLabel.text = KWStringConfig.current.to
+    self.toValueLabel.text = self.viewModel.transactionToAmountString
+    self.txDetailsTransactionFeeTextLabel.text = KWStringConfig.current.transactionFee
+    self.txDetailsTransactionFeeValueLabel.text = self.viewModel.transactionFeeString
+  }
+
+  fileprivate func setupCommonElements() {
+    if self.orderDetailsDataContainerView.isHidden {
+      self.transactionTypeTopPaddingConstraint.constant = 275.0
+    } else {
+      self.productAvatarImageView.image = self.viewModel.orderProductAvatar
+      self.productAvatarImageViewHeightConstraint.constant = self.viewModel.orderProductAvatar?.size.height ?? 0.0
+      self.transactionTypeTopPaddingConstraint.constant = 340.0 + self.productAvatarImageViewHeightConstraint.constant
+      self.viewModel.getProductAvatarIfNeeded { isSuccess in
+        if isSuccess {
+          self.productAvatarImageView.image = self.viewModel.orderProductAvatar
+          self.productAvatarImageViewHeightConstraint.constant = self.viewModel.orderProductAvatar?.size.height ?? 0.0
+          self.transactionTypeTopPaddingConstraint.constant = 340.0 + self.productAvatarImageViewHeightConstraint.constant
+        }
+      }
+    }
+    self.transactionTypeTextLabel.text = self.viewModel.transactionTypeText
+    self.firstAmountLabel.text = self.viewModel.firstAmountText
+    self.secondAmountLabel.attributedText = self.viewModel.secondAmountAttributedString
+    self.yourWalletTextLabel.text = KWStringConfig.current.yourWallet
+    self.yourWalletValueLabel.text = self.viewModel.yourWalletType
+    self.yourAddressTextLabel.text = KWStringConfig.current.yourAddress
+    self.yourAddressValueLabel.text = self.viewModel.yourWalletAddress
+  
+    let viewModel = KAdvancedSettingsViewModel(
+      hasMinRate: self.viewModel.transaction.from != self.viewModel.transaction.to,
+      sourceToken: self.viewModel.transaction.from.symbol,
+      destToken: self.viewModel.transaction.to.symbol
+    )
+    self.advanceSettingsView.delegate = self
+    self.advanceSettingsView.updateViewModel(viewModel)
+    self.advanceSettingsView.updateMinRate(
+      percent: self.viewModel.minRatePercent,
+      currentRate: Double(self.viewModel.expectedRate) / pow(10.0, Double(self.viewModel.transaction.to.decimals))
+    )
+    self.advanceSettingsViewHeightConstraint.constant = self.advanceSettingsView.height
+    self.view.layoutIfNeeded()
 
     self.confirmButton.setBackgroundColor(
       KWThemeConfig.current.actionButtonNormalBackgroundColor,
@@ -191,6 +229,27 @@ public class KWConfirmPaymentViewController: UIViewController {
   }
 
   @IBAction func confirmButtonPressed(_ sender: Any) {
+    if !self.viewModel.isBalanceEnoughAmountFrom {
+      self.showAlertController(
+        title: KWStringConfig.current.error,
+        message: KWStringConfig.current.balanceIsNotEnoughToMakeTransaction
+      )
+      return
+    }
+    if !self.viewModel.isBalanceForPayTransaction {
+      self.showAlertController(
+        title: KWStringConfig.current.error,
+        message: KWStringConfig.current.balanceIsNotEnoughMinRatePayTransaction
+      )
+      return
+    }
+    if !self.viewModel.isMinRateValid {
+      self.showAlertController(
+        title: KWStringConfig.current.error,
+        message: KWStringConfig.current.minRateInvalid
+      )
+      return
+    }
     self.delegate?.confirmPaymentViewController(self, run: .confirm(transaction: self.viewModel.newTransaction))
   }
 
@@ -200,7 +259,51 @@ public class KWConfirmPaymentViewController: UIViewController {
 
   fileprivate func reloadDataFromNode() {
     self.viewModel.getEstimatedGasLimit {
-      self.transactionFeeLabel.text = self.viewModel.displayTransactionFeeETH
+      self.txDetailsTransactionFeeValueLabel.text = self.viewModel.displayTransactionFeeETH
+      self.transactionFeeValueLabel.text = self.viewModel.displayTransactionFeeETH
+    }
+    self.viewModel.getBalance { }
+    self.viewModel.getExpectedRateRequest {
+      self.firstAmountLabel.text = self.viewModel.firstAmountText
+      self.secondAmountLabel.attributedText = self.viewModel.secondAmountAttributedString
+      self.orderAmountLabel.text = self.viewModel.orderReceiveAmount
+      self.fromValueLabel.text = self.viewModel.transactionFromAmountString
+      self.toValueLabel.text = self.viewModel.transactionToAmountString
+      self.advanceSettingsView.updateMinRate(
+        percent: self.viewModel.minRatePercent,
+        currentRate: Double(self.viewModel.expectedRate) / pow(10.0, Double(self.viewModel.transaction.to.decimals))
+      )
+    }
+    KWGasCoordinator.shared.getKNCachedGasPrice {
+      self.viewModel.updateGasPriceType(self.viewModel.gasPriceType)
+      self.advanceSettingsView.updateGasPrices(
+        fast: KWGasCoordinator.shared.fastGas,
+        medium: KWGasCoordinator.shared.mediumGas,
+        slow: KWGasCoordinator.shared.slowGas
+      )
+      self.updateTransactionGas()
+    }
+  }
+
+  fileprivate func updateTransactionGas() {
+    self.txDetailsTransactionFeeValueLabel.text = self.viewModel.transactionFeeString
+    self.transactionFeeValueLabel.text = self.viewModel.orderTransactionFeeString
+    self.view.layoutIfNeeded()
+  }
+}
+
+extension KWConfirmPaymentViewController: KAdvancedSettingsViewDelegate {
+  func kAdvancedSettingsView(_ view: KAdvancedSettingsView, run event: KAdvancedSettingsViewEvent) {
+    switch event {
+    case .gasPriceChanged(let type):
+      self.viewModel.updateGasPriceType(type)
+      self.updateTransactionGas()
+    case .minRatePercentageChanged(let percent):
+      self.viewModel.updateMinRatePercent(percent)
+    case .infoPressed: break
+    case .displayButtonPressed:
+      self.advanceSettingsViewHeightConstraint.constant = self.advanceSettingsView.height
+      self.view.layoutIfNeeded()
     }
   }
 }

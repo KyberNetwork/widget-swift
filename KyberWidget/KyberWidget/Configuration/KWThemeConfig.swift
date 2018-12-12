@@ -17,7 +17,14 @@ public class KWStringConfig: NSObject {
   public var importWallet: String = "Import Wallet"
   public var confirm: String = "Confirm"
 
+  public var orderDetails: String = "Order Details"
+
+  public var payTopString: String = "Choose your token"
+  public var swapTopString: String = "You are performing token conversion. Please choose"
+  public var buyTopString: String = "You are buying %@ token. Please select your token for the payment"
+
   public var youAreAboutToPay: String = "You are about to pay"
+  public var youAreAboutToSwap: String = "You are about to swap"
   public var youAreAboutToBuy: String = "You are about to buy"
   public var address: String = "Address"
   public var amount: String = "Amount"
@@ -49,10 +56,25 @@ public class KWStringConfig: NSObject {
   public var cancel: String = "Cancel"
 
   public var to: String = "To"
+  public var from: String = "From"
 
   public var addressToPay: String = "Address to pay"
   public var amountToPayUppercased: String = "Amount to pay".uppercased()
   public var amountToBuyUppercased: String = "Amount to buy".uppercased()
+
+  public var stillProceedIfRateGoesDownBy = "Still proceed if %@ rate goes down by:"
+  public var transactionWillRevertIfRateLower = "Txn will be reverted if %@ is lower than %@ (Current rate %@)"
+
+  public var transactionFee = "Transaction Fee"
+  public var yourWallet = "Your wallet"
+  public var yourAddress = "Your address"
+  public var advancedOptional = "Advanced (optional)"
+
+  public var error = "Error"
+  public var balanceIsNotEnoughToMakeTransaction = "Your balance is not enough to make transaction"
+  public var balanceIsNotEnoughMinRatePayTransaction = "Your balance is not enough. Try to set higher min acceptable rate"
+  public var minRateInvalid = "Min acceptable rate is invalid"
+  public var waitForUpdateTransactionFee = "Please wait for updating transaction fee"
 }
 
 public class KWThemeConfig: NSObject {
@@ -67,6 +89,10 @@ public class KWThemeConfig: NSObject {
   public var importButtonColor: UIColor = UIColor.Kyber.background
   public var importButtonTitleColor: UIColor = UIColor.white
   public var importReceiveFundsButtonColor: UIColor = UIColor.Kyber.shamrock
+
+  public var payTopTextColor: UIColor = UIColor(red: 15, green: 170, blue: 162)
+  public var swapTopTextColor: UIColor = UIColor(red: 113, green: 113, blue: 113)
+  public var buyTopTextColor: UIColor = UIColor(red: 113, green: 113, blue: 113)
 
   public var payTextFieldColor: UIColor = UIColor.Kyber.background
   public var payReceiveAmountColor: UIColor = UIColor.Kyber.grey

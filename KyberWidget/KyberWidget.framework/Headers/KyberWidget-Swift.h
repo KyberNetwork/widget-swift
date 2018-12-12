@@ -199,6 +199,8 @@ SWIFT_CLASS("_TtC11KyberWidget30KWConfirmPaymentViewController")
 @end
 
 
+
+
 SWIFT_CLASS("_TtC11KyberWidget25KWConfirmPaymentViewModel")
 @interface KWConfirmPaymentViewModel : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -242,18 +244,18 @@ SWIFT_CLASS("_TtC11KyberWidget22KWImportViewController")
 - (void)documentPicker:(UIDocumentPickerViewController * _Nonnull)controller didPickDocumentAtURL:(NSURL * _Nonnull)url;
 @end
 
-@class QRCodeReaderViewController;
-
-@interface KWImportViewController (SWIFT_EXTENSION(KyberWidget)) <QRCodeReaderDelegate>
-- (void)readerDidCancel:(QRCodeReaderViewController * _Null_unspecified)reader;
-- (void)reader:(QRCodeReaderViewController * _Null_unspecified)reader didScanResult:(NSString * _Null_unspecified)result;
-@end
-
 @class UITextField;
 
 @interface KWImportViewController (SWIFT_EXTENSION(KyberWidget)) <UITextFieldDelegate>
 - (BOOL)textFieldShouldClear:(UITextField * _Nonnull)textField SWIFT_WARN_UNUSED_RESULT;
 - (BOOL)textField:(UITextField * _Nonnull)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString * _Nonnull)string SWIFT_WARN_UNUSED_RESULT;
+@end
+
+@class QRCodeReaderViewController;
+
+@interface KWImportViewController (SWIFT_EXTENSION(KyberWidget)) <QRCodeReaderDelegate>
+- (void)readerDidCancel:(QRCodeReaderViewController * _Null_unspecified)reader;
+- (void)reader:(QRCodeReaderViewController * _Null_unspecified)reader didScanResult:(NSString * _Null_unspecified)result;
 @end
 
 
@@ -269,12 +271,10 @@ SWIFT_CLASS("_TtC11KyberWidget29KWPaymentMethodViewController")
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 - (void)viewDidLoad;
 - (void)viewWillAppear:(BOOL)animated;
-- (void)viewDidDisappear:(BOOL)animated;
 - (void)viewDidLayoutSubviews;
+- (void)viewDidDisappear:(BOOL)animated;
 - (nonnull instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil SWIFT_UNAVAILABLE;
 @end
-
-
 
 
 @interface KWPaymentMethodViewController (SWIFT_EXTENSION(KyberWidget)) <UITextFieldDelegate>
