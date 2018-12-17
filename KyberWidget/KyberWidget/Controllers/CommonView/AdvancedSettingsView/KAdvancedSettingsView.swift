@@ -32,7 +32,7 @@ class KAdvancedSettingsViewModel: NSObject {
   let destToken: String
 
   var minRateString: String {
-    return "\((100.0 - minRatePercent) * currentRate)"
+    return "\((100.0 - minRatePercent) * currentRate / 100.0)"
   }
   fileprivate(set) var minRatePercent: Double = 3.0
   fileprivate(set) var currentRate: Double

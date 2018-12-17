@@ -12,8 +12,6 @@
 		251CCF4B2118308900F12B01 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 251CCF492118308900F12B01 /* LaunchScreen.storyboard */; };
 		251CCF562118308900F12B01 /* KPTestFrameworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251CCF552118308900F12B01 /* KPTestFrameworkTests.swift */; };
 		251CCF612118308900F12B01 /* KPTestFrameworkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251CCF602118308900F12B01 /* KPTestFrameworkUITests.swift */; };
-		254DA67021A5820200672EE7 /* KyberWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 254DA66C21A581E800672EE7 /* KyberWidget.framework */; };
-		254DA67121A5820200672EE7 /* KyberWidget.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 254DA66C21A581E800672EE7 /* KyberWidget.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		254DA67521A6551600672EE7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254DA67321A6551600672EE7 /* ViewController.swift */; };
 		254DA67621A6551600672EE7 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 254DA67421A6551600672EE7 /* ViewController.xib */; };
 		254DA67A21A6569B00672EE7 /* PayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254DA67821A6569B00672EE7 /* PayViewController.swift */; };
@@ -22,6 +20,9 @@
 		254DA68021A65FD500672EE7 /* SwapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 254DA67E21A65FD500672EE7 /* SwapViewController.xib */; };
 		254DA68421A662A500672EE7 /* BuyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254DA68221A662A500672EE7 /* BuyViewController.swift */; };
 		254DA68521A662A500672EE7 /* BuyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 254DA68321A662A500672EE7 /* BuyViewController.xib */; };
+		25B712D721C7942100413C7F /* KyberWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25B712D621C7942100413C7F /* KyberWidget.framework */; };
+		25B712D821C7942C00413C7F /* KyberWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25B712D621C7942100413C7F /* KyberWidget.framework */; };
+		25B712D921C7942C00413C7F /* KyberWidget.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 25B712D621C7942100413C7F /* KyberWidget.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		25E133082129CAC200AC4669 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25E133072129CAC200AC4669 /* Assets.xcassets */; };
 		25EE480D2126AF19002657DF /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EE480C2126AF19002657DF /* UIViewController.swift */; };
 		25EE48112126AF71002657DF /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EE48102126AF71002657DF /* UINavigationController.swift */; };
@@ -64,7 +65,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				254DA67121A5820200672EE7 /* KyberWidget.framework in Embed Frameworks */,
+				25B712D921C7942C00413C7F /* KyberWidget.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,7 +87,6 @@
 		251CCF602118308900F12B01 /* KPTestFrameworkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPTestFrameworkUITests.swift; sourceTree = "<group>"; };
 		251CCF622118308900F12B01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		252A207521A7F3A700DBD6B0 /* KPTestFramework.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KPTestFramework.entitlements; sourceTree = "<group>"; };
-		254DA66C21A581E800672EE7 /* KyberWidget.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KyberWidget.framework; sourceTree = "<group>"; };
 		254DA67321A6551600672EE7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		254DA67421A6551600672EE7 /* ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
 		254DA67821A6569B00672EE7 /* PayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayViewController.swift; sourceTree = "<group>"; };
@@ -95,6 +95,7 @@
 		254DA67E21A65FD500672EE7 /* SwapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SwapViewController.xib; sourceTree = "<group>"; };
 		254DA68221A662A500672EE7 /* BuyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyViewController.swift; sourceTree = "<group>"; };
 		254DA68321A662A500672EE7 /* BuyViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BuyViewController.xib; sourceTree = "<group>"; };
+		25B712D621C7942100413C7F /* KyberWidget.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KyberWidget.framework; sourceTree = "<group>"; };
 		25E133072129CAC200AC4669 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		25EE480C2126AF19002657DF /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		25EE48102126AF71002657DF /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
@@ -112,8 +113,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				254DA67021A5820200672EE7 /* KyberWidget.framework in Frameworks */,
+				25B712D721C7942100413C7F /* KyberWidget.framework in Frameworks */,
 				36777F2922B9B25C81F7C00D /* Pods_KPTestFramework.framework in Frameworks */,
+				25B712D821C7942C00413C7F /* KyberWidget.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,11 +173,11 @@
 		251CCF3F2118308600F12B01 /* KPTestFramework */ = {
 			isa = PBXGroup;
 			children = (
+				25B712D621C7942100413C7F /* KyberWidget.framework */,
 				252A207521A7F3A700DBD6B0 /* KPTestFramework.entitlements */,
 				254DA68121A6629500672EE7 /* BuyViewController */,
 				254DA67C21A65FC100672EE7 /* SwapViewController */,
 				254DA67721A6568B00672EE7 /* PayViewController */,
-				254DA66C21A581E800672EE7 /* KyberWidget.framework */,
 				25EE480B2126AF0F002657DF /* Extensions */,
 				251CCF402118308600F12B01 /* AppDelegate.swift */,
 				251CCF442118308600F12B01 /* Main.storyboard */,

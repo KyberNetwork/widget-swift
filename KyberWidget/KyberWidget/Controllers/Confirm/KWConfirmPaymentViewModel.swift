@@ -216,7 +216,10 @@ public class KWConfirmPaymentViewModel: NSObject {
     return self.balance >= amountFrom
   }
 
-  var isMinRateValid: Bool { return !self.minRate.isZero }
+  var isMinRateValid: Bool {
+    if self.dataType != .pay { return true }
+    return !self.minRate.isZero
+  }
 
   var isBalanceEnoughForTxFee: Bool {
     guard self.transaction.from.isETH else {
@@ -258,8 +261,12 @@ public class KWConfirmPaymentViewModel: NSObject {
 
   func updateMinRatePercent(_ percent: Double) {
     self.minRatePercent = percent
-    let realPercent = min(90.0, percent)
-    self.minRate = BigInt(100.0 - realPercent) * self.expectedRate / BigInt(100)
+    if self.dataType == .pay {
+      let realPercent = min(90.0, percent)
+      self.minRate = BigInt(100.0 - realPercent) * self.expectedRate / BigInt(100)
+    } else {
+      self.minRate = BigInt(100.0 - percent) * self.expectedRate / BigInt(100)
+    }
   }
 
   // MARK: Now we have all valid data to get the best estimated gas limit
