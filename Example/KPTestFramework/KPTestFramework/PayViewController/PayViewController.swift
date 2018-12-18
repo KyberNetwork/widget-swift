@@ -153,7 +153,7 @@ extension PayViewController: KWCoordinatorDelegate {
 
   func coordinatorDidBroadcastTransaction(with hash: String) {
     self.coordinator?.stop(completion: {
-      self.showAlertController(title: "Payment sent", message: "Tx hash: \(hash)")
+      self.showAlertController(title: "Payment transaction sent", message: "Tx hash: \(hash)")
       self.coordinator = nil
     })
   }

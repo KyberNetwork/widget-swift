@@ -128,7 +128,7 @@ extension SwapViewController: KWCoordinatorDelegate {
 
   func coordinatorDidBroadcastTransaction(with hash: String) {
     self.coordinator?.stop(completion: {
-      self.showAlertController(title: "Swap transcation sent", message: "Tx hash: \(hash)")
+      self.showAlertController(title: "Swap transaction sent", message: "Tx hash: \(hash)")
       self.coordinator = nil
     })
   }
