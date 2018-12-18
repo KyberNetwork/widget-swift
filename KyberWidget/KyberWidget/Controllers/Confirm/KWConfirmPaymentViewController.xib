@@ -53,6 +53,7 @@
                 <outlet property="yourWalletTextLabel" destination="tz8-Ox-P7L" id="tN4-50-5Eq"/>
                 <outlet property="yourWalletValueLabel" destination="jd6-qi-uoU" id="F8a-Hz-Bc5"/>
                 <outletCollection property="separatorViews" destination="NAF-9c-TJx" collectionClass="NSMutableArray" id="IET-pe-xdw"/>
+                <outletCollection property="separatorViews" destination="cad-qI-279" collectionClass="NSMutableArray" id="0bB-xx-tAb"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
