@@ -63,7 +63,7 @@ public class KWStringConfig: NSObject {
   public var amountToBuyUppercased: String = "Amount to buy".uppercased()
 
   public var stillProceedIfRateGoesDownBy = "Still proceed if %@ rate goes down by:"
-  public var transactionWillRevertIfRateLower = "Txn will be reverted if %@ is lower than %@ (Current rate %@)"
+  public var transactionWillRevertIfRateLower = "Transaction will be reverted if %@ is lower than %@ (Current rate %@)"
 
   public var transactionFee = "Transaction Fee"
   public var yourWallet = "Your wallet"
@@ -75,6 +75,7 @@ public class KWStringConfig: NSObject {
   public var balanceIsNotEnoughMinRatePayTransaction = "Your balance is not enough. Try to set higher min acceptable rate"
   public var minRateInvalid = "Min acceptable rate is invalid"
   public var waitForUpdateTransactionFee = "Please wait for updating transaction fee"
+  public var regular = "Regular"
 }
 
 public class KWThemeConfig: NSObject {

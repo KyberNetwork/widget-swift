@@ -272,8 +272,15 @@ extension KWPaymentMethodViewModel {
 
   var payDestAmountText: String {
     if self.dataType != .pay { return "" }
+    let numberFormatter: NumberFormatter = {
+      let formatter = NumberFormatter()
+      formatter.maximumFractionDigits = 9
+      formatter.minimumIntegerDigits = 1
+      return formatter
+    }()
     if let amount = self.toAmount {
-      return "\(amount) \(self.to.symbol)"
+      let string = numberFormatter.string(from: NSNumber(value: amount)) ?? ""
+      return "\(string.prefix(12)) \(self.to.symbol)"
     }
     return self.estimatedReceivedAmountWithSymbolString
   }
