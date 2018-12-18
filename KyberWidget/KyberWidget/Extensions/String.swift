@@ -38,7 +38,7 @@ extension String {
   }
 
   func toBigInt(decimals: Int) -> BigInt? {
-    if let double = Double(self.removeGroupSeparator()) {
+    if let double = Double(self) {
       return BigInt(double * pow(10.0, Double(decimals)))
     }
     return KWNumberUtil.shared.number(
@@ -48,7 +48,7 @@ extension String {
   }
 
   func toBigInt(units: KWEthereumUnit) -> BigInt? {
-    if let double = Double(self.removeGroupSeparator()) {
+    if let double = Double(self) {
       return BigInt(double * Double(units.rawValue))
     }
     return KWNumberUtil.shared.number(
