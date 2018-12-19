@@ -27,6 +27,7 @@ class KAdvancedSettingsViewModel: NSObject {
 
   fileprivate(set) var isViewHidden: Bool = true
   fileprivate(set) var hasMinRate: Bool = true
+  fileprivate(set) var dataType: KWDataType
 
   let sourceToken: String
   let destToken: String
@@ -39,12 +40,13 @@ class KAdvancedSettingsViewModel: NSObject {
 
   fileprivate(set) var minRateType: Int = 0 // 0: 3%, 1: any, 2: custom
 
-  init(hasMinRate: Bool, sourceToken: String, destToken: String) {
+  init(hasMinRate: Bool, sourceToken: String, destToken: String, dataType: KWDataType) {
     self.hasMinRate = hasMinRate
     self.sourceToken = sourceToken
     self.destToken = destToken
     self.currentRate = 0
     self.minRateType = 0
+    self.dataType = dataType
   }
 
   var isGasPriceViewHidden: Bool { return self.isViewHidden }
@@ -237,12 +239,25 @@ class KAdvancedSettingsView: KWXibLoaderView {
 
     switch self.viewModel.minRateType {
     case 0:
-      self.viewModel.updateMinRateValue(type: 0, percent: 3.0, currentRate: self.viewModel.currentRate)
+      self.viewModel.updateMinRateValue(
+        type: 0,
+        percent: 3.0,
+        currentRate: self.viewModel.currentRate
+      )
     case 1:
-      self.viewModel.updateMinRateValue(type: 1, percent: 100.0, currentRate: self.viewModel.currentRate)
+      let maxMinRatePercent: Double = self.viewModel.dataType == .pay ? 90.0 : 100.0
+      self.viewModel.updateMinRateValue(
+        type: 1,
+        percent: maxMinRatePercent,
+        currentRate: self.viewModel.currentRate
+      )
     case 2:
       let val = self.viewModel.minRatePercent
-      self.viewModel.updateMinRateValue(type: 2, percent: val, currentRate: self.viewModel.currentRate)
+      self.viewModel.updateMinRateValue(
+        type: 2,
+        percent: val,
+        currentRate: self.viewModel.currentRate
+      )
     default: break
     }
 
@@ -345,7 +360,8 @@ extension KAdvancedSettingsView: UITextFieldDelegate {
     let text = ((textField.text ?? "") as NSString).replacingCharacters(in: range, with: string)
     let number = text.removeGroupSeparator()
     let value: Double? = number.isEmpty ? 0 : Double(number)
-    if let val = value, val >= 0, val <= 100 {
+    let maxMinRatePercent: Double = self.viewModel.dataType == .pay ? 90.0 : 100.0
+    if let val = value, val >= 0, val <= maxMinRatePercent {
       textField.text = text
       self.viewModel.updateMinRateValue(type: 2, percent: val, currentRate: self.viewModel.currentRate)
       self.updateMinRateUIs()

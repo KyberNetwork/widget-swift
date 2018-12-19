@@ -193,7 +193,8 @@ public class KWConfirmPaymentViewController: UIViewController {
     let viewModel = KAdvancedSettingsViewModel(
       hasMinRate: self.viewModel.transaction.from != self.viewModel.transaction.to,
       sourceToken: self.viewModel.transaction.from.symbol,
-      destToken: self.viewModel.transaction.to.symbol
+      destToken: self.viewModel.transaction.to.symbol,
+      dataType: self.viewModel.dataType
     )
     self.advanceSettingsView.delegate = self
     self.advanceSettingsView.updateViewModel(viewModel)

@@ -261,12 +261,7 @@ public class KWConfirmPaymentViewModel: NSObject {
 
   func updateMinRatePercent(_ percent: Double) {
     self.minRatePercent = percent
-    if self.dataType == .pay {
-      let realPercent = min(90.0, percent)
-      self.minRate = BigInt(100.0 - realPercent) * self.expectedRate / BigInt(100)
-    } else {
-      self.minRate = BigInt(100.0 - percent) * self.expectedRate / BigInt(100)
-    }
+    self.minRate = BigInt(100.0 - percent) * self.expectedRate / BigInt(100)
   }
 
   // MARK: Now we have all valid data to get the best estimated gas limit
