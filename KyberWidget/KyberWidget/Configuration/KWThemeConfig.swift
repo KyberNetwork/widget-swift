@@ -73,7 +73,7 @@ public class KWStringConfig: NSObject {
   public var error = "Error"
   public var balanceIsNotEnoughToMakeTransaction = "Your balance is not enough to make transaction"
   public var balanceIsNotEnoughMinRatePayTransaction = "Your balance is not enough. Try to set higher min acceptable rate"
-  public var minRateInvalid = "Min acceptable rate is invalid"
+  public var minRateInvalid = "Min acceptable rate must be greater than zero"
   public var waitForUpdateTransactionFee = "Please wait for updating transaction fee"
   public var regular = "Regular"
 }

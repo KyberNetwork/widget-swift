@@ -63,8 +63,11 @@ public class KWConfirmPaymentViewModel: NSObject {
     self.keystore = keystore
     self.provider = KWExternalProvider(keystore: keystore, network: network)
     if self.transaction.from.isETH { self.isNeedsToSendApprove = false }
+
     self.expectedRate = self.transaction.expectedRate ?? BigInt(0)
-    self.minRate = self.transaction.minRate ?? BigInt(0)
+    self.minRatePercent = 3.0
+    self.minRate = BigInt(97.0) * self.expectedRate / BigInt(100.0)
+
     self.productName = productName
     self.productAvatarURL = productAvatarURL
     self.productAvatarImage = productAvatarImage
@@ -262,9 +265,11 @@ public class KWConfirmPaymentViewModel: NSObject {
   func updateMinRatePercent(_ percent: Double) {
     self.minRatePercent = percent
     self.minRate = BigInt(100.0 - percent) * self.expectedRate / BigInt(100)
+    print("Selected min rate percent: \(percent)")
+    print("Min rate value: \(self.minRate.string(decimals: self.transaction.to.decimals, maxFractionDigits: 6))")
   }
 
-  // MARK: Now we have all valid data to get the best estimated gas limit
+  // MARK: Now we have all val id data to get the best estimated gas limit
   func getEstimatedGasLimit(completion: @escaping () -> Void) {
     if self.dataType == .pay {
       print("Estimated gas for pay transaction")

@@ -336,9 +336,10 @@ class KAdvancedSettingsView: KWXibLoaderView {
 
   @IBAction func anyRateButtonPressed(_ sender: Any) {
     if self.viewModel == nil { return }
-    self.viewModel.updateMinRateValue(type: 1, percent: 100.0, currentRate: self.viewModel.currentRate)
+    let maxMinRatePercent: Double = self.viewModel.dataType == .pay ? 90.0 : 100.0
+    self.viewModel.updateMinRateValue(type: 1, percent: maxMinRatePercent, currentRate: self.viewModel.currentRate)
     self.updateMinRateUIs()
-    self.delegate?.kAdvancedSettingsView(self, run: .minRatePercentageChanged(percent: 100.0))
+    self.delegate?.kAdvancedSettingsView(self, run: .minRatePercentageChanged(percent: maxMinRatePercent))
   }
 
   @IBAction func customeRateButtonPressed(_ sender: Any) {
