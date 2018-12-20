@@ -49,8 +49,10 @@ public class KWPaymentMethodViewController: UIViewController {
   @IBOutlet weak var heightConstraintForTokenContainerView: NSLayoutConstraint!
   @IBOutlet weak var tokenContainerView: UIView!
   @IBOutlet weak var tokenButton: UIButton!
+  @IBOutlet weak var fromDropImageView: UIImageView!
   @IBOutlet weak var tokenAmountTextField: UITextField!
   @IBOutlet weak var receiveTokenButton: UIButton!
+  @IBOutlet weak var toDropImageView: UIImageView!
   @IBOutlet weak var receiveAmountLabel: UILabel!
   @IBOutlet weak var heightConstraintForReceiveTokenData: NSLayoutConstraint!
   @IBOutlet weak var toButton: UIButton!
@@ -62,6 +64,7 @@ public class KWPaymentMethodViewController: UIViewController {
 
   @IBOutlet weak var agreeTermsAndConditionsLabel: UILabel!
   @IBOutlet weak var agreeTermsAndConditionsButton: UIButton!
+  @IBOutlet weak var agreeTextLabel: UILabel!
 
   fileprivate var viewModel: KWPaymentMethodViewModel
   weak var delegate: KWPaymentMethodViewControllerDelegate?
@@ -187,6 +190,8 @@ public class KWPaymentMethodViewController: UIViewController {
     self.toButton.isHidden = self.viewModel.isToButtonHidden
     self.tokensSeparatorView.isHidden = self.viewModel.isToButtonHidden
     self.receiveTokenButton.isHidden = self.viewModel.isToButtonHidden
+    self.receiveTokenButton.isEnabled = self.viewModel.isToButtonEnabled
+    self.toDropImageView.isHidden = !self.viewModel.isToButtonEnabled || self.viewModel.isToButtonHidden
     self.receiveAmountLabel.isHidden = self.viewModel.isToButtonHidden
     self.receiveAmountLabel.textColor = KWThemeConfig.current.amountTextFieldDisable
 
@@ -206,6 +211,11 @@ public class KWPaymentMethodViewController: UIViewController {
       width: 1.0,
       radius: 4.0
     )
+    self.agreeTextLabel.text = KWStringConfig.current.agreeTo
+    let agreeGesture = UITapGestureRecognizer(target: self, action: #selector(self.agreeTermsAndConditionsCheckBoxPressed(_:)))
+    self.agreeTextLabel.addGestureRecognizer(agreeGesture)
+    self.agreeTextLabel.isUserInteractionEnabled = true
+
     self.agreeTermsAndConditionsButton.backgroundColor = .white
     self.agreeTermsAndConditionsLabel.attributedText = self.viewModel.termsAndConditionsAttributedString
     let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.openTermsAndConditionsView(_:)))

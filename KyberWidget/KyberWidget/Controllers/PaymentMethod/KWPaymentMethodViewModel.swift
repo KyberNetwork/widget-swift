@@ -160,6 +160,10 @@ extension KWPaymentMethodViewModel {
     return self.dataType == .pay
   }
 
+  var isToButtonEnabled: Bool {
+    return self.receiverToken == nil
+  }
+
   /*
    Enabled if receive amount is empty, disabled otherwise
    */
@@ -355,15 +359,10 @@ extension KWPaymentMethodViewModel {
 extension KWPaymentMethodViewModel {
   var termsAndConditionsAttributedString: NSAttributedString {
     let attributedString = NSMutableAttributedString()
-    let addressTextAttributes: [NSAttributedString.Key: Any] = [
-      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .medium),
-      NSAttributedString.Key.foregroundColor: UIColor.Kyber.segment,
-      ]
     let addressValueAttributes: [NSAttributedString.Key: Any] = [
       NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .medium),
       NSAttributedString.Key.foregroundColor: UIColor.Kyber.action,
-      ]
-    attributedString.append(NSAttributedString(string: "\(KWStringConfig.current.agreeTo) ", attributes: addressTextAttributes))
+    ]
     attributedString.append(NSAttributedString(string: KWStringConfig.current.termsAndConditions, attributes: addressValueAttributes))
     return attributedString
   }
