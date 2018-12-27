@@ -133,9 +133,9 @@ public class KWPaymentMethodViewModel: NSObject {
 
   var navigationTitle: String {
     switch self.dataType {
-    case .pay: return KWStringConfig.current.payment
+    case .pay: return KWStringConfig.current.paymentMethod
     case .swap: return KWStringConfig.current.swap
-    case .buy: return KWStringConfig.current.buy
+    case .buy: return KWStringConfig.current.paymentMethod
     }
   }
 }
