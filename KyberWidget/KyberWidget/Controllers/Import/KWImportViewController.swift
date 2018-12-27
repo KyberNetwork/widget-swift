@@ -233,7 +233,8 @@ public class KWImportViewController: UIViewController {
     if self.viewModel.hasAccount {
       self.openAlertViewChangeWallet(
         title: "Change wallet?",
-        message: "Do you want to use another wallet?"
+        message: "Do you want to use another wallet?",
+        methodID: 0
       )
       return
     }
@@ -244,7 +245,8 @@ public class KWImportViewController: UIViewController {
     if self.viewModel.hasAccount {
       self.openAlertViewChangeWallet(
         title: "Change wallet?",
-        message: "Do you want to use another wallet?"
+        message: "Do you want to use another wallet?",
+        methodID: 1
       )
       return
     }
@@ -255,7 +257,8 @@ public class KWImportViewController: UIViewController {
     if self.viewModel.hasAccount {
       self.openAlertViewChangeWallet(
         title: "Change wallet?",
-        message: "Do you want to use another wallet?"
+        message: "Do you want to use another wallet?",
+        methodID: 2
       )
       return
     }
@@ -402,21 +405,24 @@ public class KWImportViewController: UIViewController {
     if !self.viewModel.isBalanceEnoughWithRealAmountFrom {
       self.openAlertViewChangeWallet(
         title: "Insufficient balance",
-        message: "Your balance is not enough to make the transaction."
+        message: "Your balance is not enough to make the transaction.",
+        methodID: self.viewModel.selectedType
       )
       return
     }
     if !self.viewModel.isBalanceEnoughWithMinRateAmountFrom {
       self.openAlertViewChangeWallet(
         title: "Insufficient balance",
-        message: "Your balance is not enough. Try to increase the min acceptable rate."
+        message: "Your balance is not enough. Try to increase the min acceptable rate.",
+        methodID: self.viewModel.selectedType
       )
       return
     }
     if !self.viewModel.isAmountValidWithCap {
       self.openAlertViewChangeWallet(
         title: "Amount too big",
-        message: "We can not handle your amount."
+        message: "We can not handle your amount.",
+        methodID: self.viewModel.selectedType
       )
       return
     }
@@ -436,7 +442,8 @@ public class KWImportViewController: UIViewController {
     self.delegate?.importViewController(self, run: event)
   }
 
-  fileprivate func openAlertViewChangeWallet(title: String, message: String) {
+  // methodID: 0: JSON, 1: Private key, 2: Seeds
+  fileprivate func openAlertViewChangeWallet(title: String, message: String, methodID: Int) {
     let alert = UIAlertController(
       title: title,
       message: message,
@@ -445,6 +452,8 @@ public class KWImportViewController: UIViewController {
     alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
     alert.addAction(UIAlertAction(title: "Change Wallet", style: .default, handler: { action in
       self.changeWalletButtonPressed(action)
+      self.viewModel.updateSelectedType(methodID)
+      self.updateUIs()
     }))
     self.present(alert, animated: true, completion: nil)
   }
