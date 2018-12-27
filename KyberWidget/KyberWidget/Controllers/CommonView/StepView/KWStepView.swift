@@ -51,8 +51,8 @@ class KWStepView: KWXibLoaderView {
     self.importWalletImageView.backgroundColor = KWThemeConfig.current.inactiveBackgroundColor
     self.confirmImageView.backgroundColor = KWThemeConfig.current.inactiveBackgroundColor
 
-    self.paymentLabel.text = KWStringConfig.current.payment
-    self.importLabel.text = KWStringConfig.current.importWallet
+    self.paymentLabel.text = KWStringConfig.current.paymentMethod
+    self.importLabel.text = KWStringConfig.current.unlockWallet
     self.confirmLabel.text = KWStringConfig.current.confirm
   }
 
@@ -63,9 +63,8 @@ class KWStepView: KWXibLoaderView {
 
     self.paymentLabel.text = {
       switch dataType {
-      case .pay: return KWStringConfig.current.payment
+      case .pay, .buy: return KWStringConfig.current.paymentMethod
       case .swap: return KWStringConfig.current.swap
-      case .buy: return KWStringConfig.current.buy
       }
     }()
     self.updateChooseToken(stateID: paymentState)

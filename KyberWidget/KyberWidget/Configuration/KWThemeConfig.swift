@@ -14,6 +14,7 @@ public class KWStringConfig: NSObject {
   public var payment: String = "Pay"
   public var swap: String = "Swap"
   public var buy: String = "Buy"
+  public var paymentMethod: String = "Payment Method"
   public var importWallet: String = "Import Wallet"
   public var confirm: String = "Confirm"
 
