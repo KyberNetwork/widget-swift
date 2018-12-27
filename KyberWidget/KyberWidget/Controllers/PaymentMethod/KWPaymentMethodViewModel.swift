@@ -30,6 +30,7 @@ public class KWPaymentMethodViewModel: NSObject {
   let signer: String?
   let commissionID: String?
   let productName: String?
+  let productQty: Int?
   let productAvatar: String?
   fileprivate(set) var productAvatarImage: UIImage?
 
@@ -69,6 +70,7 @@ public class KWPaymentMethodViewModel: NSObject {
     signer: String? = nil,
     commissionID: String? = nil,
     productName: String?,
+    productQty: Int?,
     productAvatar: String?,
     productAvatarImage: UIImage?,
     dataType: KWDataType,
@@ -82,6 +84,7 @@ public class KWPaymentMethodViewModel: NSObject {
     self.signer = signer
     self.commissionID = commissionID
     self.productName = productName
+    self.productQty = productQty
     self.productAvatar = productAvatar
     self.productAvatarImage = productAvatarImage?.resizeImage(toWidth: UIScreen.main.bounds.width - 44.0)
 

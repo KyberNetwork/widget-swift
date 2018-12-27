@@ -129,6 +129,10 @@ class KAdvancedSettingsView: KWXibLoaderView {
   @IBOutlet weak var minRateCustomTextField: UITextField!
   @IBOutlet weak var cancelButton: UIButton!
 
+  @IBOutlet weak var defaultThreePercentLabel: UILabel!
+  @IBOutlet weak var anyRateTextLabel: UILabel!
+  @IBOutlet weak var customTextLabel: UILabel!
+
   fileprivate var viewModel: KAdvancedSettingsViewModel!
   weak var delegate: KAdvancedSettingsViewDelegate?
 
@@ -149,6 +153,24 @@ class KAdvancedSettingsView: KWXibLoaderView {
       UIImage(named: "cancel_icon", in: Bundle.framework, compatibleWith: nil),
       for: .normal
     )
+
+    let fasGasTapped = UITapGestureRecognizer(target: self, action: #selector(self.fastGasButtonPressed(_:)))
+    self.fasGasValueLabel.addGestureRecognizer(fasGasTapped)
+
+    let regularGasTapped = UITapGestureRecognizer(target: self, action: #selector(self.mediumGasButtonPressed(_:)))
+    self.mediumGasValueLabel.addGestureRecognizer(regularGasTapped)
+
+    let slowGasTapped = UITapGestureRecognizer(target: self, action: #selector(self.slowGasButtonPressed(_:)))
+    self.slowGasValueLabel.addGestureRecognizer(slowGasTapped)
+
+    let defaultThreePercentTapped = UITapGestureRecognizer(target: self, action: #selector(self.threePercentButtonPressed(_:)))
+    self.defaultThreePercentLabel.addGestureRecognizer(defaultThreePercentTapped)
+
+    let anyRateTapped = UITapGestureRecognizer(target: self, action: #selector(self.anyRateButtonPressed(_:)))
+    self.anyRateTextLabel.addGestureRecognizer(anyRateTapped)
+
+    let customTapped = UITapGestureRecognizer(target: self, action: #selector(self.customeRateButtonPressed(_:)))
+    self.customTextLabel.addGestureRecognizer(customTapped)
   }
 
   override func layoutSubviews() {

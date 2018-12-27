@@ -34,6 +34,7 @@
                 <outlet property="productAvatarImageView" destination="NE7-Qz-3bn" id="jL7-6q-oI2"/>
                 <outlet property="productAvatarImageViewHeightConstraint" destination="Ccv-bf-UtV" id="lHv-jE-EBU"/>
                 <outlet property="productNameLabel" destination="LY5-q0-MYO" id="Tf6-xV-hDf"/>
+                <outlet property="productQtyLabel" destination="XUg-uV-iaG" id="Cic-Ws-FiN"/>
                 <outlet property="receiverAddressLabel" destination="TY2-1N-HJI" id="6Qa-0Z-8Cg"/>
                 <outlet property="secondAmountLabel" destination="HTz-rE-htb" id="B76-Os-cf2"/>
                 <outlet property="stepView" destination="i3f-dI-ZvR" id="2ZI-97-MLn"/>
@@ -195,7 +196,7 @@
                                     </constraints>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="German Fresh Beer Voucher" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LY5-q0-MYO">
-                                    <rect key="frame" x="24" y="74" width="291" height="17.5"/>
+                                    <rect key="frame" x="24" y="74" width="201.5" height="17.5"/>
                                     <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="14"/>
                                     <color key="textColor" red="0.37647058820000001" green="0.42745098040000001" blue="0.4823529412" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -225,6 +226,12 @@
                                     <color key="textColor" red="0.3803921569" green="0.40784313729999999" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="X 24" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XUg-uV-iaG">
+                                    <rect key="frame" x="279.5" y="73" width="35.5" height="20"/>
+                                    <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="16"/>
+                                    <color key="textColor" red="0.37647058820000001" green="0.42745098040000001" blue="0.4823529412" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -240,18 +247,20 @@
                                 <constraint firstAttribute="trailing" secondItem="yg0-Gd-Vg3" secondAttribute="trailing" id="NpP-JR-jdY"/>
                                 <constraint firstItem="NE7-Qz-3bn" firstAttribute="centerX" secondItem="Pu2-jD-Jua" secondAttribute="centerX" id="PeO-hJ-YZj"/>
                                 <constraint firstItem="cad-qI-279" firstAttribute="top" secondItem="AGw-Zf-xuA" secondAttribute="bottom" constant="16" id="QGb-Nf-yIF"/>
-                                <constraint firstAttribute="trailing" secondItem="LY5-q0-MYO" secondAttribute="trailing" constant="20" id="R9Z-8q-3HM"/>
                                 <constraint firstItem="thw-9C-lnd" firstAttribute="leading" secondItem="TY2-1N-HJI" secondAttribute="leading" id="WXt-8U-qtR"/>
                                 <constraint firstItem="TY2-1N-HJI" firstAttribute="top" secondItem="cad-qI-279" secondAttribute="bottom" constant="16" id="WtB-NE-BIh"/>
+                                <constraint firstItem="XUg-uV-iaG" firstAttribute="centerY" secondItem="LY5-q0-MYO" secondAttribute="centerY" id="Yju-lZ-FXA"/>
                                 <constraint firstItem="nZp-ga-gsM" firstAttribute="centerY" secondItem="thw-9C-lnd" secondAttribute="centerY" id="Zyn-Wa-eFX"/>
                                 <constraint firstAttribute="bottom" secondItem="TY2-1N-HJI" secondAttribute="bottom" constant="24" id="coP-g3-Hu7"/>
                                 <constraint firstItem="Cmj-7g-7A4" firstAttribute="centerY" secondItem="AGw-Zf-xuA" secondAttribute="centerY" id="e1v-yN-KqA"/>
                                 <constraint firstItem="LY5-q0-MYO" firstAttribute="leading" secondItem="Pu2-jD-Jua" secondAttribute="leading" constant="24" id="ekJ-1m-oVS"/>
                                 <constraint firstAttribute="trailing" secondItem="nZp-ga-gsM" secondAttribute="trailing" constant="24" id="hIn-qY-hxD"/>
                                 <constraint firstAttribute="trailing" secondItem="cad-qI-279" secondAttribute="trailing" constant="24" id="ilI-1K-8kE"/>
+                                <constraint firstItem="XUg-uV-iaG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="LY5-q0-MYO" secondAttribute="trailing" constant="16" id="oUR-2F-dfZ"/>
                                 <constraint firstItem="yg0-Gd-Vg3" firstAttribute="top" secondItem="Pu2-jD-Jua" secondAttribute="top" id="r3D-XF-YDw"/>
                                 <constraint firstItem="AGw-Zf-xuA" firstAttribute="leading" secondItem="Pu2-jD-Jua" secondAttribute="leading" constant="24" id="tBM-c2-P1F"/>
                                 <constraint firstAttribute="trailing" secondItem="TY2-1N-HJI" secondAttribute="trailing" constant="24" id="vhJ-XS-cbx"/>
+                                <constraint firstAttribute="trailing" secondItem="XUg-uV-iaG" secondAttribute="trailing" constant="20" id="x51-Gp-Ueq"/>
                                 <constraint firstItem="cad-qI-279" firstAttribute="leading" secondItem="Pu2-jD-Jua" secondAttribute="leading" constant="24" id="xrQ-72-bQC"/>
                                 <constraint firstAttribute="trailing" secondItem="Cmj-7g-7A4" secondAttribute="trailing" constant="24" id="yrI-3M-hFg"/>
                                 <constraint firstItem="TY2-1N-HJI" firstAttribute="top" secondItem="thw-9C-lnd" secondAttribute="bottom" constant="72" id="za1-nZ-ymH"/>

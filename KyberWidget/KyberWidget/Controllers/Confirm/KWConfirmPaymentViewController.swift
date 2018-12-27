@@ -33,6 +33,7 @@ public class KWConfirmPaymentViewController: UIViewController {
   @IBOutlet weak var orderDetailsDataContainerView: UIView!
   @IBOutlet weak var orderDetailsTextLabel: UILabel!
   @IBOutlet weak var productNameLabel: UILabel!
+  @IBOutlet weak var productQtyLabel: UILabel!
   @IBOutlet weak var productAvatarImageView: UIImageView!
   @IBOutlet weak var productAvatarImageViewHeightConstraint: NSLayoutConstraint!
 
@@ -149,6 +150,12 @@ public class KWConfirmPaymentViewController: UIViewController {
   fileprivate func setupOrderDetailsView() {
     self.orderDetailsTextLabel.text = KWStringConfig.current.orderDetails
     self.productNameLabel.text = self.viewModel.orderProductName
+    self.productQtyLabel.text = {
+      if let qty = self.viewModel.productQty, qty > 0 {
+        return "X \(qty)"
+      }
+      return nil
+    }()
     self.orderAmountTextLabel.text = KWStringConfig.current.amount
     self.orderAmountLabel.text = self.viewModel.orderReceiveAmount
     self.transactionFeeTextLabel.text = KWStringConfig.current.transactionFee

@@ -50,6 +50,7 @@ public class KWPayCoordinator: KWCoordinator {
     signer: String? = nil,
     commissionId: String? = nil,
     productName: String,
+    productQty: Int?,
     productAvatar: String?,
     productAvatarImage: UIImage?
     ) throws {
@@ -64,6 +65,7 @@ public class KWPayCoordinator: KWCoordinator {
       signer: signer,
       commissionId: commissionId,
       productName: productName,
+      productQty: productQty,
       productAvatar: productAvatar,
       productAvatarImage: productAvatarImage
     )
@@ -91,6 +93,7 @@ public class KWSwapCoordinator: KWCoordinator {
       signer: signer,
       commissionId: commissionId,
       productName: nil,
+      productQty: nil,
       productAvatar: nil,
       productAvatarImage: nil
     )
@@ -118,6 +121,7 @@ public class KWBuyCoordinator: KWCoordinator {
       signer: signer,
       commissionId: commissionId,
       productName: nil,
+      productQty: nil,
       productAvatar: nil,
       productAvatarImage: nil
     )
@@ -138,6 +142,7 @@ public class KWCoordinator {
   let givenDefaultPairString: String
   let dataType: KWDataType
   let productName: String?
+  let productQty: Int?
   let productAvatar: String?
   let productAvatarImage: UIImage?
 
@@ -179,6 +184,7 @@ public class KWCoordinator {
     signer: String? = nil,
     commissionId: String? = nil,
     productName: String?,
+    productQty: Int?,
     productAvatar: String?,
     productAvatarImage: UIImage?
     ) throws {
@@ -210,6 +216,7 @@ public class KWCoordinator {
     self.givenDefaultPairString = defaultPair
     self.dataType = type
     self.productName = productName
+    self.productQty = productQty
     self.productAvatar = productAvatar
     self.productAvatarImage = productAvatarImage
   }
@@ -329,6 +336,7 @@ public class KWCoordinator {
           signer: self.signer,
           commissionID: self.commissionId,
           productName: self.productName,
+          productQty: self.productQty,
           productAvatar: self.productAvatar,
           productAvatarImage: self.productAvatarImage,
           dataType: self.dataType,
@@ -426,6 +434,7 @@ extension KWCoordinator: KWImportViewControllerDelegate {
         dataType: self.dataType,
         transaction: transaction,
         productName: self.productName,
+        productQty: self.productQty,
         productAvatarURL: self.productAvatar,
         productAvatarImage: self.productAvatarImage,
         balance: balance,

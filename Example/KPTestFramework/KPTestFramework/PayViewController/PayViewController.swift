@@ -18,6 +18,7 @@ class PayViewController: UIViewController {
   @IBOutlet weak var commisionIDTextField: UITextField!
   @IBOutlet weak var signerTextField: UITextField!
   @IBOutlet weak var productNameTextField: UITextField!
+  @IBOutlet weak var productQtyTextField: UITextField!
   @IBOutlet weak var productAvatarTextField: UITextField!
   @IBOutlet weak var pinnedTokenTextField: UITextField!
 
@@ -66,6 +67,10 @@ class PayViewController: UIViewController {
     let pinnedToken = self.pinnedTokenTextField.text ?? ""
     let commissionID = self.commisionIDTextField.text ?? ""
     let productName = self.productNameTextField.text ?? ""
+    let qty: Int? = {
+      if let text = self.productQtyTextField.text { return Int(text) }
+      return nil
+    }()
     let productAvt = self.productAvatarTextField.text ?? ""
     do {
       self.coordinator = try KWPayCoordinator(
@@ -78,6 +83,7 @@ class PayViewController: UIViewController {
         signer: signer.isEmpty ? nil : signer,
         commissionId: commissionID.isEmpty ? nil : commissionID,
         productName: productName,
+        productQty: qty,
         productAvatar: productAvt.isEmpty ? nil : productAvt,
         productAvatarImage: nil
       )

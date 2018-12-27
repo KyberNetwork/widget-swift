@@ -16,6 +16,7 @@ public class KWConfirmPaymentViewModel: NSObject {
   let dataType: KWDataType
   let transaction: KWTransaction
   let productName: String?
+  let productQty: Int?
   let productAvatarURL: String?
   var productAvatarImage: UIImage?
   var gasLimit: BigInt
@@ -51,6 +52,7 @@ public class KWConfirmPaymentViewModel: NSObject {
     dataType: KWDataType,
     transaction: KWTransaction,
     productName: String? = nil,
+    productQty: Int? = nil,
     productAvatarURL: String? = nil,
     productAvatarImage: UIImage? = nil,
     balance: BigInt,
@@ -69,6 +71,7 @@ public class KWConfirmPaymentViewModel: NSObject {
     self.minRate = BigInt(97.0) * self.expectedRate / BigInt(100.0)
 
     self.productName = productName
+    self.productQty = productQty
     self.productAvatarURL = productAvatarURL
     self.productAvatarImage = productAvatarImage
     self.balance = balance

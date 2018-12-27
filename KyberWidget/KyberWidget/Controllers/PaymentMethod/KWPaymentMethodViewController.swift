@@ -32,6 +32,7 @@ public class KWPaymentMethodViewController: UIViewController {
   @IBOutlet weak var payAmountTextLabel: UILabel!
   @IBOutlet weak var payDestAmountLabel: UILabel!
   @IBOutlet weak var payProductNameLabel: UILabel!
+  @IBOutlet weak var payProductQtyLabel: UILabel!
   @IBOutlet weak var payProductAvatarImageView: UIImageView!
   @IBOutlet weak var separatorView: UIView!
 
@@ -142,6 +143,12 @@ public class KWPaymentMethodViewController: UIViewController {
   fileprivate func setupDestAddressView() {
     self.payDetailsContainerView.isHidden = self.viewModel.isPayOrderDetailsContainerHidden
     self.payProductNameLabel.text = self.viewModel.productName
+    self.payProductQtyLabel.text = {
+      if let qty = self.viewModel.productQty, qty > 0 {
+        return "X \(qty)"
+      }
+      return nil
+    }()
     self.payDestAmountLabel.text = self.viewModel.payDestAmountText
     self.payProductAvatarImageView.isHidden = self.viewModel.isProductAvatarImageViewHidden
     self.payProductAvatarImageView.image = self.viewModel.productAvatarImage

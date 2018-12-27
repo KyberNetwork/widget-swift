@@ -17,7 +17,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KAdvancedSettingsView" customModule="KyberWidget" customModuleProvider="target">
             <connections>
+                <outlet property="anyRateTextLabel" destination="sfA-Ik-zhd" id="5WE-Kl-hxD"/>
                 <outlet property="cancelButton" destination="xnF-Xk-o1X" id="CX5-q7-1TG"/>
+                <outlet property="customTextLabel" destination="oiI-x8-dgM" id="Apd-Ee-5cn"/>
+                <outlet property="defaultThreePercentLabel" destination="QXc-uJ-5W2" id="5RT-eb-pjc"/>
                 <outlet property="displayViewButton" destination="kC4-al-Lim" id="eNx-qY-2k3"/>
                 <outlet property="fasGasButton" destination="Ahe-Qz-IPa" id="s9D-GY-neN"/>
                 <outlet property="fasGasValueLabel" destination="d9b-Jz-K2d" id="2Se-Kc-tXa"/>
