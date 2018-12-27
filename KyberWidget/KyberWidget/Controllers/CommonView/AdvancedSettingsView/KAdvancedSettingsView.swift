@@ -110,13 +110,16 @@ class KAdvancedSettingsView: KWXibLoaderView {
   @IBOutlet weak var heightConstraintGasPriceContainerView: NSLayoutConstraint!
   @IBOutlet weak var gasPriceContainerView: UIView!
   @IBOutlet weak var fasGasValueLabel: UILabel!
+  @IBOutlet weak var fasTextLabel: UILabel!
   @IBOutlet weak var fasGasButton: UIButton!
 
   @IBOutlet weak var mediumGasValueLabel: UILabel!
   @IBOutlet weak var mediumGasButton: UIButton!
-
+  @IBOutlet weak var regularTextLabel: UILabel!
+  
   @IBOutlet weak var slowGasValueLabel: UILabel!
   @IBOutlet weak var slowGasButton: UIButton!
+  @IBOutlet weak var slowTextLabel: UILabel!
   @IBOutlet weak var gasPriceSeparatorView: UIView!
 
   @IBOutlet weak var minRateContainerView: UIView!
@@ -162,6 +165,15 @@ class KAdvancedSettingsView: KWXibLoaderView {
 
     let slowGasTapped = UITapGestureRecognizer(target: self, action: #selector(self.slowGasButtonPressed(_:)))
     self.slowGasValueLabel.addGestureRecognizer(slowGasTapped)
+
+    let fasTextTapped = UITapGestureRecognizer(target: self, action: #selector(self.fastGasButtonPressed(_:)))
+    self.fasTextLabel.addGestureRecognizer(fasTextTapped)
+    
+    let regularTextTapped = UITapGestureRecognizer(target: self, action: #selector(self.mediumGasButtonPressed(_:)))
+    self.regularTextLabel.addGestureRecognizer(regularTextTapped)
+    
+    let slowTextTapped = UITapGestureRecognizer(target: self, action: #selector(self.slowGasButtonPressed(_:)))
+    self.slowTextLabel.addGestureRecognizer(slowTextTapped)
 
     let defaultThreePercentTapped = UITapGestureRecognizer(target: self, action: #selector(self.threePercentButtonPressed(_:)))
     self.defaultThreePercentLabel.addGestureRecognizer(defaultThreePercentTapped)

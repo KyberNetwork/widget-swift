@@ -24,6 +24,7 @@
                 <outlet property="displayViewButton" destination="kC4-al-Lim" id="eNx-qY-2k3"/>
                 <outlet property="fasGasButton" destination="Ahe-Qz-IPa" id="s9D-GY-neN"/>
                 <outlet property="fasGasValueLabel" destination="d9b-Jz-K2d" id="2Se-Kc-tXa"/>
+                <outlet property="fasTextLabel" destination="662-rx-Ymk" id="JuA-Hu-2mf"/>
                 <outlet property="gasPriceContainerView" destination="Zbn-RB-OWZ" id="FMb-yA-yXo"/>
                 <outlet property="gasPriceSeparatorView" destination="0yr-4C-pIU" id="PNT-j6-1Ej"/>
                 <outlet property="heightConstraintGasPriceContainerView" destination="2DO-Ek-7Hd" id="FTC-h9-drn"/>
@@ -35,8 +36,10 @@
                 <outlet property="minRateCustomButton" destination="m8G-xa-Bh5" id="lR4-Xu-nB8"/>
                 <outlet property="minRateCustomTextField" destination="YMN-Ly-6xS" id="MOx-Vz-JTj"/>
                 <outlet property="minRateThreePercentButton" destination="lNz-V5-3WF" id="nUX-IN-fJ2"/>
+                <outlet property="regularTextLabel" destination="FMy-y8-igd" id="aAf-f9-Z6n"/>
                 <outlet property="slowGasButton" destination="8TX-Uf-qV9" id="GWF-dg-UJx"/>
                 <outlet property="slowGasValueLabel" destination="ZCp-KP-Uqz" id="gXJ-zV-7UE"/>
+                <outlet property="slowTextLabel" destination="yd2-sj-OJW" id="2SL-ie-DJA"/>
                 <outlet property="stillProceedIfRateGoesDownByLabel" destination="m11-tO-aa1" id="UR0-Zc-egj"/>
                 <outlet property="transactionRevertedDescLabel" destination="QQm-kw-kMQ" id="W6e-vJ-tdp"/>
             </connections>
