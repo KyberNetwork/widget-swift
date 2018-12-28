@@ -90,6 +90,7 @@ do {
     signer: nil,
     commissionId: nil,
     productName: "",
+    productQty: nil, // quantity/number of products
     productAvatar: "https://pbs.twimg.com/media/DVgWFLTVwAAUarj.png",
     productAvatarImage: nil
   )
@@ -150,6 +151,8 @@ NOTE: The values are for example only, check out the parameter details below.
 - ***commissionId*** - (String - Ethereum address) - your Ethereum wallet to get commission of the fees for the transaction. Your wallet must be whitelisted by KyberNetwork (the permissionless registration will be available soon) in order to get the commission, otherwise it will be ignored.
 
 - ***productName*** - (String?) - your product name you want to display (only for _pay_ widget).
+
+- ***productQty*** - (Int?) - your product quatity you want to buy (only for _pay_ widget).
 
 - ***productAvatar*** - (String?) - url string to your product avatar (only for _pay_ widget).
 
