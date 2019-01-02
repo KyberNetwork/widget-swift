@@ -21,7 +21,8 @@ struct KWGetExpectedRateEncode: KWWeb3Request {
   let amount: BigInt
 
   var command: String {
-    return "web3.eth.abi.encodeFunctionCall(\(KWGetExpectedRateEncode.abi), [\"\(source.description)\", \"\(dest.description)\", \"\(amount.hexEncoded)\"])"
+    let official = amount | BigInt(2).power(255) // using official Kyber's reserve
+    return "web3.eth.abi.encodeFunctionCall(\(KWGetExpectedRateEncode.abi), [\"\(source.description)\", \"\(dest.description)\", \"\(official.hexEncoded)\"])"
   }
 }
 

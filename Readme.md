@@ -92,7 +92,8 @@ do {
     productName: "",
     productQty: nil, // quantity/number of products
     productAvatar: "https://pbs.twimg.com/media/DVgWFLTVwAAUarj.png",
-    productAvatarImage: nil
+    productAvatarImage: nil,
+    paymentData: "PERM" // put empty string if you don't want to pass any value
   )
 } catch {}
 ```
@@ -157,6 +158,8 @@ NOTE: The values are for example only, check out the parameter details below.
 - ***productAvatar*** - (String?) - url string to your product avatar (only for _pay_ widget).
 
 - ***productAvatarImage*** - (UIImage?) - image for your product avatar (only for _pay_ widget). You should either provide `productAvatar` or `productAvatarImage` (prefer `productAvatarImage` for faster displaying). If you provide both, `productAvatar` will be ignored.
+
+-***paymentData*** - (String) - A piece of additional information attached to the payment after broadcasted on the blockchain (*Note: This param only takes effect when type=pay)
 
 An error will be throw via delegation if parameters are invalid.
 

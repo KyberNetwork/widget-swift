@@ -14,7 +14,7 @@ import TrustCore
 struct KWExchangeRequestEncode: KWWeb3Request {
   typealias Response = String
 
-  static let abi = "{\"constant\":false,\"inputs\":[{\"name\":\"src\",\"type\":\"address\"}, {\"name\":\"srcAmount\",\"type\":\"uint256\"},{\"name\":\"dest\",\"type\":\"address\"}, {\"name\":\"destAddress\",\"type\":\"address\"},{\"name\":\"maxDestAmount\",\"type\":\"uint256\"},{\"name\":\"minConversionRate\",\"type\":\"uint256\"},{\"name\":\"walletId\",\"type\":\"address\"}],\"name\":\"trade\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"}"
+  static let abi = "{\"constant\":false,\"inputs\":[{\"name\":\"src\",\"type\":\"address\"},{\"name\":\"srcAmount\",\"type\":\"uint256\"},{\"name\":\"dest\",\"type\":\"address\"},{\"name\":\"destAddress\",\"type\":\"address\"},{\"name\":\"maxDestAmount\",\"type\":\"uint256\"},{\"name\":\"minConversionRate\",\"type\":\"uint256\"},{\"name\":\"walletId\",\"type\":\"address\"},{\"name\":\"hint\",\"type\":\"bytes\"}],\"name\":\"tradeWithHint\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"}"
 
   let exchange: KWTransaction
   let address: String
@@ -26,7 +26,8 @@ struct KWExchangeRequestEncode: KWWeb3Request {
     }()
     let walletID = self.exchange.commissionID ?? "0x0000000000000000000000000000000000000000"
     let amountTo: String = (exchange.amountTo ?? BigInt(2).power(255)).description
-    let command = "web3.eth.abi.encodeFunctionCall(\(KWExchangeRequestEncode.abi), [\"\(exchange.from.address.description)\", \"\(exchange.amountFrom.description)\", \"\(exchange.to.address.description)\", \"\(address)\", \"\(amountTo)\", \"\(minRate.description)\", \"\(walletID)\"])"
+    let hint = "PERM".hexEncoded
+    let command = "web3.eth.abi.encodeFunctionCall(\(KWExchangeRequestEncode.abi), [\"\(exchange.from.address.description)\", \"\(exchange.amountFrom.description)\", \"\(exchange.to.address.description)\", \"\(address)\", \"\(amountTo)\", \"\(minRate.description)\", \"\(walletID)\", \"\(hint)\"])"
     return command
   }
 }
