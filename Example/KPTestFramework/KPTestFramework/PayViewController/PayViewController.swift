@@ -21,7 +21,8 @@ class PayViewController: UIViewController {
   @IBOutlet weak var productQtyTextField: UITextField!
   @IBOutlet weak var productAvatarTextField: UITextField!
   @IBOutlet weak var pinnedTokenTextField: UITextField!
-
+  @IBOutlet weak var paymentDataTextField: UITextField!
+  
   @IBOutlet weak var networkSegment: UISegmentedControl!
   @IBOutlet weak var continueButton: UIButton!
 
@@ -85,7 +86,8 @@ class PayViewController: UIViewController {
         productName: productName,
         productQty: qty,
         productAvatar: productAvt.isEmpty ? nil : productAvt,
-        productAvatarImage: nil
+        productAvatarImage: nil,
+        paymentData: self.paymentDataTextField.text ?? ""
       )
       self.coordinator?.delegate = self
       self.coordinator?.start()

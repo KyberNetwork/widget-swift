@@ -52,7 +52,8 @@ public class KWPayCoordinator: KWCoordinator {
     productName: String,
     productQty: Int?,
     productAvatar: String?,
-    productAvatarImage: UIImage?
+    productAvatarImage: UIImage?,
+    paymentData: String = ""
     ) throws {
     try super.init(
       baseViewController: baseViewController,
@@ -67,7 +68,8 @@ public class KWPayCoordinator: KWCoordinator {
       productName: productName,
       productQty: productQty,
       productAvatar: productAvatar,
-      productAvatarImage: productAvatarImage
+      productAvatarImage: productAvatarImage,
+      paymentData: paymentData
     )
   }
 }
@@ -145,6 +147,7 @@ public class KWCoordinator {
   let productQty: Int?
   let productAvatar: String?
   let productAvatarImage: UIImage?
+  let paymentData: String
 
   let network: KWEnvironment
 
@@ -186,7 +189,8 @@ public class KWCoordinator {
     productName: String?,
     productQty: Int?,
     productAvatar: String?,
-    productAvatarImage: UIImage?
+    productAvatarImage: UIImage?,
+    paymentData: String = ""
     ) throws {
     self.baseViewController = baseViewController
     self.navigationController = {
@@ -219,6 +223,8 @@ public class KWCoordinator {
     self.productQty = productQty
     self.productAvatar = productAvatar
     self.productAvatarImage = productAvatarImage
+    self.paymentData = paymentData
+    KWPayRequestEncode.paymentData = paymentData
   }
 
   public func start(completion: (() -> Void)? = nil) {
