@@ -17,6 +17,11 @@ public struct KWGasConfiguration {
   static let transferTokenGasLimitDefault = BigInt(60_000)
   static let transferETHGasLimitDefault = BigInt(21_000)
 
+  static let daiGasLimitDefault = BigInt(450_000)
+  static let makerGasLimitDefault = BigInt(400_000)
+  static let propyGasLimitDefault = BigInt(500_000)
+  static let promotionTokenGasLimitDefault = BigInt(380_000)
+
   static let gasPriceFast = BigInt(15) * BigInt(10).power(9)
   static let gasPriceMedium = BigInt(10) * BigInt(10).power(9)
   static let gasPriceSlow = BigInt(5) * BigInt(10).power(9)
@@ -29,15 +34,24 @@ public struct KWGasConfiguration {
       if from.isETH { return transferETHGasLimitDefault }
       return transferTokenGasLimitDefault
     }
-    // swapping
-    if from.isDGX {
-      // swapping digix to eth or token
-      return to.isETH ? digixGasLimitDefault : digixGasLimitDefault + exchangeETHTokenGasLimitDefault
-    }
-    if to.isDGX {
-      return from.isETH ? digixGasLimitDefault : digixGasLimitDefault + exchangeETHTokenGasLimitDefault
-    }
-    // swap ETH <-> token or token <-> token
-    return (from.isETH || to.isETH) ? exchangeETHTokenGasLimitDefault : exchangeTokensGasLimitDefault
+    let gasSrcToETH: BigInt = {
+      if from.isETH { return BigInt(0) }
+      if from.isDGX { return digixGasLimitDefault }
+      if from.isDAI { return daiGasLimitDefault }
+      if from.isMKR { return makerGasLimitDefault }
+      if from.isPRO { return propyGasLimitDefault }
+      if from.isPRO { return promotionTokenGasLimitDefault }
+      return exchangeETHTokenGasLimitDefault
+    }()
+    let gasETHToDest: BigInt = {
+      if to.isETH { return BigInt(0) }
+      if to.isDGX { return digixGasLimitDefault }
+      if to.isDAI { return daiGasLimitDefault }
+      if to.isMKR { return makerGasLimitDefault }
+      if to.isPRO { return propyGasLimitDefault }
+      if to.isPRO { return promotionTokenGasLimitDefault }
+      return exchangeETHTokenGasLimitDefault
+    }()
+    return gasSrcToETH + gasETHToDest
   }
 }
