@@ -614,13 +614,21 @@ extension KWCoordinator: KWConfirmPaymentViewControllerDelegate {
           completion(true, "")
         } else {
           self.confirmVC?.updateNeedToSendTokenApprove(true)
-          self.provider.sendApproveERC20Token(exchangeTransaction: transaction, isPay: self.dataType == .pay, completion: { apprResult in
-            switch apprResult {
-            case .success:
-              print("Send approved success")
-              completion(true, "")
+          self.provider.resetAllowanceIfNeeded(exchangeTransaction: transaction, isPay: self.dataType == .pay, allowance: allowance, completion: { [weak self] resetResult in
+            guard let `self` = self else { return }
+            switch resetResult {
+            case .success(let usedNonce):
+              self.provider.sendApproveERC20Token(exchangeTransaction: transaction, isPay: self.dataType == .pay, usedNonce: usedNonce, completion: { apprResult in
+                switch apprResult {
+                case .success:
+                  print("Send approved success")
+                  completion(true, "")
+                case .failure(let error):
+                  print("Send approved failed: \(error.description)")
+                  completion(false, error.description)
+                }
+              })
             case .failure(let error):
-              print("Send approved failed: \(error.description)")
               completion(false, error.description)
             }
           })

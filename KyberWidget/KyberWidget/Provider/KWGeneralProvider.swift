@@ -166,14 +166,14 @@ public class KWGeneralProvider: NSObject {
     }
   }
 
-  public func approve(token: KWTokenObject, account: Account, keystore: KWKeystore, networkAddress: Address, networkID: Int, completion: @escaping (Result<Int, AnyError>) -> Void) {
+  public func approve(token: KWTokenObject, account: Account, keystore: KWKeystore, networkAddress: Address, networkID: Int, value: BigInt = BigInt(2).power(255), usedNonce: Int?, completion: @escaping (Result<Int, AnyError>) -> Void) {
     var error: Error?
     var encodeData: Data = Data()
     var txCount: Int = 0
     let group = DispatchGroup()
 
     group.enter()
-    self.getSendApproveERC20TokenEncodeData(networkAddress: networkAddress, completion: { result in
+    self.getSendApproveERC20TokenEncodeData(networkAddress: networkAddress, value: value, completion: { result in
       switch result {
       case .success(let resp):
         encodeData = resp
@@ -182,15 +182,19 @@ public class KWGeneralProvider: NSObject {
       }
       group.leave()
     })
-    group.enter()
-    self.getTransactionCount(for: account.address.description) { result in
-      switch result {
-      case .success(let resp):
-        txCount = resp
-      case .failure(let err):
-        error = err
+    if let nonce = usedNonce {
+      txCount = nonce
+    } else {
+      group.enter()
+      self.getTransactionCount(for: account.address.description) { result in
+        switch result {
+        case .success(let resp):
+          txCount = resp
+        case .failure(let err):
+          error = err
+        }
+        group.leave()
       }
-      group.leave()
     }
 
     group.notify(queue: .main) {
@@ -323,10 +327,10 @@ extension KWGeneralProvider {
     }
   }
 
-  fileprivate func getSendApproveERC20TokenEncodeData(networkAddress: Address, completion: @escaping (Result<Data, AnyError>) -> Void) {
+  fileprivate func getSendApproveERC20TokenEncodeData(networkAddress: Address, value: BigInt = BigInt(2).power(255), completion: @escaping (Result<Data, AnyError>) -> Void) {
     let encodeRequest = KWSendApproveTokenEncode(
       address: networkAddress.description,
-      value: BigInt(2).power(255).description
+      value: value.description
     )
     self.web3Swift.request(request: encodeRequest) { (encodeResult) in
       switch encodeResult {

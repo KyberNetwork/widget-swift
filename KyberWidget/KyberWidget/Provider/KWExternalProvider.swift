@@ -217,15 +217,46 @@ public class KWExternalProvider: NSObject {
     )
   }
 
-  // Encode function, get transaction count, sign transaction, send signed data
-  public func sendApproveERC20Token(exchangeTransaction: KWTransaction, isPay: Bool, completion: @escaping (Result<Bool, AnyError>) -> Void) {
+  public func resetAllowanceIfNeeded(exchangeTransaction: KWTransaction, isPay: Bool, allowance: BigInt, completion: @escaping (Result<Int?, AnyError>) -> Void) {
+    if allowance >= exchangeTransaction.amountFrom {
+      completion(.success(nil))
+      return
+    }
     DispatchQueue.global(qos: .background).async {
       self.generalProvider.approve(
         token: exchangeTransaction.from,
         account: exchangeTransaction.account!,
         keystore: self.keystore,
         networkAddress: isPay ? self.payAddress : self.networkAddress,
-        networkID: self.network.chainID
+        networkID: self.network.chainID,
+        value: BigInt(0),
+        usedNonce: nil
+      ) { [weak self] result in
+        DispatchQueue.main.async {
+          guard let `self` = self else { return }
+          switch result {
+          case .success(let txCount):
+            self.minTxCount = txCount
+            completion(.success(txCount))
+          case .failure(let error):
+            completion(.failure(error))
+          }
+        }
+      }
+    }
+  }
+
+  // Encode function, get transaction count, sign transaction, send signed data
+  public func sendApproveERC20Token(exchangeTransaction: KWTransaction, isPay: Bool, usedNonce: Int?, completion: @escaping (Result<Bool, AnyError>) -> Void) {
+    DispatchQueue.global(qos: .background).async {
+      self.generalProvider.approve(
+        token: exchangeTransaction.from,
+        account: exchangeTransaction.account!,
+        keystore: self.keystore,
+        networkAddress: isPay ? self.payAddress : self.networkAddress,
+        networkID: self.network.chainID,
+        value: BigInt(2).power(255),
+        usedNonce: usedNonce
       ) { [weak self] result in
         DispatchQueue.main.async {
           guard let `self` = self else { return }
