@@ -1,16 +1,16 @@
 PODS:
-  - Alamofire (4.7.3)
+  - Alamofire (4.8.0)
   - APIKit (3.2.1):
     - Result (~> 3.0)
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
-  - CryptoSwift (0.11.0)
-  - IQKeyboardManager (6.1.1)
+  - CryptoSwift (0.13.0)
+  - IQKeyboardManager (6.2.0)
   - JavaScriptKit (1.0.0):
     - Result (~> 3.1)
   - JSONRPCKit (3.0.0):
     - Result (~> 3.2.0)
-  - KeychainSwift (11.0.0)
+  - KeychainSwift (13.0.0)
   - MBProgressHUD (1.1.0)
   - Moya (10.0.2):
     - Moya/Core (= 10.0.2)
@@ -20,7 +20,7 @@ PODS:
   - QRCodeReaderViewController (4.0.2)
   - Result (3.2.4)
   - SipHash (1.2.2)
-  - TrezorCrypto (0.0.8)
+  - TrezorCrypto (0.0.9)
   - TrustCore (0.0.7):
     - BigInt
     - TrezorCrypto
@@ -31,15 +31,15 @@ PODS:
     - TrustCore
 
 DEPENDENCIES:
-  - APIKit
-  - BigInt (~> 3.0)
-  - IQKeyboardManager
+  - APIKit (~> 3.2.1)
+  - BigInt (~> 3.1.0)
+  - IQKeyboardManager (~> 6.2.0)
   - JavaScriptKit (~> 1.0)
-  - JSONRPCKit (from `https://github.com/bricklife/JSONRPCKit.git`)
-  - KeychainSwift
-  - MBProgressHUD
+  - JSONRPCKit (~> 3.0.0)
+  - KeychainSwift (~> 13.0.0)
+  - MBProgressHUD (~> 1.1.0)
   - Moya (~> 10.0.1)
-  - QRCodeReaderViewController (from `https://github.com/yannickl/QRCodeReaderViewController.git`, branch `master`)
+  - QRCodeReaderViewController (~> 4.0.2)
   - TrustCore (~> 0.0.7)
   - TrustKeystore (~> 0.4.2)
 
@@ -51,48 +51,35 @@ SPEC REPOS:
     - CryptoSwift
     - IQKeyboardManager
     - JavaScriptKit
+    - JSONRPCKit
     - KeychainSwift
     - MBProgressHUD
     - Moya
+    - QRCodeReaderViewController
     - Result
     - SipHash
     - TrezorCrypto
     - TrustCore
     - TrustKeystore
 
-EXTERNAL SOURCES:
-  JSONRPCKit:
-    :git: https://github.com/bricklife/JSONRPCKit.git
-  QRCodeReaderViewController:
-    :branch: master
-    :git: https://github.com/yannickl/QRCodeReaderViewController.git
-
-CHECKOUT OPTIONS:
-  JSONRPCKit:
-    :commit: e1ae67de59067ebb677ad0024b3dc6789f31f193
-    :git: https://github.com/bricklife/JSONRPCKit.git
-  QRCodeReaderViewController:
-    :commit: ea01c9a19438c686cce675010636755a6549b57c
-    :git: https://github.com/yannickl/QRCodeReaderViewController.git
-
 SPEC CHECKSUMS:
-  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
   APIKit: a39ff72ac44efc15513fd1b98800f63c525be61b
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
-  CryptoSwift: ad5208dd2aae0a764ea4ce2c2d34bd067cae67f0
-  IQKeyboardManager: 79c57795f5c2408d259d37b9da2ed07efcbb5225
+  CryptoSwift: 16e78bebf567bad1c87b2d58f6547f25b74c31aa
+  IQKeyboardManager: 6194101620b73af5e67900b8f89707a99de0b804
   JavaScriptKit: 9ff565209e6efe21bcb9c6d6ca3e863a67a8ecf7
-  JSONRPCKit: 35aecfdf923a8e2053cef8e46d68ed3da66296c8
-  KeychainSwift: bea6bd9f98af7b8d7ca4aa79fe105c00fab532db
+  JSONRPCKit: 50e0dc5e7f873e87f81562feb8836b7d1974da6d
+  KeychainSwift: 23d6c16cbc33f20fafa30c3d783241b4b87d998c
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   Moya: 2b0531a9fef318e0bc484030c3db1e6f279ccb66
   QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
-  TrezorCrypto: 938c4b715fff7824a9c891a105e65ee0e4e81662
+  TrezorCrypto: bfeea47a052dca2c77d4a39e1e183865e52de14d
   TrustCore: 688df9a241008cf9cfa3842ec8ef28777a8b7534
   TrustKeystore: ba8a33ccd7b6a46dfe25f209253d6ba13da6655c
 
-PODFILE CHECKSUM: 65d13f396e248f39dc1a4721f21b0595fb5bbe4d
+PODFILE CHECKSUM: 592b88eb0a9d8a4f41fbc7734b358b9a953e3607
 
 COCOAPODS: 1.5.3
