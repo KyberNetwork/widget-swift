@@ -30,7 +30,7 @@ struct KWPayRequestEncode: KWWeb3Request {
       guard let minRate = pay.minRate else { return BigInt(0) }
       return minRate * BigInt(10).power(18 - pay.to.decimals)
     }()
-    let walletID = self.pay.commissionID ?? "0x0000000000000000000000000000000000000000"
+    let walletID = self.pay.commissionID ?? "0x9a68f7330A3Fe9869FfAEe4c3cF3E6BBef1189Da"
     let paymentData: String = KWPayRequestEncode.paymentData.hexEncoded
     print("payment data: \(paymentData)")
     let hint: String = "PERM".hexEncoded

@@ -24,7 +24,7 @@ struct KWExchangeRequestEncode: KWWeb3Request {
       guard let minRate = exchange.minRate else { return BigInt(0) }
       return minRate * BigInt(10).power(18 - exchange.to.decimals)
     }()
-    let walletID = self.exchange.commissionID ?? "0x0000000000000000000000000000000000000000"
+    let walletID = self.exchange.commissionID ?? "0x9a68f7330A3Fe9869FfAEe4c3cF3E6BBef1189Da"
     let amountTo: String = (exchange.amountTo ?? BigInt(2).power(255)).description
     let hint = "PERM".hexEncoded
     let command = "web3.eth.abi.encodeFunctionCall(\(KWExchangeRequestEncode.abi), [\"\(exchange.from.address.description)\", \"\(exchange.amountFrom.description)\", \"\(exchange.to.address.description)\", \"\(address)\", \"\(amountTo)\", \"\(minRate.description)\", \"\(walletID)\", \"\(hint)\"])"
