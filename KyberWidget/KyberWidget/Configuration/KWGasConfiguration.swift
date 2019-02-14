@@ -31,8 +31,7 @@ public struct KWGasConfiguration {
     if from == to {
       // normal transfer
       if isPay { return payTransferTokenGasLimitDefault }
-      if from.isETH { return transferETHGasLimitDefault }
-      return transferTokenGasLimitDefault
+      return calculateDefaultGasLimitTransfer(token: from)
     }
     let gasSrcToETH: BigInt = {
       if from.isETH { return BigInt(0) }
@@ -40,7 +39,7 @@ public struct KWGasConfiguration {
       if from.isDAI { return daiGasLimitDefault }
       if from.isMKR { return makerGasLimitDefault }
       if from.isPRO { return propyGasLimitDefault }
-      if from.isPRO { return promotionTokenGasLimitDefault }
+      if from.isPT { return promotionTokenGasLimitDefault }
       return exchangeETHTokenGasLimitDefault
     }()
     let gasETHToDest: BigInt = {
@@ -49,9 +48,19 @@ public struct KWGasConfiguration {
       if to.isDAI { return daiGasLimitDefault }
       if to.isMKR { return makerGasLimitDefault }
       if to.isPRO { return propyGasLimitDefault }
-      if to.isPRO { return promotionTokenGasLimitDefault }
+      if to.isPT { return promotionTokenGasLimitDefault }
       return exchangeETHTokenGasLimitDefault
     }()
     return gasSrcToETH + gasETHToDest
+  }
+
+  static func calculateDefaultGasLimitTransfer(token: KWTokenObject) -> BigInt {
+    if token.isETH { return transferETHGasLimitDefault }
+    if token.isDGX { return digixGasLimitDefault }
+    if token.isDAI { return daiGasLimitDefault }
+    if token.isMKR { return makerGasLimitDefault }
+    if token.isPRO { return propyGasLimitDefault }
+    if token.isPT { return promotionTokenGasLimitDefault }
+    return transferTokenGasLimitDefault
   }
 }

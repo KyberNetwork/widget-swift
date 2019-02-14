@@ -297,10 +297,7 @@ public class KWExternalProvider: NSObject {
   // MARK: Estimate Gas
   public func getTransferEstimateGasLimit(for transaction: KWTransaction, completion: @escaping (Result<BigInt, AnyError>) -> Void) {
     let defaultGasLimit: BigInt = {
-      if transaction.from.isETH && transaction.to.isETH {
-        return KWGasConfiguration.transferETHGasLimitDefault
-      }
-      return KWGasConfiguration.transferTokenGasLimitDefault
+      return KWGasConfiguration.calculateDefaultGasLimitTransfer(token: transaction.from)
     }()
     DispatchQueue.global(qos: .background).async {
       self.requestDataForTokenTransfer(transaction) { [weak self] result in
@@ -329,9 +326,7 @@ public class KWExternalProvider: NSObject {
     let value: BigInt = transaction.from.isETH ? transaction.amountFrom : BigInt(0)
 
     let defaultGasLimit: BigInt = {
-      if transaction.from.isDGX || transaction.to.isDGX { return KWGasConfiguration.digixGasLimitDefault }
-      if transaction.to.isETH || transaction.from.isETH { return KWGasConfiguration.exchangeETHTokenGasLimitDefault }
-      return KWGasConfiguration.exchangeTokensGasLimitDefault
+      return KWGasConfiguration.calculateGasLimit(from: transaction.from, to: transaction.to, isPay: false)
     }()
 
     DispatchQueue.global(qos: .background).async {
@@ -360,9 +355,7 @@ public class KWExternalProvider: NSObject {
   public func getPayEstimateGasLimit(for transaction: KWTransaction, completion: @escaping (Result<BigInt, AnyError>) -> Void) {
     let value: BigInt = transaction.from.isETH ? transaction.amountFrom : BigInt(0)
     let defaultGasLimit: BigInt = {
-      if transaction.from.isDGX || transaction.to.isDGX { return KWGasConfiguration.digixGasLimitDefault }
-      if transaction.to.isETH || transaction.from.isETH { return KWGasConfiguration.exchangeETHTokenGasLimitDefault }
-      return KWGasConfiguration.exchangeTokensGasLimitDefault
+      return KWGasConfiguration.calculateGasLimit(from: transaction.from, to: transaction.to, isPay: true)
     }()
     DispatchQueue.global(qos: .background).async {
       self.requestDataForPay(transaction) { [weak self] dataResult in
