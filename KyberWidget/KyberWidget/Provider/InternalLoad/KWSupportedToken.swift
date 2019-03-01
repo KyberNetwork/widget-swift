@@ -24,7 +24,8 @@ public class KWSupportedToken: NSObject {
           switch result {
           case .success(let response):
             do {
-              let jsonArr: [JSONDictionary] = try response.mapJSON(failsOnEmptyData: false) as? [JSONDictionary] ?? []
+              let jsonData: JSONDictionary = try response.mapJSON(failsOnEmptyData: false) as? JSONDictionary ?? [:]
+              let jsonArr: [JSONDictionary] = jsonData["data"] as? [JSONDictionary] ?? []
               let tokenObjects = jsonArr.map({ return KWTokenObject(trackerDict: $0) })
               completion(.success(tokenObjects))
               print("---- Supported Tokens: Load successfully")

@@ -21,7 +21,7 @@ extension KWNetworkProvider: TargetType {
   public var baseURL: URL {
     switch self {
     case .getSupportedTokens:
-      let string = "https://tracker.kyber.network/api/tokens/supported"
+      let string = "https://api.kyber.network/currencies"
       return URL(string: string)!
     case .getRates(let env):
       let string: String = {

@@ -49,7 +49,7 @@ public struct KWTokenObject {
     let symbol = trackerDict["symbol"] as? String ?? ""
     self.symbol = symbol
     self.icon = symbol.lowercased()
-    self.address = (trackerDict["contractAddress"] as? String ?? "").lowercased()
+    self.address = (trackerDict["address"] as? String ?? "").lowercased()
     self.decimals = trackerDict["decimals"] as? Int ?? 0
   }
 
