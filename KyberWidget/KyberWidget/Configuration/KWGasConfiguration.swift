@@ -21,6 +21,7 @@ public struct KWGasConfiguration {
   static let makerGasLimitDefault = BigInt(400_000)
   static let propyGasLimitDefault = BigInt(500_000)
   static let promotionTokenGasLimitDefault = BigInt(380_000)
+  static let trueUSDTokenGasLimitDefault = BigInt(500_000)
 
   static let gasPriceFast = BigInt(15) * BigInt(10).power(9)
   static let gasPriceMedium = BigInt(10) * BigInt(10).power(9)
@@ -40,6 +41,7 @@ public struct KWGasConfiguration {
       if from.isMKR { return makerGasLimitDefault }
       if from.isPRO { return propyGasLimitDefault }
       if from.isPT { return promotionTokenGasLimitDefault }
+      if from.isTUSD { return trueUSDTokenGasLimitDefault }
       return exchangeETHTokenGasLimitDefault
     }()
     let gasETHToDest: BigInt = {
@@ -49,6 +51,7 @@ public struct KWGasConfiguration {
       if to.isMKR { return makerGasLimitDefault }
       if to.isPRO { return propyGasLimitDefault }
       if to.isPT { return promotionTokenGasLimitDefault }
+      if to.isTUSD { return trueUSDTokenGasLimitDefault }
       return exchangeETHTokenGasLimitDefault
     }()
     return gasSrcToETH + gasETHToDest
@@ -61,6 +64,7 @@ public struct KWGasConfiguration {
     if token.isMKR { return makerGasLimitDefault }
     if token.isPRO { return propyGasLimitDefault }
     if token.isPT { return promotionTokenGasLimitDefault }
+    if token.isTUSD { return trueUSDTokenGasLimitDefault }
     return transferTokenGasLimitDefault
   }
 }

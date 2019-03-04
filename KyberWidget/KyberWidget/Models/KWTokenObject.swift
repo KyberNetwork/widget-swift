@@ -75,6 +75,7 @@ public struct KWTokenObject {
   var isMKR: Bool { return symbol == "MKR" }
   var isPRO: Bool { return symbol == "PRO" }
   var isPT: Bool { return symbol == "PT" }
+  var isTUSD: Bool { return symbol == "TUSD" && name.lowercased() == "trueusd" }
 
 
   static public func ==(left: KWTokenObject, right: KWTokenObject) -> Bool {
